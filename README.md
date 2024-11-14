@@ -9,13 +9,13 @@ Our goal is to create a platform for insider tips, a map where you can find less
 | Nr. | Milestones                                             | KW  |
 |-----|---------------------------------------------------------|-----|
 | 1   | UI-Design | KW 52 |
-| 2   | Map | KW X |
-| 3   | Database              | KW X |
-| 4   | Server Connection                    | KW X |
-| 5   | HTML, CSS         | KW X |
-| 6   | Server         | KW X |
-| 7   | Data output         | KW X |
-| 8   | Testing        | KW X |
+| 2   | Map | KW 2 |
+| 3   | Database              | KW 2 |
+| 4   | Server Connection                    | KW 5 |
+| 5   | HTML, CSS, Bootstrap         | KW 15 |
+| 6   | Server         | KW 10 |
+| 7   | Data output         | KW 18 |
+| 8   | Testing        | KW 23 |
 
 
 
