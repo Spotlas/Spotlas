@@ -26,7 +26,7 @@ let config = {
   
   // --------------------------------------------------
   
-  const sidebar = document.getElementById("sidebar");
+  const sidebar = document.getElementById("homepage_karte_sidebar");
   
   function createSidebarElements(layer) {
     const el = `<div class="sidebar-el" data-marker="${layer._leaflet_id}">${layer
