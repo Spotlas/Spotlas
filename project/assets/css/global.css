@@ -1,21 +1,6 @@
 /* Projekt Spotlas */
 /* global.css **/
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-ul,
-li,
-a {
-  font-family: var(--font-family);
-  color: var(--primary-font-color);
 
-  margin: 0;
-  padding: 0;
-}
 body {
   margin: 0;
   padding: 0;
@@ -30,7 +15,8 @@ body {
 
     /* Blacks and Whites */
     --black-color: hsl(0, 0%, 0%); /*#black*/
-    --white-color: hsl(0, 0%, 100%); /*#black*/
+    --white-color: hsl(0, 0%, 100%); /*#white*/
+    --white-color-70P: hsla(0, 0%, 100%, 0.713); /*#white*/
 
     /* Background Colors */
     --primary-bg-color: hsl(0, 0%, 7%); /*#111111*/
@@ -90,4 +76,10 @@ body {
     --screen-lg: 992px;
     --screen-xl: 1200px;
     --screen-xxl: 1400px;
+
+    /* Border Radius */
+    --border-radius-s: 4px;
+    --border-radius-m : 8px;
+    --border-radius-l: 12px;
+    --border-radius-xl: 16px
 }
