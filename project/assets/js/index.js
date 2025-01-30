@@ -5,14 +5,14 @@
 
 // config map
 let config = {
-    minZoom: 7,
-    maxZoom: 18,
+    minZoom: 3,
+    maxZoom: 30,
   };
   // magnification with which the map will start
-  const zoom = 11;
+  const zoom = 7;
   // co-ordinates
-  const lat = 22.72299;
-  const lng = 75.864716;
+  const lat = 47.6965;
+  const lng = 13.3458;
   
   // calling map
   const map = L.map("map", config).setView([lat, lng], zoom);
@@ -52,12 +52,12 @@ let config = {
   
   // coordinate array points
   const points = [
-    [23.45610, 75.42270],
-    [22.72299, 75.864716],
-    [22.962187, 76.05011],
-    [23.187076, 75.769958],
-    [22.243344, 76.133881],
-  ];
+    [48.20849, 16.37208], // Wien
+    [47.2682, 11.39277],  // Innsbruck
+    [47.80949, 13.05501], // Salzburg
+    [46.62472, 14.30528], // Klagenfurt
+    [48.30694, 14.28583], // Linz
+  ];  
   
   const fg = L.featureGroup().addTo(map);
   
@@ -65,7 +65,6 @@ let config = {
     const marker = L.marker(point).addTo(fg);
     const getLatLong = marker.getLatLng();
     marker.bindPopup(getLatLong.toString());
-  
   });
   
   listMarkers();
@@ -86,3 +85,32 @@ let config = {
     sidebar.innerHTML = '';
     listMarkers();
   });
+
+  L.DataDivIcon = L.DivIcon.extend({
+    createIcon: function (oldIcon) {
+      let divElement = L.DivIcon.prototype.createIcon.call(this, oldIcon);
+  
+      if (this.options.data) {
+        for (let key in this.options.data) {
+          divElement.dataset[key] = this.options.data[key];
+        }
+      }
+      return divElement;
+    },
+  });
+  
+  L.dataDivIcon = (options) => new L.DataDivIcon(options);
+
+  const myNewIcon = L.dataDivIcon({
+    className: "leaflet-data-marker",
+    html: '<svg viewBox="0 0 149 178"><path fill="red" stroke="#FFF" stroke-width="10" stroke-miterlimit="10" d="M126 23l-6-6A69 69 0 0 0 74 1a69 69 0 0 0-51 22A70 70 0 0 0 1 74c0 21 7 38 22 52l43 47c6 6 11 6 16 0l48-51c12-13 18-29 18-48 0-20-8-37-22-51z"/></svg>',
+    iconSize: [30, 20],
+    data: {
+      firstExample: "First example",
+      secondExample: "Second example",
+    },
+  });
+
+  L.marker([52.22983, 21.011728], { icon: myNewIcon })
+  .addTo(map)
+  .bindPopup("Center Warsaw");
