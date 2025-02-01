@@ -1,20 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Spotlas" company="HTL Leonding" webLink="http://" view-date="2024-12-23" view-index="0" gantt-divider-location="286" resource-divider-location="300" version="3.3.3312" locale="de_DE">
+<?xml version="1.0" encoding="UTF-8"?><project name="Spotlas" company="HTL Leonding" webLink="http://" view-date="2025-01-13" view-index="0" gantt-divider-location="286" resource-divider-location="300" version="3.3.3312" locale="de_AT">
     <description><![CDATA[Projekt]]></description>
     <view zooming-state="default:4" id="gantt-chart">
-        <field id="tpd3" name="Vorgang" width="135" order="0"/>
-        <field id="tpd4" name="Anfang" width="67" order="1"/>
-        <field id="tpd5" name="Ende" width="68" order="2"/>
-        <field id="tpd15" name="Notizen" width="20" order="3"/>
+        <field id="tpd3" name="Name" width="135" order="0"/>
+        <field id="tpd4" name="Begin date" width="67" order="1"/>
+        <field id="tpd5" name="End date" width="68" order="2"/>
+        <field id="tpd15" name="Notes" width="20" order="3"/>
         <option id="filter.completedTasks" value="false"/>
         <option id="filter.dueTodayTasks" value="false"/>
         <option id="filter.overdueTasks" value="false"/>
         <option id="filter.inProgressTodayTasks" value="false"/>
-        <timeline><![CDATA[2,1,16,12,15,0,14]]></timeline>
+        <timeline><![CDATA[12,2,16,1,15,14,0]]></timeline>
         <option id="color.recent"><![CDATA[#ccffcc #ccccff #ff3333 #ff0033 #ccff00 #ff0000 #ccffff #ff66ff]]></option>
     </view>
     <view id="resource-table">
-        <field id="0" name="Ressource" width="210" order="0"/>
-        <field id="1" name="Rolle" width="86" order="1"/>
+        <field id="0" name="Name" width="210" order="0"/>
+        <field id="1" name="Default role" width="86" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -40,7 +40,7 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
-        <task id="0" uid="7a066ddda1f84b82803ead74836f0668" name="Datenbank" color="#ccffff" meeting="false" start="2025-01-06" duration="40" complete="40" thirdDate="2025-01-06" thirdDate-constraint="1" priority="2" expand="true">
+        <task id="0" uid="7a066ddda1f84b82803ead74836f0668" name="Datenbank" color="#ccffff" meeting="false" start="2025-01-06" duration="40" complete="70" thirdDate="2025-01-06" thirdDate-constraint="1" priority="2" expand="true">
             <depend id="32" type="2" difference="0" hardness="Strong"/>
             <task id="1" uid="4ec156d0af314cf3bcdd893f1d8561ea" name="Anforderungsanalyse" color="#ccffff" meeting="false" start="2025-01-06" duration="1" complete="100" thirdDate="2025-01-06" thirdDate-constraint="1" expand="true">
                 <depend id="2" type="2" difference="0" hardness="Strong"/>
@@ -52,14 +52,14 @@
             <task id="3" uid="5f36d228c9d44bceb655d0a90004c971" name="Technologieauswahl" color="#ccffff" meeting="false" start="2025-01-19" duration="1" complete="100" thirdDate="2024-12-18" thirdDate-constraint="1" expand="true">
                 <depend id="11" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="4" uid="7dd21fffdd4549e1b474311e364cd22a" name="ER-Diagramm" color="#ccffff" meeting="false" start="2025-01-24" duration="2" complete="0" thirdDate="2025-01-24" thirdDate-constraint="1" expand="true"/>
-            <task id="5" uid="98db34457d6b434491daa1ddf3bd076a" name="DB Installation und Konfiguartion" color="#ccffff" meeting="false" start="2025-01-27" duration="7" complete="0" thirdDate="2025-01-27" thirdDate-constraint="1" expand="true">
+            <task id="4" uid="7dd21fffdd4549e1b474311e364cd22a" name="ER-Diagramm" color="#ccffff" meeting="false" start="2025-01-24" duration="2" complete="20" thirdDate="2025-01-24" thirdDate-constraint="1" expand="true"/>
+            <task id="5" uid="98db34457d6b434491daa1ddf3bd076a" name="DB Installation und Konfiguartion" color="#ccffff" meeting="false" start="2025-01-27" duration="7" complete="100" thirdDate="2025-01-27" thirdDate-constraint="1" expand="true">
                 <depend id="35" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="35" uid="8aaa515a66be49fcbc694f52aa1e2fcc" name="M_DB installation" color="#ff3333" meeting="true" start="2025-02-03" duration="0" complete="0" expand="true">
+            <task id="35" uid="8aaa515a66be49fcbc694f52aa1e2fcc" name="M_DB installation" color="#ff3333" meeting="true" start="2025-02-03" duration="0" complete="100" expand="true">
                 <depend id="6" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="6" uid="16a23f0a178d4b36a3c2d9009f0fbf7e" name="Tabellen erstellen" color="#ccffff" meeting="false" start="2025-02-04" duration="3" complete="0" thirdDate="2025-02-04" thirdDate-constraint="1" expand="true">
+            <task id="6" uid="16a23f0a178d4b36a3c2d9009f0fbf7e" name="Tabellen erstellen" color="#ccffff" meeting="false" start="2025-02-04" duration="3" complete="70" thirdDate="2025-02-04" thirdDate-constraint="1" expand="true">
                 <depend id="7" type="2" difference="0" hardness="Strong"/>
             </task>
             <task id="7" uid="810668348bb4466c9b0e6d6e5b3a995f" name="Datenvalidierung" color="#ccffff" meeting="false" start="2025-02-08" duration="1" complete="0" thirdDate="2025-02-08" thirdDate-constraint="1" expand="true">
