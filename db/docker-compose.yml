@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spotlas-php
+    volumes:
+      - ./htdocs:/var/www/html
+      - ./logs:/var/log/apache2  # Falls du Apache-Logs speichern willst
+    ports:
+      - "3080:80"
+    depends_on:
+      - mariadb
+    networks:
+      - spotlas_network
+    environment:
+      - MYSQL_HOST=mariadb
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+
+  mariadb:
+    image: mariadb:latest
+    container_name: spotlas-mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - spotlas_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 3
+      timeout: 5s
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: spotlas-phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: root
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3081:80"
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    networks:
+      - spotlas_network
+
+volumes:
+  mariadb_data:
+
+networks:
+  spotlas_network:

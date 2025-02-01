@@ -1,0 +1,30 @@
+# .gitignore für Docker und PHP-Projekte
+
+# Ignoriere Umgebungsdateien (sensible Daten)
+.env
+
+# Ignoriere Docker-Container und Volumes
+docker-compose.override.yml
+docker-compose.yml.backup
+*.log
+
+# Ignoriere phpMyAdmin-Daten
+phpmyadmin/
+
+# Ignoriere Volumes und Datenbankdaten
+mariadb_data/
+
+# Ignoriere lokale IDE- und Editor-Dateien
+.vscode/
+.idea/
+
+# Ignoriere Betriebssystem-spezifische Dateien
+.DS_Store
+Thumbs.db
+
+# Ignoriere Node.js-Module, falls du Node für andere Zwecke verwendest
+node_modules/
+
+# Ignoriere Build-Ordner oder temporäre Dateien
+build/
+tmp/

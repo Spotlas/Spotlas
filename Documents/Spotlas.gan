@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Spotlas" company="HTL Leonding" webLink="http://" view-date="2024-12-23" view-index="0" gantt-divider-location="286" resource-divider-location="300" version="3.3.3312" locale="de_DE">
+    <description><![CDATA[Projekt]]></description>
+    <view zooming-state="default:4" id="gantt-chart">
+        <field id="tpd3" name="Vorgang" width="135" order="0"/>
+        <field id="tpd4" name="Anfang" width="67" order="1"/>
+        <field id="tpd5" name="Ende" width="68" order="2"/>
+        <field id="tpd15" name="Notizen" width="20" order="3"/>
+        <option id="filter.completedTasks" value="false"/>
+        <option id="filter.dueTodayTasks" value="false"/>
+        <option id="filter.overdueTasks" value="false"/>
+        <option id="filter.inProgressTodayTasks" value="false"/>
+        <timeline><![CDATA[2,1,16,12,15,0,14]]></timeline>
+        <option id="color.recent"><![CDATA[#ccffcc #ccccff #ff3333 #ff0033 #ccff00 #ff0000 #ccffff #ff66ff]]></option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Ressource" width="210" order="0"/>
+        <field id="1" name="Rolle" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="0" mon="0" tue="0" wed="0" thu="0" fri="0" sat="0"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="0" uid="7a066ddda1f84b82803ead74836f0668" name="Datenbank" color="#ccffff" meeting="false" start="2025-01-06" duration="40" complete="40" thirdDate="2025-01-06" thirdDate-constraint="1" priority="2" expand="true">
+            <depend id="32" type="2" difference="0" hardness="Strong"/>
+            <task id="1" uid="4ec156d0af314cf3bcdd893f1d8561ea" name="Anforderungsanalyse" color="#ccffff" meeting="false" start="2025-01-06" duration="1" complete="100" thirdDate="2025-01-06" thirdDate-constraint="1" expand="true">
+                <depend id="2" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="2" uid="37f89630c2004008a58f7db3ea6df762" name="Datenmodellierung" color="#ccffff" meeting="false" start="2025-01-08" duration="11" complete="100" thirdDate="2025-01-08" thirdDate-constraint="1" expand="true">
+                <depend id="3" type="2" difference="0" hardness="Strong"/>
+                <depend id="4" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="3" uid="5f36d228c9d44bceb655d0a90004c971" name="Technologieauswahl" color="#ccffff" meeting="false" start="2025-01-19" duration="1" complete="100" thirdDate="2024-12-18" thirdDate-constraint="1" expand="true">
+                <depend id="11" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="4" uid="7dd21fffdd4549e1b474311e364cd22a" name="ER-Diagramm" color="#ccffff" meeting="false" start="2025-01-24" duration="2" complete="0" thirdDate="2025-01-24" thirdDate-constraint="1" expand="true"/>
+            <task id="5" uid="98db34457d6b434491daa1ddf3bd076a" name="DB Installation und Konfiguartion" color="#ccffff" meeting="false" start="2025-01-27" duration="7" complete="0" thirdDate="2025-01-27" thirdDate-constraint="1" expand="true">
+                <depend id="35" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="35" uid="8aaa515a66be49fcbc694f52aa1e2fcc" name="M_DB installation" color="#ff3333" meeting="true" start="2025-02-03" duration="0" complete="0" expand="true">
+                <depend id="6" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="6" uid="16a23f0a178d4b36a3c2d9009f0fbf7e" name="Tabellen erstellen" color="#ccffff" meeting="false" start="2025-02-04" duration="3" complete="0" thirdDate="2025-02-04" thirdDate-constraint="1" expand="true">
+                <depend id="7" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="7" uid="810668348bb4466c9b0e6d6e5b3a995f" name="Datenvalidierung" color="#ccffff" meeting="false" start="2025-02-08" duration="1" complete="0" thirdDate="2025-02-08" thirdDate-constraint="1" expand="true">
+                <depend id="8" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="8" uid="2436781aadd04c949815aa304baf2cc6" name="API-Verbindung" color="#ccffff" meeting="false" start="2025-02-09" duration="3" complete="0" thirdDate="2025-02-09" thirdDate-constraint="1" expand="true">
+                <depend id="9" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="9" uid="7b04ee7e050f4d2fb1cc45b141c3eb8e" name="DB Testen" color="#ccffff" meeting="false" start="2025-02-12" duration="3" complete="0" thirdDate="2025-01-12" thirdDate-constraint="1" expand="true">
+                <depend id="12" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="12" uid="8dfb2e0899334a4cb51b92954802c798" name="M_DB fertig" color="#ff0033" meeting="true" start="2025-02-15" duration="0" complete="0" thirdDate="2025-02-14" thirdDate-constraint="1" expand="true">
+                <depend id="13" type="2" difference="0" hardness="Strong"/>
+            </task>
+        </task>
+        <task id="10" uid="d42849205b8b468d9e0f42ef38f4603a" name="Server" color="#ccffcc" meeting="false" start="2025-01-25" duration="66" complete="0" expand="true">
+            <depend id="32" type="2" difference="0" hardness="Strong"/>
+            <task id="11" uid="44333433f85a429bb730c0309c30557f" name="Recherche zur Verbindung von DB und Server" color="#ccffcc" meeting="false" start="2025-01-25" duration="1" complete="0" thirdDate="2025-01-25" thirdDate-constraint="1" expand="true">
+                <depend id="13" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="13" uid="4b57a8feb1844aec934822cc89d235ee" name="Verbindung DB und PHP" color="#ccffcc" meeting="false" start="2025-02-15" duration="5" complete="0" thirdDate="2025-02-15" thirdDate-constraint="1" expand="true">
+                <depend id="14" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="14" uid="6b1e48e55e704104af6a4ea8c3894469" name="Fetches aufs PHP mit JS" color="#ccffcc" meeting="false" start="2025-02-20" duration="3" complete="0" thirdDate="2025-02-08" thirdDate-constraint="1" expand="true">
+                <depend id="15" type="2" difference="0" hardness="Strong"/>
+                <depend id="19" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="19" uid="6851fa6055304ff28c9ba157bca8c9d6" name="M_Verbindung Server DB" color="#ff3333" meeting="true" start="2025-02-23" duration="0" complete="0" expand="true"/>
+            <task id="15" uid="d2cfae79e6194e44b53c19b6efc9b157" name="Ausgabe aufs Frontend" color="#ccffcc" meeting="false" start="2025-02-23" duration="1" complete="0" thirdDate="2025-01-15" thirdDate-constraint="1" expand="true">
+                <depend id="16" type="2" difference="0" hardness="Strong"/>
+                <depend id="30" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="16" uid="11efebaf1cee4af0ba3eacb8afd3b25b" name="Datensicherheit" color="#ccffcc" meeting="false" start="2025-02-28" duration="3" complete="0" thirdDate="2025-02-28" thirdDate-constraint="1" expand="true">
+                <depend id="17" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="17" uid="0099c1d96de24ddf8df316a8c12cdc72" name="Bilderupload" color="#ccffcc" meeting="false" start="2025-03-08" duration="9" complete="0" thirdDate="2025-03-08" thirdDate-constraint="1" expand="true">
+                <depend id="18" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="18" uid="dec1d78600b240028a14e11666d922fc" name="Fehlerbehandlung und Validierung" color="#ccffcc" meeting="false" start="2025-03-17" duration="15" complete="0" thirdDate="2025-03-16" thirdDate-constraint="1" expand="true">
+                <depend id="20" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="20" uid="eaeb0c1c69f34a6682fa3e210abde93b" name="M_Server fertiggestellt" color="#ff0000" meeting="true" start="2025-04-01" duration="0" complete="0" expand="true"/>
+        </task>
+        <task id="21" uid="56fd6143e0874702b8aa7417642bad6a" name="Frontend" color="#ccccff" meeting="false" start="2024-12-01" duration="140" complete="38" expand="true">
+            <depend id="32" type="2" difference="0" hardness="Strong"/>
+            <task id="22" uid="71a08a834bb64771bbe3d61ee583bab7" name="Moodboard" color="#ccccff" meeting="false" start="2024-12-01" duration="7" complete="100" thirdDate="2024-12-01" thirdDate-constraint="1" expand="true">
+                <depend id="23" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="23" uid="5e3ebc365f3046eea3de26f37d646cb2" name="Figma Prototype" color="#ccccff" meeting="false" start="2024-12-17" duration="40" complete="100" thirdDate="2024-12-17" thirdDate-constraint="1" expand="true"/>
+            <task id="24" uid="d963e4fddbe947be90508a6d6fa76d87" name="Libary Auseinandersetzung" color="#ccccff" meeting="false" start="2025-01-21" duration="6" complete="30" thirdDate="2025-01-21" thirdDate-constraint="1" expand="true">
+                <depend id="25" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="25" uid="e15c5296479d4c4c9da72970950812e1" name="HTML Grundstruktur" color="#ccccff" meeting="false" start="2025-01-31" duration="10" complete="0" thirdDate="2025-01-31" thirdDate-constraint="1" expand="true">
+                <depend id="26" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="26" uid="b2218a905c744375bac82f38f4a65bff" name="Karte einbinden" color="#ccccff" meeting="false" start="2025-02-14" duration="10" complete="0" thirdDate="2025-02-14" thirdDate-constraint="1" expand="true">
+                <depend id="27" type="2" difference="0" hardness="Strong"/>
+                <depend id="33" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="33" uid="d1b62f8f606d446784f330a05a30af88" name="M_HTML + Karte" color="#ff0033" meeting="true" start="2025-02-24" duration="0" complete="0" expand="true"/>
+            <task id="27" uid="f10dcda1cb0140b186fc9f6c2efdb0c1" name="Basic CSS" color="#ccccff" meeting="false" start="2025-02-24" duration="7" complete="0" thirdDate="2025-02-24" thirdDate-constraint="1" expand="true">
+                <depend id="28" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="28" uid="668d3c4401e942dcbe9983da3f3e992d" name="Detailiertes CSS" color="#ccccff" meeting="false" start="2025-03-03" duration="14" complete="0" thirdDate="2025-03-03" thirdDate-constraint="1" expand="true">
+                <depend id="29" type="2" difference="0" hardness="Strong"/>
+                <depend id="34" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="34" uid="f99b1cd2f6c04c5bb46fb10dec06dee8" name="M_CSS fertig" color="#ff3333" meeting="true" start="2025-03-17" duration="0" complete="0" expand="true"/>
+            <task id="29" uid="e85962ceebe04c8abdf4c9846673fcb4" name="Interaktive Elemente" color="#ccccff" meeting="false" start="2025-03-17" duration="7" complete="0" thirdDate="2025-03-17" thirdDate-constraint="1" expand="true">
+                <depend id="30" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="30" uid="505f68ba9bb14be0a202fd063c40d702" name="Dynamische Contentgenerierung" color="#ccccff" meeting="false" start="2025-03-24" duration="7" complete="0" thirdDate="2025-03-24" thirdDate-constraint="1" expand="true">
+                <depend id="31" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="31" uid="483e33758694476d9085943f2d66f5bd" name="Responsive" color="#ccccff" meeting="false" start="2025-03-31" duration="20" complete="0" thirdDate="2025-03-31" thirdDate-constraint="1" expand="true">
+                <depend id="36" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="36" uid="34772a4882924cfab71a1f16507475fe" name="M_Frontend fertig" color="#ff3333" meeting="true" start="2025-04-20" duration="0" complete="0" expand="true"/>
+        </task>
+        <task id="32" uid="fea6f5f137244d1ea93eab392537677f" name="Verbesserungsphase" color="#ccff00" meeting="false" start="2025-04-20" duration="40" complete="0" thirdDate="2025-04-20" thirdDate-constraint="1" expand="true"/>
+    </tasks>
+    <resources>
+        <resource id="3" name="Erik Bergmair" function="Default:1" contacts="bergi.rik@gmail.com" phone=""/>
+        <resource id="4" name="Viktoria Vejmelek" function="SoftwareDevelopment:5" contacts="viktoria.vejmelek@gmail.com" phone=""/>
+        <resource id="5" name="Julian Richter" function="SoftwareDevelopment:2" contacts="" phone=""/>
+        <resource id="6" name="Anna Reder" function="SoftwareDevelopment:5" contacts="" phone=""/>
+    </resources>
+    <allocations>
+        <allocation task-id="1" resource-id="3" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="0" resource-id="3" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="2" resource-id="3" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="3" resource-id="3" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="4" resource-id="3" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="5" resource-id="3" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="6" resource-id="3" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="7" resource-id="3" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="8" resource-id="3" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="9" resource-id="3" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="12" resource-id="3" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="19" resource-id="3" function="Default:1" responsible="false" load="100.0"/>
+        <allocation task-id="32" resource-id="3" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="35" resource-id="3" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="22" resource-id="4" function="SoftwareDevelopment:5" responsible="true" load="100.0"/>
+        <allocation task-id="23" resource-id="4" function="SoftwareDevelopment:5" responsible="true" load="100.0"/>
+        <allocation task-id="24" resource-id="4" function="SoftwareDevelopment:5" responsible="true" load="100.0"/>
+        <allocation task-id="25" resource-id="4" function="SoftwareDevelopment:5" responsible="true" load="100.0"/>
+        <allocation task-id="26" resource-id="4" function="SoftwareDevelopment:5" responsible="true" load="100.0"/>
+        <allocation task-id="27" resource-id="4" function="SoftwareDevelopment:5" responsible="true" load="100.0"/>
+        <allocation task-id="28" resource-id="4" function="SoftwareDevelopment:5" responsible="true" load="100.0"/>
+        <allocation task-id="29" resource-id="4" function="SoftwareDevelopment:5" responsible="true" load="100.0"/>
+        <allocation task-id="30" resource-id="4" function="SoftwareDevelopment:5" responsible="true" load="100.0"/>
+        <allocation task-id="31" resource-id="4" function="SoftwareDevelopment:5" responsible="true" load="100.0"/>
+        <allocation task-id="32" resource-id="4" function="SoftwareDevelopment:5" responsible="false" load="100.0"/>
+        <allocation task-id="33" resource-id="4" function="SoftwareDevelopment:5" responsible="true" load="100.0"/>
+        <allocation task-id="34" resource-id="4" function="SoftwareDevelopment:5" responsible="true" load="100.0"/>
+        <allocation task-id="36" resource-id="4" function="SoftwareDevelopment:5" responsible="true" load="100.0"/>
+        <allocation task-id="11" resource-id="5" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="13" resource-id="5" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="14" resource-id="5" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="15" resource-id="5" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="16" resource-id="5" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="17" resource-id="5" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="18" resource-id="5" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="19" resource-id="5" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="20" resource-id="5" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="32" resource-id="5" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
+        <allocation task-id="22" resource-id="6" function="SoftwareDevelopment:5" responsible="false" load="100.0"/>
+        <allocation task-id="23" resource-id="6" function="SoftwareDevelopment:5" responsible="false" load="100.0"/>
+        <allocation task-id="24" resource-id="6" function="SoftwareDevelopment:5" responsible="false" load="100.0"/>
+        <allocation task-id="25" resource-id="6" function="SoftwareDevelopment:5" responsible="false" load="100.0"/>
+        <allocation task-id="26" resource-id="6" function="SoftwareDevelopment:5" responsible="false" load="100.0"/>
+        <allocation task-id="27" resource-id="6" function="SoftwareDevelopment:5" responsible="false" load="100.0"/>
+        <allocation task-id="28" resource-id="6" function="SoftwareDevelopment:5" responsible="false" load="100.0"/>
+        <allocation task-id="29" resource-id="6" function="SoftwareDevelopment:5" responsible="false" load="100.0"/>
+        <allocation task-id="30" resource-id="6" function="SoftwareDevelopment:5" responsible="false" load="100.0"/>
+        <allocation task-id="31" resource-id="6" function="SoftwareDevelopment:5" responsible="false" load="100.0"/>
+        <allocation task-id="32" resource-id="6" function="SoftwareDevelopment:5" responsible="false" load="100.0"/>
+        <allocation task-id="33" resource-id="6" function="SoftwareDevelopment:5" responsible="false" load="100.0"/>
+        <allocation task-id="34" resource-id="6" function="SoftwareDevelopment:5" responsible="false" load="100.0"/>
+        <allocation task-id="36" resource-id="6" function="SoftwareDevelopment:5" responsible="false" load="100.0"/>
+    </allocations>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+</project>

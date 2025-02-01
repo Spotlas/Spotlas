@@ -1,0 +1,268 @@
+
+-- location
+CREATE TABLE Locations (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    category_id INT,
+    latitude DOUBLE NOT NULL,
+    longitude DOUBLE NOT NULL,
+    address VARCHAR(255),
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    status_id INT,  -- Fremdschlüssel zu Status
+    price_range VARCHAR(255),
+    -- rating INT DEFAULT 0 CHECK(rating >= 0 AND rating <= 5),
+    -- review_count INT DEFAULT 0,
+    -- comment_count INT DEFAULT 0,
+    opening_hours VARCHAR(255),
+    season VARCHAR(255),
+    accessibility BOOLEAN DEFAULT FALSE,
+    view_count INT DEFAULT 0,
+    favorite_count INT DEFAULT 0,
+    website_url VARCHAR(255),
+    special_features TEXT,
+    created_by INT,
+    FOREIGN KEY (category_id) REFERENCES Categories(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (created_by) REFERENCES Users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (status_id) REFERENCES Statuses(id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- categories
+CREATE TABLE Categories (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    description TEXT,
+    status_id INT,  -- Fremdschlüssel zu Status
+    FOREIGN KEY (status_id) REFERENCES Statuses(id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- Images
+CREATE TABLE Images (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    location_id INT NOT NULL,
+    image_url VARCHAR(512) NOT NULL,
+    description TEXT,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status_id INT,  -- Fremdschlüssel zu Status
+    FOREIGN KEY (location_id) REFERENCES Locations(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (status_id) REFERENCES Statuses(id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+
+-- Comments
+CREATE TABLE Comments (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    location_id INT NOT NULL,
+    user_id INT NOT NULL,
+    comment_text TEXT,
+    version INT DEFAULT 1,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    status_id INT,  -- Fremdschlüssel zu Status
+    FOREIGN KEY (location_id) REFERENCES Locations(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (status_id) REFERENCES Statuses(id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- Users
+CREATE TABLE Users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    full_name VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_login TIMESTAMP NULL,
+    last_active TIMESTAMP NULL,
+    status_id INT,  -- Fremdschlüssel zu Status
+    birth_date DATE,
+    profile_picture_url VARCHAR(255),
+    phone_number VARCHAR(20),
+    last_password_change TIMESTAMP NULL,
+    role ENUM('user', 'admin', 'moderator') DEFAULT 'user',
+    is_verified BOOLEAN DEFAULT FALSE,
+    preferences JSON,
+    is_blocked BOOLEAN DEFAULT FALSE,
+    description TEXT,
+    FOREIGN KEY (status_id) REFERENCES Statuses(id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+
+-- Raitings
+CREATE TABLE Ratings (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    location_id INT NOT NULL,
+    user_id INT NOT NULL,
+    rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(location_id, user_id),  -- Verhindert doppelte Bewertungen
+    FOREIGN KEY (location_id) REFERENCES Locations(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+-- Favorites
+CREATE TABLE Favorites (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    location_id INT NOT NULL,
+    user_id INT NOT NULL,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(location_id, user_id),  -- Verhindert doppelte Favoriten
+    FOREIGN KEY (location_id) REFERENCES Locations(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+-- Location to Categories
+CREATE TABLE LocationCategories (
+    location_id INT NOT NULL,  -- Fremdschlüssel, der zum Ort verweist
+    category_id INT NOT NULL,  -- Fremdschlüssel, der zur Kategorie verweist
+    PRIMARY KEY (location_id, category_id),  -- Kombination aus Ort und Kategorie als Primärschlüssel
+    FOREIGN KEY (location_id) REFERENCES Locations(id) ON DELETE CASCADE ON UPDATE CASCADE,  -- Verknüpfung zum Ort
+    FOREIGN KEY (category_id) REFERENCES Categories(id) ON DELETE CASCADE ON UPDATE CASCADE  -- Verknüpfung zur Kategorie
+);
+
+
+-- Statuses
+CREATE TABLE Statuses (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) UNIQUE NOT NULL
+);
+
+
+
+
+
+--
+--
+-- Correct Order
+--
+--
+
+-- Statuses
+CREATE TABLE Statuses (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) UNIQUE NOT NULL
+);
+
+-- Categories
+CREATE TABLE Categories (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    description TEXT,
+    status_id INT,  -- Fremdschlüssel zu Status
+    FOREIGN KEY (status_id) REFERENCES Statuses(id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- Users
+CREATE TABLE Users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    full_name VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_login TIMESTAMP NULL,
+    last_active TIMESTAMP NULL,
+    status_id INT,  -- Fremdschlüssel zu Status
+    birth_date DATE,
+    profile_picture_url VARCHAR(255),
+    phone_number VARCHAR(20),
+    last_password_change TIMESTAMP NULL,
+    role ENUM('user', 'admin', 'moderator') DEFAULT 'user',
+    is_verified BOOLEAN DEFAULT FALSE,
+    preferences JSON,
+    is_blocked BOOLEAN DEFAULT FALSE,
+    description TEXT,
+    FOREIGN KEY (status_id) REFERENCES Statuses(id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- Locations
+CREATE TABLE Locations (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    category_id INT,
+    latitude DECIMAL(9,6) NOT NULL,
+    longitude DECIMAL(9,6) NOT NULL,
+    address VARCHAR(255),
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    status_id INT,  -- Fremdschlüssel zu Status
+    price_range VARCHAR(255),
+    -- rating INT DEFAULT 0 CHECK(rating >= 0 AND rating <= 5),
+    -- review_count INT DEFAULT 0,
+    -- comment_count INT DEFAULT 0,
+    opening_hours VARCHAR(255),
+    season VARCHAR(255),
+    accessibility BOOLEAN DEFAULT FALSE,
+    view_count INT DEFAULT 0,
+    favorite_count INT DEFAULT 0,
+    website_url VARCHAR(255),
+    special_features TEXT,
+    created_by INT,
+    FOREIGN KEY (category_id) REFERENCES Categories(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (created_by) REFERENCES Users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (status_id) REFERENCES Statuses(id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- Location to Categories
+CREATE TABLE LocationCategories (
+    location_id INT NOT NULL,  -- Fremdschlüssel, der zum Ort verweist
+    category_id INT NOT NULL,  -- Fremdschlüssel, der zur Kategorie verweist
+    PRIMARY KEY (location_id, category_id),  -- Kombination aus Ort und Kategorie als Primärschlüssel
+    FOREIGN KEY (location_id) REFERENCES Locations(id) ON DELETE CASCADE ON UPDATE CASCADE,  -- Verknüpfung zum Ort
+    FOREIGN KEY (category_id) REFERENCES Categories(id) ON DELETE CASCADE ON UPDATE CASCADE  -- Verknüpfung zur Kategorie
+);
+
+-- Images
+CREATE TABLE Images (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    location_id INT NOT NULL,
+    image_url VARCHAR(512) NOT NULL,
+    description TEXT,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status_id INT,  -- Fremdschlüssel zu Status
+    FOREIGN KEY (location_id) REFERENCES Locations(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (status_id) REFERENCES Statuses(id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- Comments
+CREATE TABLE Comments (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    location_id INT NOT NULL,
+    user_id INT NOT NULL,
+    comment_text TEXT,
+    version INT DEFAULT 1,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    status_id INT,  -- Fremdschlüssel zu Status
+    FOREIGN KEY (location_id) REFERENCES Locations(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (status_id) REFERENCES Statuses(id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- Ratings
+CREATE TABLE Ratings (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    location_id INT NOT NULL,
+    user_id INT NOT NULL,
+    rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(location_id, user_id),  -- Verhindert doppelte Bewertungen
+    FOREIGN KEY (location_id) REFERENCES Locations(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Favorites
+CREATE TABLE Favorites (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    location_id INT NOT NULL,
+    user_id INT NOT NULL,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(location_id, user_id),  -- Verhindert doppelte Favoriten
+    FOREIGN KEY (location_id) REFERENCES Locations(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
