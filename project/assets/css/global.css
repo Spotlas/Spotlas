@@ -18,13 +18,14 @@ body {
     --white-color: hsl(0, 0%, 100%); /*#white*/
    
     /* Background Colors */
-    --primary-bg-color: hsl(0, 0%, 7%); /*#111111*/
+    --primary-bg-color: hsl(72, 24%, 96%); /*#111111*/
     --secondary-bg-color: hsl(0, 0%, 14%); /*#232323*/
     --accent-bg-color: hsl(0, 0%, 17%); /*#2C2C2C*/
 
     --bg-color-sidebar: hsla(0, 0%, 100%, 0.8); /*#white*/
     --bg-color-header: #E9E9E1;
     --bg-color-footer: #E9E9E1;
+    --bg-color-white: #ffffff;
 
     /* Primary, Secondary, Accent colors */
     --primary-color: hsl(243, 98%, 66%); /*#2f27ce*/

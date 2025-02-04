@@ -5,6 +5,12 @@ body{
    font-family: var(--font-family);
    scroll-behavior: smooth;
    overflow-y: hidden;
+   background-color: var(--primary-bg-color);
+}
+
+h1, h2, h3, h4, h5, h6{
+    padding: 0;
+    margin: 0;
 }
 
 /* *********************************** Homepage Header ********+*********************+ */
@@ -53,6 +59,72 @@ body{
 
     /* Fixiert auf der Stelle, unabhängig von der Bildschirmgröße */
     transform: translate(0, 0);
+}
+
+/* ***************************************** Filter ************************************ */
+#homepage_section_filter{
+    position: absolute;
+    z-index: 11;
+    display: flex;
+    gap: 2vw;
+    top: 7vh;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    width: 100%;
+    max-width: 90vw;
+    overflow-x: scroll; /* Enable horizontal scrolling */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+    white-space: nowrap;
+    padding: 1vw;
+}
+
+#homepage_section_filter::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+}
+
+#homepage_filters{
+    display: flex;
+    gap: 1vw;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    
+}
+
+.homepage_filter{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5vw;
+    min-width: 70px;
+    min-height: 4vh;
+    padding: 0.25vw 0.5vw;
+    margin: 0;
+    background-color: var(--bg-color-white);
+    border-radius: var(--border-radius-xl);
+
+    transition: all ease-in-out 200ms;
+}
+
+.homepage_filter:hover{
+    cursor: pointer;
+    transform: translateY(-3px);
+}
+
+.homepage_filter img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#homepage_filter_search input{
+    padding: 0.7vw 1.2vw;
+    border-radius: var(--border-radius-m);
+    background-color: var(--bg-color-white);
+    border: none;
 }
 
 
