@@ -10,18 +10,21 @@ body {
 
 :root {
     /* Header */
-    --height_header : 80px;
-    --header_backGroundColor: #E9E9E1;
+    --height-header : 80px;
+    
 
     /* Blacks and Whites */
     --black-color: hsl(0, 0%, 0%); /*#black*/
     --white-color: hsl(0, 0%, 100%); /*#white*/
-    --white-color-70P: hsla(0, 0%, 100%, 0.713); /*#white*/
-
+   
     /* Background Colors */
     --primary-bg-color: hsl(0, 0%, 7%); /*#111111*/
     --secondary-bg-color: hsl(0, 0%, 14%); /*#232323*/
     --accent-bg-color: hsl(0, 0%, 17%); /*#2C2C2C*/
+
+    --bg-color-sidebar: hsla(0, 0%, 100%, 0.8); /*#white*/
+    --bg-color-header: #E9E9E1;
+    --bg-color-footer: #E9E9E1;
 
     /* Primary, Secondary, Accent colors */
     --primary-color: hsl(243, 98%, 66%); /*#2f27ce*/
@@ -81,5 +84,9 @@ body {
     --border-radius-s: 4px;
     --border-radius-m : 8px;
     --border-radius-l: 12px;
-    --border-radius-xl: 16px
+    --border-radius-xl: 16px;
+
+    /* Footer */
+    --height-footer: 200px;
+    
 }
