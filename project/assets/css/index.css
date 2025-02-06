@@ -21,6 +21,8 @@ h1, h2, h3, h4, h5, h6{
     grid-template-columns: 50% 50%;
     background-color: var(--bg-color-header);
     padding: 0 1vw 0 1vw;
+    height: 80px;
+    align-items: center;
 }
 
 #homepage_header_spotlas{
@@ -46,9 +48,9 @@ h1, h2, h3, h4, h5, h6{
 /* ************************************* Sidebar ********************************************** */
 
 #homepage_karte_sidebar {
-    position: absolute;
-    top: 17vh;  /* Abstand von oben */
-    left: 1vw;  /* Abstand von links */
+    position: fixed;
+    top: 50%;
+    left: 1vw;
     width: 20vw;
     min-width: 300px;
     height: 50vh;
@@ -56,9 +58,7 @@ h1, h2, h3, h4, h5, h6{
     border-radius: var(--border-radius-m);
     padding: var(--padding-m);
     z-index: 10;
-
-    /* Fixiert auf der Stelle, unabhängig von der Bildschirmgröße */
-    transform: translate(0, 0);
+    transform: translateY(-50%);
 }
 
 /* ***************************************** Filter ************************************ */
@@ -125,6 +125,10 @@ h1, h2, h3, h4, h5, h6{
     border-radius: var(--border-radius-m);
     background-color: var(--bg-color-white);
     border: none;
+}
+
+.homepage_filter h3{
+
 }
 
 
