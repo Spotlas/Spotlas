@@ -59,6 +59,8 @@ h1, h2, h3, h4, h5, h6{
     padding: var(--padding-m);
     z-index: 10;
     transform: translateY(-50%);
+
+    box-shadow: 2px 2px 19px -6px rgba(0,0,0,0.74);
 }
 
 /* ***************************************** Filter ************************************ */
@@ -100,11 +102,12 @@ h1, h2, h3, h4, h5, h6{
     justify-content: center;
     gap: 0.5vw;
     min-width: 70px;
-    min-height: 4vh;
-    padding: 0.25vw 0.5vw;
+    height: 1.5vh;
+    padding: 0.7vw 1.2vw;
     margin: 0;
     background-color: var(--bg-color-white);
     border-radius: var(--border-radius-xl);
+    box-shadow: 2px 2px 19px -6px rgba(0,0,0,0.74);
 
     transition: all ease-in-out 200ms;
 }
@@ -125,10 +128,13 @@ h1, h2, h3, h4, h5, h6{
     border-radius: var(--border-radius-m);
     background-color: var(--bg-color-white);
     border: none;
+    box-shadow: 2px 2px 19px -6px rgba(0,0,0,0.74);
+    height: 1.5vh;
 }
 
-.homepage_filter h3{
-
+.homepage_filter h2{
+    font-size: var(--font-size-xs);
+    color: var(--black-color);
 }
 
 
