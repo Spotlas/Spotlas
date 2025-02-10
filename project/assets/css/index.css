@@ -25,9 +25,10 @@ h1, h2, h3, h4, h5, h6{
     align-items: center;
 }
 
-#homepage_header_spotlas{
+#homepage_header_spotlas a{
     text-align: left;
     color: var(--black-color);
+    text-decoration: none;
 }
 
 #homepage_header_ImageItems{
