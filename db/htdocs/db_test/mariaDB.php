@@ -16,4 +16,27 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 echo "Connected successfully";  // Optional, um zu testen, ob die Verbindung funktioniert
+
+// API-ROuten
+/*
+
+STARTSEITE:
+Location suche per id
+location suche per suche (name)
+loation suche per kategorie
+alle damit man sie auf der karte sieht
+profilbild
+
+HOCHLADEN:
+insert post route zum hinzufügen
+
+PROFIL:
+alle profilinfos quasi und alle orte vom nutzer
+
+UNTERSEITE:
+location genauer angeschaut mit infos und kommentaren und bildern
+bewertung
+favouriten
+
+*/
 ?>
