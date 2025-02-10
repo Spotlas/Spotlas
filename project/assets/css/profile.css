@@ -38,38 +38,26 @@ h1, h2, h3, h4, h5, h6{
     gap: 1vw;
 }
 
-/* *************************************** Add ************************************************** */
+/* *************************************** Profile ************************************************** */
 
-#add_info_backButton{
+
+#profile_info_backButton{
     display: flex;
     margin: 1.3vw 92vw 0 1.3vw;
 
     transition: all ease-in-out 200ms;
 }
 
-#add_info_backButton:hover{
+#profile_info_backButton:hover{
     cursor: pointer;
     transform: translateY(-5px);
 }
 
-#add_info_backButton img{
+#profile_info_backButton img{
     width: 40px;
     transform: rotate(90deg);
 }
-#add_info_backButton a{
+#profile_info_backButton a{
     text-decoration: none;
     color: var(--black-color);
-}
-
-/***************************************** Footer ************************************************** / */
-
-#homepage_footer{
-    clip-path: polygon(100% calc(100% - 100px), 0 100%, 100% 100%);
-    height: var(--height-footer); 
-    width: 100%;
-    background-color: var(--bg-color-footer);
-    position: fixed;
-    bottom: 0;
-    z-index: 8;
-    padding-bottom: 40px; 
 }
