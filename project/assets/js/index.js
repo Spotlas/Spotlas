@@ -117,3 +117,23 @@ L.Control.geocoder({
   defaultMarkGeocode: false,
   geocoder: L.Control.Geocoder.nominatim({ language: 'en' })
 }).addTo(map);
+
+/* Methoden ***************************************************** */
+
+function showDropdown() {
+  const dropdown = document.getElementById('dropDown_menu');
+  dropdown.classList.toggle('show');
+
+  // Schließen, wenn außerhalb geklickt wird
+  document.addEventListener('click', function closeDropdown(e) {
+      if (!dropdown.contains(e.target) && e.target.id !== 'toggleImg') {
+          dropdown.classList.remove('show');
+          document.removeEventListener('click', closeDropdown);
+      }
+  });
+}
+
+document.getElementById('toggleImg').addEventListener('click', function (e) {
+  e.stopPropagation();
+  showDropdown();
+});

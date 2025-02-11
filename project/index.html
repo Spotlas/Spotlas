@@ -44,10 +44,16 @@
                 <a href="./pages/add_place/add.html"><img src="./assets/images/icons/add_icon.svg" alt="add" width="40px" height="40px"></a>
             </div>
             <div>
-                <a href="./pages/"><img src="./assets/images/icons/profile_icon.svg" alt="profile" width="40px" height="40px"></a>
+                <a href="./pages/profile/profile.html"><img src="./assets/images/icons/profile_icon.svg" alt="profile" width="40px" height="40px"></a>
             </div>
             <div>
-                <a href=""><img src="./assets/images/icons/arrow_icon.svg" alt="options" width="40px" height="40px"></a>
+                <img onclick="showDropdown()" src="./assets/images/icons/arrow_icon.svg" alt="options" width="40px" height="40px">
+                <div style="display: none; z-index: 12;" id="dropDown_menu">
+                    <a href="./pages/settings/settings.html">Einstellungen</a>
+                    <a href="./pages/profile/profile.html">Profil</a>
+                    <a href="">Help Center</a>
+                    <a href="./pages/login_register/login.html">Abmelden</a>
+                </div>
             </div>
         </div>
     </header>
