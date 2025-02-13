@@ -15,5 +15,14 @@ $conn = new mysqli($servername, $username, $password, $dbname, $port);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-echo "Connected successfully";  // Optional, um zu testen, ob die Verbindung funktioniert
+
+//*************************************************************************************** */
+echo "Connected successfully";  
+// !! NUR ZUM PROBIEREN OB DIE VERBINDUNG FUNKTIONIERT !! 
+// WENN MAN ARBEITET MIT API (JS, PHP) AUSKOMMENTIEREN SONST KOMMT ES ZU FEHLERN. 
+// ZU 100% WENN MAN MIT JS AUF PHP FETCHT. 
+// ZUM API ROUTEN SCHREIBEN UND TESTEN SOLLTE ES GEHEN.
+//*************************************************************************************** */
+
+
 ?>

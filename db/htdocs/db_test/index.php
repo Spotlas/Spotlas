@@ -15,6 +15,29 @@
     // Mariadb DATABASE
     require 'mariadb.php';
 
+    // ****************************************   //
+    // API ROUTEN TESTEN AM BESTEN MIT POSTMAN   //
+    // **************************************** //
+
+    
+    // test route
+    $sql = "SELECT * FROM Users";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // output data of each row
+        while($row = $result->fetch_assoc()) {
+            echo "<div class='card'>";
+            echo "<h2>" . $row["full_name"] . "</h2>";
+            echo "<p>" . $row["email"] . "</p>";
+            echo "<p>" . $row["phone_number"] . "</p>";
+            echo "</div>";
+        }
+    } else {
+        echo "0 results";
+    }
+    
+
     ?>
 </body>
 </html>
