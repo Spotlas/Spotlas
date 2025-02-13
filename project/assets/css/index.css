@@ -25,9 +25,10 @@ h1, h2, h3, h4, h5, h6{
     align-items: center;
 }
 
-#homepage_header_spotlas{
+#homepage_header_spotlas a{
     text-align: left;
     color: var(--black-color);
+    text-decoration: none;
 }
 
 #homepage_header_ImageItems{
@@ -35,6 +36,25 @@ h1, h2, h3, h4, h5, h6{
     justify-content: flex-end;
     align-items: center;
     gap: 1vw;
+}
+
+/* Drop Down Settings usw. */
+
+#dropDown_menu{
+    display: grid;
+    grid-template-columns: 100%;
+    position: absolute;
+    top: 80px;
+    right: 0;
+    background-color: var(--bg-color-sidebar);
+    border-radius: var(--border-radius-m);
+    padding: var(--padding-m);
+    z-index: 10;
+    box-shadow: 2px 2px 19px -6px rgba(0,0,0,0.74);
+}
+
+.show{
+    display: block !important;
 }
 
 /* *************************************** Map ******************************* */
@@ -130,6 +150,10 @@ h1, h2, h3, h4, h5, h6{
     border: none;
     box-shadow: 2px 2px 19px -6px rgba(0,0,0,0.74);
     height: 1.5vh;
+}
+
+#homepage_filter_search input:focus{
+    outline: none;
 }
 
 .homepage_filter h2{
