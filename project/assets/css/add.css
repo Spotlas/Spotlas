@@ -43,9 +43,6 @@ h1, h2, h3, h4, h5, h6{
 main{
     display: grid;
     grid-template-columns: 20% 80%;
-
-    grid-template-rows: 90% 10%;
-
     gap: 1vw;
     padding: 1vw;
 
@@ -120,15 +117,25 @@ main{
 }
 
 /* Section 2 */
+#add_section2{
+    display: grid;
+    grid-template-rows: 90% 10%;
 
+    max-height: 68vh;
+}
+
+/* back Continue buttons */
 #add_buttons_bC{
-    position: absolute;;
-    right: 0;
-    margin-top: 30vw;
+    display: flex;
+    justify-content: flex-end;
+
+    grid-row: 2;
+
 }
 
 #add_buttons_bC button{
-    padding: 0.5vw 1vw;
+    padding: var(--padding-s) var(--padding-m);
+    /* padding: 0.5vw 1vw; */
     margin-right: 1vw;
     border-radius: 8px;
     background-color: var(--primary-color);
@@ -138,6 +145,7 @@ main{
     font-size: var(--font-size-s);
 }
 
+/* Input fields */
 #add_name_description{
     display: grid;
     grid-template-columns: 1fr;
