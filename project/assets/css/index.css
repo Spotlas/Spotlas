@@ -65,6 +65,39 @@ h1, h2, h3, h4, h5, h6{
     z-index: 5;
 }
 
+@keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
+  
+  @keyframes border-pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgb(255, 0, 0);
+    }
+  
+    70% {
+      box-shadow: 0 0 0 20px rgba(255, 0, 0, 0);
+    }
+  
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+    }
+  }
+  
+  .animation {
+    border-radius: 50%;
+    animation: border-pulse 1.5s infinite;
+  }
+  
+  .animation svg {
+    animation: rotation 2s infinite linear;
+    fill: red;
+  }
+
 /* ************************************* Sidebar ********************************************** */
 
 #homepage_karte_sidebar {

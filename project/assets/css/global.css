@@ -28,7 +28,7 @@ body {
     --bg-color-white: #ffffff;
 
     /* Primary, Secondary, Accent colors */
-    --primary-color: hsl(243, 98%, 66%); /*#2f27ce*/
+    --primary-color: hsl(102, 7%, 65%); /*#2f27ce*/
     --secondary-color: hsl(0, 2%, 19%); /*#575757*/
     --accent-color: hsl(22, 100%, 43%); /*#DA4F00*/
 

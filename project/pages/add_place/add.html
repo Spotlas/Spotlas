@@ -23,6 +23,8 @@
     <!-- Basic CSS -->
     <link rel="stylesheet" href="../../assets/css/add.css">
 
+    <script src="../../assets/js/add.js" defer></script>
+
 </head>
 <body>
     <header id="homepage_header">
@@ -43,14 +45,55 @@
         </div>
     </header>
 
-    <main>
-        <section id="add_main">
+    <main id="main">
+        <section id="add_section1">
             <div id="add_info_backButton">
                 <img src="../../assets/images/icons/arrow_icon.svg" alt="">
                 <a href="../../index.html"><p>Back</p></a>
             </div>
 
+            <div id="add_info_progress">
+                <div class="progress-container">
+                    <div id="progress-bar">0%</div>
+                </div>
+                
+                
+                <div id="add_info_progress_text">
+                    <p id="info">1/2</p>
+                </div>
+            </div>
+
+            
         </section>
+
+        <section id="add_section2">
+
+            <div id="add_content_slide1">
+                
+                <div id="add_name_description">
+                    <div id="add_name">
+                        <label for="name">Name:</label>
+                        <input type="text" name="name" id="name" placeholder="Name">
+                    </div>
+                    <div id="add_description">
+                        <label for="description">Description:</label>
+                        <textarea name="description" id="description" placeholder="Description"></textarea>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div style="display: none;" id="add_content_slide2">
+
+            </div>
+
+            <div id="add_buttons_bC">
+                <button id="add_back" onclick="updateProgress('back')">Back</button>
+                <button id="add_continue" onclick="updateProgress('more')">Continue</button>    
+            </div>
+
+        </section>
+
     </main>
 
     <footer>

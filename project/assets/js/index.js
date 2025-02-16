@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 /**
- * data on sidebar
+ * data on sidebar with marker click interaction
  */
 
 // config map
@@ -8,115 +8,71 @@ let config = {
   minZoom: 3,
   maxZoom: 30,
 };
-// magnification with which the map will start
 const zoom = 7;
-// co-ordinates
 const lat = 47.6965;
 const lng = 13.3458;
 
-// calling map
 const map = L.map("map", config).setView([lat, lng], zoom);
 
 L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}", {
   attribution: '&copy; <a href="https://www.esri.com/">Esri</a>, USGS, NOAA',
 }).addTo(map);
 
-// --------------------------------------------------
-
 const sidebar = document.getElementById("homepage_karte_sidebar");
+let selectedMarker = null;
 
-function createSidebarElements(layer) {
-  const el = `<div class="sidebar-el" data-marker="${layer._leaflet_id}">${layer
-      .getLatLng()
-      .toString()}</div>`;
-
-  const temp = document.createElement("div");
-  temp.innerHTML = el.trim();
-  const htmlEl = temp.firstChild;
-
-  L.DomEvent.on(htmlEl, "click", zoomToMarker);
-  sidebar.insertAdjacentElement("beforeend", htmlEl);
+function openSidebarWithContent(content) {
+  sidebar.innerHTML = content;
+  sidebar.classList.add("open");
 }
 
-function zoomToMarker(e) {
-  const clickedEl = e.target;
-  const markerId = clickedEl.getAttribute("data-marker");
-  const marker = fg.getLayer(markerId);
-  const getLatLong = marker.getLatLng();
-
-  marker.bindPopup(getLatLong.toString()).openPopup();
-}
-
-// coordinate array points
 const points = [
-  [48.20849, 16.37208], // Wien
-  [47.2682, 11.39277],  // Innsbruck
-  [47.80949, 13.05501], // Salzburg
-  [46.62472, 14.30528], // Klagenfurt
-  [48.30694, 14.28583], // Linz
-];  
+  { lat: 48.20849, lng: 16.37208, name: "Wien", image: "wien.jpg", description: "Die Hauptstadt von Österreich." },
+  { lat: 47.2682, lng: 11.39277, name: "Innsbruck", image: "innsbruck.jpg", description: "Bekannt für Wintersport." },
+  { lat: 47.80949, lng: 13.05501, name: "Salzburg", image: "salzburg.jpg", description: "Geburtsstadt von Mozart." },
+  { lat: 46.62472, lng: 14.30528, name: "Klagenfurt", image: "klagenfurt.jpg", description: "Hauptstadt von Kärnten." },
+  { lat: 48.30694, lng: 14.28583, name: "Linz", image: "linz.jpg", description: "Kulturhauptstadt Europas 2009." },
+];
 
 const fg = L.featureGroup().addTo(map);
 
 points.forEach((point) => {
-  const marker = L.marker(point).addTo(fg);
-  const getLatLong = marker.getLatLng();
-  marker.bindPopup(getLatLong.toString());
+  const marker = L.marker([point.lat, point.lng]).addTo(fg);
+  marker.on("click", () => {
+    selectedMarker = marker;
+    openSidebarWithContent(`
+      <h3>${point.name}</h3>
+      <img src="${point.image}" alt="${point.name}" style="width:100%; max-height:150px; object-fit:cover;">
+      <p>${point.description}</p>
+      <p><strong>Koordinaten:</strong> ${point.lat}, ${point.lng}</p>
+    `);
+  });
 });
 
 listMarkers();
 
-//Create Elements for markers in bound
 function listMarkers() {
+  if (selectedMarker) return; // Zeige nur die Namen, wenn kein Marker aktiv ist
+  sidebar.innerHTML = "<h3>Orte im aktuellen Kartenausschnitt:</h3><br>";
   map.eachLayer(function (layer) {
-      if (layer instanceof L.Marker) {
-          if (map.getBounds().contains(layer.getLatLng()) == true) {
-              createSidebarElements(layer);
-          }
-      }
+    if (layer instanceof L.Marker && map.getBounds().contains(layer.getLatLng())) {
+      const el = document.createElement("div");
+      el.className = "sidebar-el";
+      el.textContent = points.find(p => p.lat === layer.getLatLng().lat && p.lng === layer.getLatLng().lng)?.name || "Unbekannter Ort";
+      el.onclick = () => {
+        map.setView(layer.getLatLng(), zoom);
+        layer.openPopup();
+      };
+      sidebar.appendChild(el);
+    }
   });
 }
 
-//Event fired when user stopped dragging the map
-map.on('moveend', function (e) {
-  sidebar.innerHTML = '';
+map.on('moveend', listMarkers);
+map.on('popupclose', () => {
+  selectedMarker = null;
   listMarkers();
 });
-
-L.DataDivIcon = L.DivIcon.extend({
-  createIcon: function (oldIcon) {
-      let divElement = L.DivIcon.prototype.createIcon.call(this, oldIcon);
-
-      if (this.options.data) {
-          for (let key in this.options.data) {
-              divElement.dataset[key] = this.options.data[key];
-          }
-      }
-      return divElement;
-  },
-});
-
-L.dataDivIcon = (options) => new L.DataDivIcon(options);
-
-const myNewIcon = L.dataDivIcon({
-  className: "leaflet-data-marker",
-  html: '<svg viewBox="0 0 149 178"><path fill="red" stroke="#FFF" stroke-width="10" stroke-miterlimit="10" d="M126 23l-6-6A69 69 0 0 0 74 1a69 69 0 0 0-51 22A70 70 0 0 0 1 74c0 21 7 38 22 52l43 47c6 6 11 6 16 0l48-51c12-13 18-29 18-48 0-20-8-37-22-51z"/></svg>',
-  iconSize: [30, 20],
-  data: {
-      firstExample: "First example",
-      secondExample: "Second example",
-  },
-});
-
-L.marker([52.22983, 21.011728], { icon: myNewIcon })
-.addTo(map)
-.bindPopup("Center Warsaw");
-
-// Add Leaflet Geocoder with English language
-L.Control.geocoder({
-  defaultMarkGeocode: false,
-  geocoder: L.Control.Geocoder.nominatim({ language: 'en' })
-}).addTo(map);
 
 /* Methoden ***************************************************** */
 
@@ -137,3 +93,4 @@ document.getElementById('toggleImg').addEventListener('click', function (e) {
   e.stopPropagation();
   showDropdown();
 });
+
