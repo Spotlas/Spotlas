@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Spotlas" company="HTL Leonding" webLink="http://" view-date="2025-01-13" view-index="0" gantt-divider-location="386" resource-divider-location="300" version="3.3.3312" locale="de_DE">
+<?xml version="1.0" encoding="UTF-8"?><project name="Spotlas" company="HTL Leonding" webLink="http://" view-date="2025-02-10" view-index="0" gantt-divider-location="371" resource-divider-location="300" version="3.3.3312" locale="de_DE">
     <description><![CDATA[Projekt]]></description>
     <view zooming-state="default:4" id="gantt-chart">
-        <field id="tpd3" name="Vorgang" width="185" order="0"/>
-        <field id="tpd4" name="Anfang" width="91" order="1"/>
-        <field id="tpd5" name="Ende" width="94" order="2"/>
+        <field id="tpd3" name="Vorgang" width="178" order="0"/>
+        <field id="tpd4" name="Anfang" width="87" order="1"/>
+        <field id="tpd5" name="Ende" width="90" order="2"/>
         <field id="tpd15" name="Notizen" width="20" order="3"/>
         <option id="filter.completedTasks" value="false"/>
         <option id="filter.dueTodayTasks" value="false"/>
         <option id="filter.overdueTasks" value="false"/>
         <option id="filter.inProgressTodayTasks" value="false"/>
-        <timeline><![CDATA[0,12,16,14,1,15,2]]></timeline>
+        <timeline><![CDATA[0,2,16,12,14,1,15]]></timeline>
         <option id="color.recent"><![CDATA[#ccffcc #ccccff #ff3333 #ff0033 #ccff00 #ff0000 #ccffff #ff66ff]]></option>
     </view>
     <view id="resource-table">

@@ -155,8 +155,9 @@ h1, h2, h3, h4, h5, h6{
     justify-content: center;
     gap: 0.5vw;
     min-width: 70px;
-    height: 1.5vh;
-    padding: 0.7vw 1.2vw;
+    /* height: 1.5vh; */
+    /* padding: 0.2vw 1.2vw; */
+    padding: 0.3vw 1.2vw;
     margin: 0;
     background-color: var(--bg-color-white);
     border-radius: var(--border-radius-xl);
@@ -174,6 +175,8 @@ h1, h2, h3, h4, h5, h6{
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: 20px;
+    width: 1.5vw;
 }
 
 #homepage_filter_search input{
