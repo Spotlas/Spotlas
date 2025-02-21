@@ -66,6 +66,8 @@ window.onload = function () {
 
     function handleFiles(event) {
         const files = event.files || event.target.files;
+        const uploadedImages = JSON.parse(sessionStorage.getItem('uploadedImages')) || []; // Lade bestehende Bilder
+    
         for (const file of files) {
             if (file.type.startsWith("image/")) {
                 const reader = new FileReader();
@@ -78,14 +80,17 @@ window.onload = function () {
                     const removeButton = document.createElement('span');
                     removeButton.innerText = 'X';
                     removeButton.style.cursor = 'pointer';
-                    removeButton.style.marginLeft = '10px';
+                    removeButton.style.marginLeft = '5px';
                     removeButton.style.color = 'red'; // Farbe des "X"
                     
                     // Füge Event Listener zum Entfernen des Bildes hinzu
                     removeButton.addEventListener('click', () => {
-                        // Hier entfernst du das Bild aus Local Storage
-                        // Falls du mehrere Bilder speichern willst, ändere diese Logik entsprechend
-                        sessionStorage.removeItem('uploadedImage'); 
+                        // Bild aus dem Array entfernen
+                        const index = uploadedImages.indexOf(e.target.result);
+                        if (index > -1) {
+                            uploadedImages.splice(index, 1); // Bild entfernen
+                            sessionStorage.setItem('uploadedImages', JSON.stringify(uploadedImages)); // Aktualisiere sessionStorage
+                        }
                         imgContainer.remove(); // Bild aus der Vorschau entfernen
                     });
     
@@ -93,8 +98,9 @@ window.onload = function () {
                     imgContainer.appendChild(removeButton);
                     imagePreview.appendChild(imgContainer);
                     
-                    // Speichere das Bild im Local Storage
-                    saveImageToSessionStorage(e.target.result);
+                    // Speichere das Bild im sessionStorage
+                    uploadedImages.push(e.target.result); // Füge das Bild zum Array hinzu
+                    sessionStorage.setItem('uploadedImages', JSON.stringify(uploadedImages)); // Speichere das Array
                 };
                 reader.readAsDataURL(file);
             }
@@ -102,13 +108,14 @@ window.onload = function () {
     }
 }
     
-    function saveImageToSessionStorage(imageSrc) {
-        // Hier kannst du deine Logik für mehrere Bilder implementieren
-        resizeImage(imageSrc).then((resizedImage) => {
-            sessionStorage.setItem("uploadedImage", resizedImage);
+    // Beispiel für die Bildverkleinerung (optional)
+    function resizeImage(imageSrc) {
+        return new Promise((resolve) => {
+            // Hier kannst du Logik hinzufügen, um das Bild zu verkleinern, wenn nötig.
+            resolve(imageSrc); // Für dieses Beispiel wird das Bild nicht verändert
         });
     }
-
+    
 
 function loadImageFromSessionStorage() {
     const savedImageSrc = sessionStorage.getItem('uploadedImage');
@@ -155,11 +162,11 @@ function updateProgress(action) {
             
         
             // Daten in localStorage speichern
-            localStorage.setItem('placeName', placeName);
-            localStorage.setItem('latitude', placeCoordinatesB);
-            localStorage.setItem('longitude', placeCoordinatesL);
-            localStorage.setItem('placeDescription', placeDescription);
-            localStorage.setItem('placeCategory', placeCategory);
+            sessionStorage.setItem('placeName', placeName);
+            sessionStorage.setItem('latitude', placeCoordinatesB);
+            sessionStorage.setItem('longitude', placeCoordinatesL);
+            sessionStorage.setItem('placeDescription', placeDescription);
+            sessionStorage.setItem('placeCategory', placeCategory);
             
         
             // Weiterleitung
