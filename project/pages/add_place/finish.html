@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Place</title>
+
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+     <!-- Font -->
+
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet"> 
+
+     <!-- Globale Variablen -->
+    <link rel="stylesheet" href="../../assets/css/global.css">
+
+    <!-- Basic CSS -->
+    <link rel="stylesheet" href="../../assets/css/add.css">
+
+    <script>
+        window.onload = function () {
+    document.getElementById('placeName').innerHTML = localStorage.getItem('placeName');
+    document.getElementById('latitude_finish').innerHTML = localStorage.getItem('latitude');
+    document.getElementById('longitude_finish').innerHTML = localStorage.getItem('longitude');
+    document.getElementById('placeDescription').innerHTML = localStorage.getItem('placeDescription');
+    document.getElementById('placeCategory').innerHTML = localStorage.getItem('placeCategory');
+    
+    const savedImage = sessionStorage.getItem('uploadedImage');
+        if (savedImage) {
+            document.getElementById('placeImage').src = savedImage;
+        } 
+};
+
+    </script>
+</head>
+<body>
+    <header id="homepage_header">
+        <div id="homepage_header_spotlas">
+            <a href="../../index.html"><h1>Spotlas</h1></a>
+        </div>
+
+        <div id="homepage_header_ImageItems">
+            <div>
+                <a href="../../pages/add_place/add.html"><img src="../../assets/images/icons/add_icon.svg" alt="add" width="40px" height="40px"></a>
+            </div>
+            <div>
+                <a href="../../pages/profile/profile.html"><img src="../../assets/images/icons/profile_icon.svg" alt="profile" width="40px" height="40px"></a>
+            </div>
+            <div>
+                <a href=""><img src="../../assets/images/icons/arrow_icon.svg" alt="options" width="40px" height="40px"></a>
+            </div>
+        </div>
+    </header>
+
+    <main id="finish_main">
+        <div id="confirmation"></div>
+            <h2>Confirm Your Details</h2>
+
+            <div class="box"></div>
+            <h5>Name:</h5>
+            <p id="placeName"></p>
+        </div>
+        <div class="box">
+            <h5>Latitude:</h5>
+            <p id="latitude_finish"></p>
+        </div>
+        <div class="box">
+            <h5>Longitude:</h5>
+            <p id="longitude_finish"></p>
+        </div>
+        <div class="box">
+            <h5>Description:</h5>
+            <p id="placeDescription"></p>
+        </div>
+        <div class="box">
+            <h5>Category:</h5>
+            <p id="placeCategory"></p>
+        </div>
+        <div class="box">
+            <h5>Image:</h5>
+            <img id="placeImage" src="" alt="Place Image" width="200px">
+        </div>
+           
+            <button id="confirmButton">Yes, all information is correct</button>
+            <button id="cancelButton">Cancel</button>
+            </div>
+        </div>
+        
+
+       
+    </main>
+</body>
