@@ -8,6 +8,13 @@ let progress = 50;
 let step = 50; // Wie viel jedes Mal hinzugefügt wird (50% pro Schritt)
 let slide = 1; // Aktuelle Folie
 
+localStorage.clear();
+sessionStorage.clear();
+indexedDB.databases().then((dbs) => {
+    dbs.forEach(db => indexedDB.deleteDatabase(db.name));
+});
+
+
 progressBar.style.height = `${progress}%`;
 progressBar.innerText = `${progress}%`;
 
@@ -74,35 +81,42 @@ window.onload = function () {
                 reader.onload = (e) => {
                     const imgContainer = document.createElement('div');
                     const img = document.createElement("img");
-                    img.src = e.target.result;
-    
-                    // Erstelle ein "X"-Element
+                
+                    // Verwende createObjectURL statt Base64
+                    const blob = new Blob([e.target.result], { type: "image/png" });
+                    const imageUrl = URL.createObjectURL(blob);
+                    img.src = imageUrl;
+                
+                    // Erstelle ein "X"-Element zum Entfernen
                     const removeButton = document.createElement('span');
                     removeButton.innerText = 'X';
                     removeButton.style.cursor = 'pointer';
                     removeButton.style.marginLeft = '5px';
-                    removeButton.style.color = 'red'; // Farbe des "X"
-                    
-                    // Füge Event Listener zum Entfernen des Bildes hinzu
+                    removeButton.style.color = 'red';
+                
                     removeButton.addEventListener('click', () => {
-                        // Bild aus dem Array entfernen
-                        const index = uploadedImages.indexOf(e.target.result);
-                        if (index > -1) {
-                            uploadedImages.splice(index, 1); // Bild entfernen
-                            sessionStorage.setItem('uploadedImages', JSON.stringify(uploadedImages)); // Aktualisiere sessionStorage
-                        }
-                        imgContainer.remove(); // Bild aus der Vorschau entfernen
+                        imgContainer.remove(); // Entferne die Vorschau
+                        uploadedImages = uploadedImages.filter(url => url !== imageUrl); // Entferne das Bild aus dem Array
+                        sessionStorage.setItem('uploadedImages', JSON.stringify(uploadedImages)); // Speichere Änderungen
                     });
-    
+                
                     imgContainer.appendChild(img);
                     imgContainer.appendChild(removeButton);
                     imagePreview.appendChild(imgContainer);
-                    
-                    // Speichere das Bild im sessionStorage
-                    uploadedImages.push(e.target.result); // Füge das Bild zum Array hinzu
-                    sessionStorage.setItem('uploadedImages', JSON.stringify(uploadedImages)); // Speichere das Array
+                
+                    uploadedImages.push(imageUrl); // Speichere nur die URL, nicht die Base64-Daten
+                
+                    try {
+                        sessionStorage.setItem('uploadedImages', JSON.stringify(uploadedImages));
+                    } catch (e) {
+                        if (e.name === 'QuotaExceededError') {
+                            console.error("Speicherplatz ist voll! Bitte löschen Sie einige Bilder.");
+                            alert("Speicherplatz ist voll! Bitte löschen Sie einige Bilder.");
+                        }
+                    }
                 };
-                reader.readAsDataURL(file);
+                reader.readAsArrayBuffer(file); // Lies das Bild als ArrayBuffer (statt Base64)
+                
             }
         }
     }
@@ -116,32 +130,34 @@ window.onload = function () {
         });
     }
     
-
-function loadImageFromSessionStorage() {
-    const savedImageSrc = sessionStorage.getItem('uploadedImage');
-    if (savedImageSrc) {
-        const imgContainer = document.createElement('div');
-        const img = document.createElement('img');
-        img.src = savedImageSrc;
-        
-        // Erstelle ein "X"-Element
-        const removeButton = document.createElement('span');
-        removeButton.innerText = 'X';
-        removeButton.style.cursor = 'pointer';
-        removeButton.style.marginLeft = '10px';
-        removeButton.style.color = 'red'; // Farbe des "X"
-        
-        // Füge Event Listener zum Entfernen des Bildes hinzu
-        removeButton.addEventListener('click', () => {
-            sessionStorage.removeItem('uploadedImage');
-            imgContainer.remove(); // Bild aus der Vorschau entfernen
+    function loadImagesFromSessionStorage() {
+        const savedImages = JSON.parse(sessionStorage.getItem('uploadedImages')) || [];
+    
+        savedImages.forEach(imageSrc => {
+            const imgContainer = document.createElement('div');
+            const img = document.createElement('img');
+            img.src = imageSrc;
+    
+            // Erstelle ein "X"-Element
+            const removeButton = document.createElement('span');
+            removeButton.innerText = 'X';
+            removeButton.style.cursor = 'pointer';
+            removeButton.style.marginLeft = '10px';
+            removeButton.style.color = 'red';
+    
+            // Event Listener zum Entfernen des Bildes
+            removeButton.addEventListener('click', () => {
+                let updatedImages = savedImages.filter(src => src !== imageSrc);
+                sessionStorage.setItem('uploadedImages', JSON.stringify(updatedImages));
+                imgContainer.remove();
+            });
+    
+            imgContainer.appendChild(img);
+            imgContainer.appendChild(removeButton);
+            document.getElementById('imagePreview').appendChild(imgContainer);
         });
-
-        imgContainer.appendChild(img);
-        imgContainer.appendChild(removeButton);
-        document.getElementById('imagePreview').appendChild(imgContainer);
     }
-}
+    
 
 
 // Funktion zum Aktualisieren des Fortschritts
@@ -162,19 +178,21 @@ function updateProgress(action) {
             
         
             // Daten in localStorage speichern
-            sessionStorage.setItem('placeName', placeName);
+            sessionStorage.setItem('name', placeName);
             sessionStorage.setItem('latitude', placeCoordinatesB);
             sessionStorage.setItem('longitude', placeCoordinatesL);
-            sessionStorage.setItem('placeDescription', placeDescription);
-            sessionStorage.setItem('placeCategory', placeCategory);
+            sessionStorage.setItem('Description', placeDescription);
+            sessionStorage.setItem('Category', placeCategory);
             
         
             // Weiterleitung
-            window.location.href = './finish.html';
+         /*    window.location.href = './finish.html';
       
         
 
-        window.location.href = './finish.html'; 
+        window.location.href = './finish.html';  */
+
+        loadFinishedSide()
 
     }
 
@@ -184,6 +202,7 @@ function updateProgress(action) {
         document.getElementById('add_back').style.cursor = 'not-allowed'
         document.getElementById('add_back').style.opacity = '0.5';
         document.getElementById('add_back').style.pointerEvents = 'none';
+        document.getElementById('add_finish').style.display = 'none';
         
     }else if(slide === 2) {
         section1.style.display = 'none';
@@ -241,4 +260,60 @@ function resizeImage(imageBase64, maxSize = 500) {
             resolve(canvas.toDataURL("image/jpeg", 0.7)); // 0.7 = Qualität
         };
     });
+}
+
+function loadFinishedSide() {
+    document.getElementById('main2_finish').style.display = 'grid';
+    document.getElementById('main').style.display = 'none';
+
+    loadAll()
+}
+
+function loadAll(){
+    console.log("Window loaded"); // Prüfen, ob das Skript läuft
+
+    const imageContainer = document.getElementById('imageContainer');
+    if (!imageContainer) {
+        console.error("Element mit ID 'imageContainer' nicht gefunden.");
+        return;
+    }
+
+    const uploadedImages = JSON.parse(sessionStorage.getItem('uploadedImages')) || [];
+    
+    if (uploadedImages.length === 0) {
+        console.log("Keine gespeicherten Bilder im sessionStorage gefunden.");
+        return;
+    }
+
+    uploadedImages.forEach((imageData, index) => {
+        const imgContainer = document.createElement('div');
+
+        const img = document.createElement('img');
+        img.src = imageData; // Base64 oder URL
+        img.alt = `Bild ${index + 1}`;
+        img.style.width = '200px';
+        img.style.height = 'auto';
+
+        // Entfernen-Button erstellen
+        const removeButton = document.createElement('span');
+        removeButton.innerText = 'X';
+        removeButton.style.cursor = 'pointer';
+        removeButton.style.marginLeft = '10px';
+        removeButton.style.color = 'red';
+        
+        removeButton.addEventListener('click', () => {
+            uploadedImages.splice(index, 1); // Bild aus dem Array entfernen
+            sessionStorage.setItem('uploadedImages', JSON.stringify(uploadedImages)); // SessionStorage aktualisieren
+            imgContainer.remove(); // Bild aus der Vorschau entfernen
+        });
+
+        imgContainer.appendChild(img);
+        imgContainer.appendChild(removeButton);
+        imageContainer.appendChild(imgContainer);
+    });
+
+}
+
+function goToAdd() {
+    window.location.href = './add.html';
 }

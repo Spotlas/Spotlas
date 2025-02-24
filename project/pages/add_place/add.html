@@ -136,6 +136,44 @@
 
     </main>
 
+    <main id="main2_finish" style="display: none;">
+        <div id="confirmation">
+            <h2>Confirm Your Details</h2>
+        </div>
+    
+        <div class="data-section">
+            <!-- Linke Spalte: Wichtige Daten -->
+            <div class="data-left">
+                <h5>Name:</h5>
+                <p id="placeName"></p>
+    
+                <h5>Description:</h5>
+                <p id="placeDescription"></p>
+    
+                <h5>Category:</h5>
+                <p id="placeCategory"></p>
+            </div>
+    
+            <!-- Rechte Spalte: Weniger wichtige Daten -->
+            <div class="data-right">
+                <h5>Latitude:</h5>
+                <p id="latitude_finish"></p>
+    
+                <h5>Longitude:</h5>
+                <p id="longitude_finish"></p>
+    
+                <h5>Image:</h5>
+                <div id="imageContainer"></div>
+            </div>
+        </div>
+
+        <div id="finish_buttons">
+             <button id="confirmButton">Yes, all information is correct</button>
+            <button onclick="goToAdd()" id="cancelButton">Cancel</button>
+        </div>
+    
+    </main>
+
     <footer>
         <div id="homepage_footer"></div>
     </footer>
