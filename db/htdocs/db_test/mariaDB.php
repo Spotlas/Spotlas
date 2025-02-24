@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 }
 
 //*************************************************************************************** */
-echo "Connected successfully";  
+// echo "Connected successfully";  
 // !! NUR ZUM PROBIEREN OB DIE VERBINDUNG FUNKTIONIERT !! 
 // WENN MAN ARBEITET MIT API (JS, PHP) AUSKOMMENTIEREN SONST KOMMT ES ZU FEHLERN. 
 // ZU 100% WENN MAN MIT JS AUF PHP FETCHT. 
