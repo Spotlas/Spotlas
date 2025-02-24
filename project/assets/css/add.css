@@ -123,14 +123,14 @@ h1, h2, h3, h4, h5, h6{
 }
 
 /* Input fields */
-#add_name_description{
+.add_name_description{
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1vw;
+    gap: 3vw;
 
 }
 
-#add_name_description div{
+.add_name_description div{
     display: flex;
     flex-direction: column;
     gap: 1vw;
@@ -139,7 +139,7 @@ h1, h2, h3, h4, h5, h6{
     
 }
 
-#add_name_description div input, textarea{
+.add_name_description div input, textarea{
     
     padding: 0.5vw 1vw;
     border: none;
@@ -147,17 +147,62 @@ h1, h2, h3, h4, h5, h6{
     box-shadow: 2px 2px 10px -6px rgba(0,0,0,0.74);
 }
 
-#add_name_description div input:focus, textarea:focus{
+.add_name_description div input:focus, textarea:focus{
     outline: none;
 }
 
 #add_content_slide1{
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 40% 60%;
     gap: 1vw;
     margin-top: 2.3vw;
 }
 
+#add_content_slide2{
+    display: grid;
+    grid-template-columns: 40% 60%;
+    gap: 1vw;
+    margin-top: 2.3vw;
+}
+
+
+
+#comments_checkbox input {
+    appearance: none; /* Standard Checkbox-Design entfernen */
+    width: 40px; /* Breite der Checkbox */
+    height: 20px; /* Höhe der Checkbox */
+    background-color: #ccc; /* Hintergrundfarbe */
+    border-radius: 10px; /* Abgerundete Ecken */
+    position: relative; /* Für das absolute Positionieren des Kreises */
+    cursor: pointer; /* Zeiger beim Überfahren */
+    transition: background-color 0.3s; /* Hintergrundwechsel-Animation */
+    margin-left: 10px; /* Abstand zwischen Label und Checkbox */
+}
+
+#comments_checkbox input:checked {
+    background-color: black; /* Hintergrundfarbe, wenn angekreuzt */
+}
+
+#comments_checkbox input::before {
+    content: "";
+    position: absolute;
+    width: 16px; /* Breite des Kreises */
+    height: 16px; /* Höhe des Kreises */
+    background: white; /* Hintergrundfarbe des Kreises */
+    border-radius: 50%; /* Kreisform */
+    top: 2px; /* Positionierung */
+    left: 2px; /* Positionierung */
+    transition: transform 0.3s; /* Bewegung des Kreises */
+}
+
+#comments_checkbox input:checked::before {
+    transform: translateX(20px); /* Bewegung des Kreises bei Aktivierung */
+}
+
+
+#opening_hours_div{
+    margin-top: 2vw;
+}
 
 /* ********************************************* File Add *************************************/
 

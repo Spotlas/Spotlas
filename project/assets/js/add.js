@@ -317,3 +317,7 @@ function loadAll(){
 function goToAdd() {
     window.location.href = './add.html';
 }
+
+function gotoHome() {
+    window.location.href = '../../index.html';
+}
