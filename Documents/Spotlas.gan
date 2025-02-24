@@ -1,20 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Spotlas" company="HTL Leonding" webLink="http://" view-date="2025-02-10" view-index="0" gantt-divider-location="356" resource-divider-location="300" version="3.3.3312" locale="de_DE">
+<?xml version="1.0" encoding="UTF-8"?><project name="Spotlas" company="HTL Leonding" webLink="http://" view-date="2024-12-29" view-index="0" gantt-divider-location="341" resource-divider-location="300" version="3.3.3312" locale="en_US">
     <description><![CDATA[Projekt]]></description>
     <view zooming-state="default:4" id="gantt-chart">
-        <field id="tpd3" name="Vorgang" width="170" order="0"/>
-        <field id="tpd4" name="Anfang" width="83" order="1"/>
-        <field id="tpd5" name="Ende" width="87" order="2"/>
-        <field id="tpd15" name="Notizen" width="20" order="3"/>
+        <field id="tpd3" name="Name" width="162" order="0"/>
+        <field id="tpd4" name="Begin date" width="79" order="1"/>
+        <field id="tpd5" name="End date" width="83" order="2"/>
+        <field id="tpd15" name="Notes" width="20" order="3"/>
         <option id="filter.completedTasks" value="false"/>
         <option id="filter.dueTodayTasks" value="false"/>
         <option id="filter.overdueTasks" value="false"/>
         <option id="filter.inProgressTodayTasks" value="false"/>
-        <timeline><![CDATA[2,0,15,16,12,14,1]]></timeline>
+        <timeline><![CDATA[16,12,1,14,0,2,15]]></timeline>
         <option id="color.recent"><![CDATA[#ccffcc #ccccff #ff3333 #ff0033 #ccff00 #ff0000 #ccffff #ff66ff]]></option>
     </view>
     <view id="resource-table">
-        <field id="0" name="Ressource" width="210" order="0"/>
-        <field id="1" name="Rolle" width="86" order="1"/>
+        <field id="0" name="Name" width="209" order="0"/>
+        <field id="1" name="Default role" width="85" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -75,7 +75,7 @@
                 <depend id="13" type="2" difference="0" hardness="Strong"/>
             </task>
         </task>
-        <task id="10" uid="d42849205b8b468d9e0f42ef38f4603a" name="Server" color="#ccffcc" meeting="false" start="2025-01-25" duration="66" complete="2" expand="false">
+        <task id="10" uid="d42849205b8b468d9e0f42ef38f4603a" name="Server" color="#ccffcc" meeting="false" start="2025-01-25" duration="66" complete="2" expand="true">
             <depend id="32" type="2" difference="0" hardness="Strong"/>
             <task id="11" uid="44333433f85a429bb730c0309c30557f" name="Recherche zur Verbindung von DB und Server" color="#ccffcc" meeting="false" start="2025-01-25" duration="1" complete="100" thirdDate="2025-01-25" thirdDate-constraint="1" expand="true">
                 <depend id="13" type="2" difference="0" hardness="Strong"/>
