@@ -266,6 +266,8 @@ function loadFinishedSide() {
     document.getElementById('main2_finish').style.display = 'grid';
     document.getElementById('main').style.display = 'none';
 
+    
+
     loadAll()
 }
 
