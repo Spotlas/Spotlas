@@ -224,7 +224,7 @@ function updateProgress(action) {
             document.getElementById('placeSeason').innerHTML = sessionStorage.getItem('Season');
             document.getElementById('placePriceRange').innerHTML = sessionStorage.getItem('Price');
             document.getElementById('placeAccessibility').innerHTML = sessionStorage.getItem('Accessibility');
-            document.getElementById('placeWebsiteUrl').innerHTML = sessionStorage.getItem('Website');
+            document.getElementById('placeWebsiteUrl').innerHTML = `<a href="https://${sessionStorage.getItem('Website')}" target="_blank">${sessionStorage.getItem('Website')}</a>`;
             document.getElementById('placeSpecialFeatures').innerHTML = sessionStorage.getItem('SpecialFeatures');
         
 

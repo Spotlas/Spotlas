@@ -115,7 +115,7 @@ h1, h2, h3, h4, h5, h6{
     padding: 0.5vw 1vw;
     margin-right: 1vw;
     border-radius: 8px;
-    background-color: var(--primary-color);
+    background-color: var(--accent-color);
     color: var(--white-color);
 
     border: none;
@@ -272,6 +272,7 @@ input[type="file"] {
 /* ********************************************** category********************************************** */
 
 #category{
+    z-index: 20;
     padding: 0.5vw 1vw;
     background-color: var(--white-color);
     border: none;
