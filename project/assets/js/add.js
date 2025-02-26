@@ -214,8 +214,8 @@ function updateProgress(action) {
         loadFinishedSide()
 
         document.getElementById('placeName').innerHTML = sessionStorage.getItem('name');
-            document.getElementById('latitude').innerHTML = sessionStorage.getItem('latitude');
-            document.getElementById('longitude').innerHTML = sessionStorage.getItem('longitude');
+            document.getElementById('latitude2').innerHTML = sessionStorage.getItem('latitude');
+            document.getElementById('longitude2').innerHTML = sessionStorage.getItem('longitude');
             document.getElementById('placeAddress').innerHTML = sessionStorage.getItem('Address');
             document.getElementById('placeDescription').innerHTML = sessionStorage.getItem('Description');
             document.getElementById('placeCategory').innerHTML = sessionStorage.getItem('Category');

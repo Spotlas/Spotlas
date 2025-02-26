@@ -269,6 +269,11 @@ input[type="file"] {
     position: relative;
 }
 
+#imageContainer{
+    display: flex;
+    gap: 1vw;
+}
+
 /* ********************************************** category********************************************** */
 
 #category{
@@ -285,4 +290,69 @@ input[type="file"] {
 span{
     font-size: var(--font-size-s);
     color: var(--grey-font-color);
+}
+
+#confirmation{
+    text-align: center;
+    margin-top: 2vw;
+    font-size: var(--font-size-m);
+}
+
+#confirm_infos{
+    margin: 0 10vw 0 10vw;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 5vw;
+    margin-top: 2vw;
+}
+
+#confirm_infos > div{
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+
+    background-color: var(--white-color);
+    padding: 1vw;
+    border-radius: var(--border-radius-m);
+    color: var(--black-color);
+
+    box-shadow: 2px 2px 10px -6px rgba(0,0,0,0.74);
+}
+
+#confirm_infos div h3{
+    text-align: left;
+}
+
+#finish_buttons{
+    margin-top: 3vw;
+    text-align: center;
+}
+
+#confirmButton{
+    padding: 0.5vw 1vw;
+    margin-right: 1vw;
+    border-radius: 8px;
+    background-color: var(--bg-color-greenButton);
+    color: green;
+
+    border: none;
+    font-size: var(--font-size-s);
+    transition: all ease-in-out 200ms;
+}
+
+#cancelButton{
+    padding: 0.5vw 1vw;
+    margin-right: 1vw;
+    border-radius: 8px;
+    background-color: var(--bg-color-redButton);
+    color: red;
+
+    border: none;
+    font-size: var(--font-size-s);
+    transition: all ease-in-out 200ms;
+}
+
+#finish_buttons button:hover{
+    cursor: pointer;
+    transform: translateY(-5px);
 }

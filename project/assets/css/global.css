@@ -27,6 +27,9 @@ body {
     --bg-color-footer: #E9E9E1;
     --bg-color-white: #ffffff;
 
+    --bg-color-redButton: rgba(255, 171, 171, 0.707);
+    --bg-color-greenButton: rgba(158, 202, 158, 0.598);
+
     /* Primary, Secondary, Accent colors */
     --primary-color: #e9e9e1; /*#2f27ce*/
     --secondary-color: #1a2802; /*#575757*/
