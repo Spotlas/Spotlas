@@ -110,10 +110,7 @@
                         </div>
 
 
-                        <div id="comments_checkbox">
-                            <label for="comments">Comments:</label>
-                            <input type="checkbox" name="comments" id="comments_checkbox">
-                        </div>
+                        
                 
                 </div>
 
@@ -140,6 +137,17 @@
 
 
                     </div>
+
+                    <div id="comments_checkbox">
+                        <label for="comments">Comments:</label>
+                        <input onclick="clickComments()" type="checkbox" name="comments" id="comments_checkbox" value="true">
+                    </div>
+
+                    <div id="comments_checkbox">
+                        <label for="comments_input_checkbox">Comments:</label>
+                        <input onclick="clickComments()" type="checkbox" name="comments" id="comments_input_checkbox">
+                    </div>
+                    
 
                     
 
@@ -181,7 +189,7 @@
 
             <div class="add_name_description">
                 
-                <div id="special_features">
+                <div>
                     <label for="special_features">Special Features:</label>
                     <input type="text" name="special_features" id="special_features" placeholder="f.e. Live Music">
                 </div>

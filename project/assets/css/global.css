@@ -18,9 +18,9 @@ body {
     --white-color: hsl(0, 0%, 100%); /*#white*/
    
     /* Background Colors */
-    --primary-bg-color: #f6f7f2; /*#111111*/
-    --secondary-bg-color: hsl(0, 0%, 14%); /*#232323*/
-    --accent-bg-color: hsl(0, 0%, 17%); /*#2C2C2C*/
+    --primary-bg-color: hsl(72, 24%, 96%); /*#111111*/
+    --secondary-bg-color: hsl(82, 90%, 8%); /*#232323*/
+    --accent-bg-color: hsl(72, 24%, 96%); /*#2C2C2C*/
 
     --bg-color-sidebar: hsla(0, 0%, 100%, 0.8); /*#white*/
     --bg-color-header: #E9E9E1;
@@ -28,13 +28,14 @@ body {
     --bg-color-white: #ffffff;
 
     /* Primary, Secondary, Accent colors */
-    --primary-color: hsl(102, 7%, 65%); /*#2f27ce*/
-    --secondary-color: hsl(0, 2%, 19%); /*#575757*/
-    --accent-color: hsl(22, 100%, 43%); /*#DA4F00*/
+    --primary-color: #e9e9e1; /*#2f27ce*/
+    --secondary-color: #1a2802; /*#575757*/
+    --accent-color: #a3ac9f; /*#DA4F00*/
 
     /* Font color */
     --primary-font-color: hsl(0, 0%, 100%); /*#FFFFFF*/
     --secondary-font-color: hsl(0, 0%, 80%); /*#B4B4B4 -> 0, 0, 71*/
+    --grey-font-color: rgb(115, 115, 115);
 
     /* Fonts */
     --font-family: "Montserrat", sans-serif;

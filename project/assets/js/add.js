@@ -173,26 +173,60 @@ function updateProgress(action) {
             const placeName = document.getElementById('name').value;
             const placeCoordinatesB = document.getElementById('latitude').value;
             const placeCoordinatesL = document.getElementById('longitude').value;
+            const placeAddress = document.getElementById('address').value;
             const placeDescription = document.getElementById('description').value;
             const placeCategory = document.getElementById('category').value;
+            const placeOpeningHours = document.getElementById('opening_hours').value;
+            const placeSeason = document.getElementById('season').value;
+            const placePrice = document.getElementById('price_range').value;
+            const placeAccessibility = document.getElementById('accessibility').value;
+            const placeWebsite = document.getElementById('website_url').value;
+            const placeSpecialFeatures = document.getElementById('special_features').value;
+
+            const commentsCheckbox = document.getElementById('comments_input_checkbox');
+
+            if (commentsCheckbox.checked) {
+                placeComments = "Enabled";
+            } else {
+                placeComments = "No Comments";
+            }
+
+            sessionStorage.setItem('Comments', placeComments);
+
             
         
             // Daten in localStorage speichern
             sessionStorage.setItem('name', placeName);
             sessionStorage.setItem('latitude', placeCoordinatesB);
             sessionStorage.setItem('longitude', placeCoordinatesL);
+            sessionStorage.setItem('Address', placeAddress);
             sessionStorage.setItem('Description', placeDescription);
             sessionStorage.setItem('Category', placeCategory);
-            
+            sessionStorage.setItem('Comments', placeComments);
+            sessionStorage.setItem('OpeningHours', placeOpeningHours);
+            sessionStorage.setItem('Season', placeSeason);
+            sessionStorage.setItem('Price', placePrice);
+            sessionStorage.setItem('Accessibility', placeAccessibility);
+            sessionStorage.setItem('Website', placeWebsite);
+            sessionStorage.setItem('SpecialFeatures', placeSpecialFeatures);
         
-            // Weiterleitung
-         /*    window.location.href = './finish.html';
-      
-        
-
-        window.location.href = './finish.html';  */
 
         loadFinishedSide()
+
+        document.getElementById('placeName').innerHTML = sessionStorage.getItem('name');
+            document.getElementById('latitude').innerHTML = sessionStorage.getItem('latitude');
+            document.getElementById('longitude').innerHTML = sessionStorage.getItem('longitude');
+            document.getElementById('placeAddress').innerHTML = sessionStorage.getItem('Address');
+            document.getElementById('placeDescription').innerHTML = sessionStorage.getItem('Description');
+            document.getElementById('placeCategory').innerHTML = sessionStorage.getItem('Category');
+            document.getElementById('placeComments').innerHTML = sessionStorage.getItem('Comments');
+            document.getElementById('placeOpeningHours').innerHTML = sessionStorage.getItem('OpeningHours');
+            document.getElementById('placeSeason').innerHTML = sessionStorage.getItem('Season');
+            document.getElementById('placePriceRange').innerHTML = sessionStorage.getItem('Price');
+            document.getElementById('placeAccessibility').innerHTML = sessionStorage.getItem('Accessibility');
+            document.getElementById('placeWebsiteUrl').innerHTML = sessionStorage.getItem('Website');
+            document.getElementById('placeSpecialFeatures').innerHTML = sessionStorage.getItem('SpecialFeatures');
+        
 
     }
 
@@ -266,8 +300,7 @@ function loadFinishedSide() {
     document.getElementById('main2_finish').style.display = 'grid';
     document.getElementById('main').style.display = 'none';
 
-    
-
+  
     loadAll()
 }
 
@@ -322,4 +355,8 @@ function goToAdd() {
 
 function gotoHome() {
     window.location.href = '../../index.html';
+}
+
+function clickComments() {
+    console.log('Checkbox clicked');
 }

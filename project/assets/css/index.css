@@ -198,15 +198,3 @@ h1, h2, h3, h4, h5, h6{
 }
 
 
-/***************************************** Footer ************************************************** / */
-
-#homepage_footer{
-    clip-path: polygon(100% calc(100% - 100px), 0 100%, 100% 100%);
-    height: var(--height-footer); 
-    width: 100%;
-    background-color: var(--bg-color-footer);
-    position: fixed;
-    bottom: 0;
-    z-index: 8;
-    padding-bottom: 40px; 
-}
