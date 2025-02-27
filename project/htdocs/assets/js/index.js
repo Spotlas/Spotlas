@@ -121,9 +121,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const dropdown = document.getElementById("dropDown_menu");
 
   function showDropdown(event) {
-    event.stopPropagation(); // Verhindert, dass das Klick-Event das Menü direkt schließt
-    dropdown.classList.toggle("show");
+    event.stopPropagation(); // Verhindert das Schließen des Menüs beim Klicken auf den Button
+    dropdown.classList.toggle("show"); // Toggle Dropdown Visibility
 
+    // Wenn das Dropdown geöffnet wird, einen Event Listener für das Schließen bei Klick außerhalb hinzufügen
     if (dropdown.classList.contains("show")) {
       document.addEventListener("click", closeDropdown);
     } else {
@@ -132,9 +133,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function closeDropdown(event) {
+    // Wenn der Klick außerhalb des Menüs und des Buttons ist, Dropdown schließen
     if (!dropdown.contains(event.target) && event.target !== toggleImg) {
       dropdown.classList.remove("show");
-      document.removeEventListener("click", closeDropdown);
+      document.removeEventListener("click", closeDropdown); // Event Listener entfernen
     }
   }
 
@@ -145,3 +147,4 @@ document.addEventListener("DOMContentLoaded", function () {
     console.error("Element mit ID 'toggleImg' nicht gefunden!");
   }
 });
+
