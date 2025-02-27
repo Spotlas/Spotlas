@@ -116,53 +116,32 @@ map.on("popupclose", () => {
 
 /* Methoden ***************************************************** */
 
-function showDropdown(event) {
-  console.log("hallo");
-  const dropdown = document.getElementById("dropDown_menu");
-
-  // Toggle-Klasse 'show'
-  const isVisible = dropdown.classList.toggle("show");
-
-  if (isVisible) {
-    // Erst Event-Listener entfernen, dann wieder hinzufügen
-    document.removeEventListener("click", closeDropdown);
-
-    setTimeout(() => {
-      document.addEventListener("click", closeDropdown);
-    }, 100);
-  } else {
-    document.removeEventListener("click", closeDropdown);
-  }
-}
-
-function closeDropdown(e) {
-  console.log(tschau, e.target)
-  const dropdown = document.getElementById("dropDown_menu");
-
-  if (!dropdown.contains(e.target) && e.target.id !== "toggleImg") {
-    dropdown.classList.remove("show");
-    document.removeEventListener("click", closeDropdown);
-  }
-}
-
 document.addEventListener("DOMContentLoaded", function () {
   const toggleImg = document.getElementById("toggleImg");
+  const dropdown = document.getElementById("dropDown_menu");
 
+  function showDropdown(event) {
+    event.stopPropagation(); // Verhindert, dass das Klick-Event das Menü direkt schließt
+    dropdown.classList.toggle("show");
+
+    if (dropdown.classList.contains("show")) {
+      document.addEventListener("click", closeDropdown);
+    } else {
+      document.removeEventListener("click", closeDropdown);
+    }
+  }
+
+  function closeDropdown(event) {
+    if (!dropdown.contains(event.target) && event.target !== toggleImg) {
+      dropdown.classList.remove("show");
+      document.removeEventListener("click", closeDropdown);
+    }
+  }
+
+  // Sicherstellen, dass der Event Listener auf dem toggleImg gesetzt wird
   if (toggleImg) {
-    // Entfernt vorherige Event-Listener, falls sie existieren
-    toggleImg.replaceWith(toggleImg.cloneNode(true));
-
-    // Holt das neue Element nach dem Ersetzen
-    const newToggleImg = document.getElementById("toggleImg");
-
-    // Jetzt den Click-Handler sicher hinzufügen
-    newToggleImg.addEventListener("click", function (e) {
-      console.log("toggleImg clicked");
-      e.stopPropagation();
-      showDropdown(e);
-    });
+    toggleImg.addEventListener("click", showDropdown);
   } else {
     console.error("Element mit ID 'toggleImg' nicht gefunden!");
   }
 });
-
