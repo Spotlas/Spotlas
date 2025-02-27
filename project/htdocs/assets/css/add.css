@@ -13,8 +13,6 @@ h1, h2, h3, h4, h5, h6{
     margin: 0;
 }
 
-
-
 /* *************************************** Add ************************************************** */
 
 #main{
@@ -125,9 +123,7 @@ h1, h2, h3, h4, h5, h6{
 /* Input fields */
 .add_name_description{
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 3vw;
-
+    grid-template-columns: 100%;
 }
 
 .add_name_description div{
@@ -136,7 +132,7 @@ h1, h2, h3, h4, h5, h6{
     gap: 1vw;
     max-width: 15vw;
 
-    
+    max-height: 10vh;
 }
 
 .add_name_description div input, textarea{
@@ -165,16 +161,13 @@ h1, h2, h3, h4, h5, h6{
     margin-top: 2.3vw;
 }
 
-
 #comments_checkbox{
     display: flex;
-    align-items: center;
+    align-items: left;
     gap: 1vw;
 
     margin-top: 2vw;
 }
-
-
 
 #comments_checkbox input {
     appearance: none; /* Standard Checkbox-Design entfernen */
@@ -215,8 +208,13 @@ h1, h2, h3, h4, h5, h6{
 
 /* ********************************************* File Add *************************************/
 
+
+#fileUpload{
+    max-height: 8vh;
+}
+
 .upload-container {
-    width: 90%;
+    width: 100%;
     max-width: 500px;
     margin: 1vw 0 0 0;
     padding: 1vw;
