@@ -122,8 +122,9 @@ h1, h2, h3, h4, h5, h6{
 
 /* Input fields */
 .add_name_description{
-    display: grid;
-    grid-template-columns: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5vw;
 }
 
 .add_name_description div{
@@ -210,7 +211,7 @@ h1, h2, h3, h4, h5, h6{
 
 
 #fileUpload{
-    max-height: 8vh;
+    
 }
 
 .upload-container {
