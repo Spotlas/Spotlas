@@ -40,22 +40,33 @@ h1, h2, h3, h4, h5, h6{
 
 /* Drop Down Settings usw. */
 
-#dropDown_menu{
-    display: grid;
-    grid-template-columns: 100%;
-    position: absolute;
-    top: 80px;
-    right: 0;
-    background-color: var(--bg-color-sidebar);
-    border-radius: var(--border-radius-m);
-    padding: var(--padding-m);
-    z-index: 10;
-    box-shadow: 2px 2px 19px -6px rgba(0,0,0,0.74);
+#dropDown_menu {
+  display: none;
+  position: absolute;
+  right: 10px;
+  top: 50px;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  z-index: 12;
 }
 
-.show{
-    display: block !important;
+#dropDown_menu.show {
+  display: block;
 }
+
+#dropDown_menu a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+}
+
+#dropDown_menu a:hover {
+  background-color: #f0f0f0;
+}
+
 
 /* *************************************** Map ******************************* */
 
