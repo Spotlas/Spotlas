@@ -13,30 +13,6 @@ h1, h2, h3, h4, h5, h6{
     margin: 0;
 }
 
-/* *********************************** Homepage Header ********+*********************+ */
-
-#homepage_header{
-    height: var(--height_header);
-    display: grid;
-    grid-template-columns: 50% 50%;
-    background-color: var(--bg-color-header);
-    padding: 0 1vw 0 1vw;
-    height: 80px;
-    align-items: center;
-}
-
-#homepage_header_spotlas a{
-    text-align: left;
-    color: var(--black-color);
-    text-decoration: none;
-}
-
-#homepage_header_ImageItems{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 1vw;
-}
 
 /* *************************************** Profile ************************************************** */
 
@@ -61,3 +37,5 @@ h1, h2, h3, h4, h5, h6{
     text-decoration: none;
     color: var(--black-color);
 }
+
+/*  */

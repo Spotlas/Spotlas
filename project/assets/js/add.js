@@ -237,6 +237,7 @@ function updateProgress(action) {
         document.getElementById('add_back').style.opacity = '0.5';
         document.getElementById('add_back').style.pointerEvents = 'none';
         document.getElementById('add_finish').style.display = 'none';
+        document.getElementById('add_continue').style.display = 'inline';
         
     }else if(slide === 2) {
         section1.style.display = 'none';
@@ -244,6 +245,7 @@ function updateProgress(action) {
         document.getElementById('add_back').style.cursor = 'pointer'
         document.getElementById('add_back').style.opacity = '1';
         document.getElementById('add_back').style.pointerEvents = 'auto';
+        document.getElementById('add_continue').style.display = 'none';
     
     }
 
