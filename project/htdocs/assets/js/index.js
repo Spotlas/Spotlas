@@ -117,35 +117,29 @@ map.on("popupclose", () => {
 
 /* Methoden ***************************************************** */
 
-document.addEventListener("DOMContentLoaded", function () {
-  const toggleImg = document.getElementById("toggleImg");
+function showDropdown() {
   const dropdown = document.getElementById("dropDown_menu");
+  
+  if (dropdown.style.display === "none" || dropdown.style.display === "") {
+    dropdown.style.display = "block";
 
-  function showDropdown(event) {
-    event.stopPropagation(); // Verhindert das Schließen des Menüs beim Klicken auf den Button
-    dropdown.classList.toggle("show"); // Toggle Dropdown Visibility
-
-    // Wenn das Dropdown geöffnet wird, einen Event Listener für das Schließen bei Klick außerhalb hinzufügen
-    if (dropdown.classList.contains("show")) {
-      document.addEventListener("click", closeDropdown);
-    } else {
-      document.removeEventListener("click", closeDropdown);
-    }
-  }
-
-  function closeDropdown(event) {
-    // Wenn der Klick außerhalb des Menüs und des Buttons ist, Dropdown schließen
-    if (!dropdown.contains(event.target) && event.target !== toggleImg) {
-      dropdown.classList.remove("show");
-      document.removeEventListener("click", closeDropdown); // Event Listener entfernen
-    }
-  }
-
-  // Sicherstellen, dass der Event Listener auf dem toggleImg gesetzt wird
-  if (toggleImg) {
-    toggleImg.addEventListener("click", showDropdown);
+    // Event-Listener hinzufügen, um Dropdown zu schließen, wenn woanders geklickt wird
+    document.addEventListener("click", closeDropdown);
   } else {
-    console.error("Element mit ID 'toggleImg' nicht gefunden!");
+    dropdown.style.display = "none";
+    document.removeEventListener("click", closeDropdown);
   }
-});
+}
+
+function closeDropdown(event) {
+  const dropdown = document.getElementById("dropDown_menu");
+  const toggleImg = document.getElementById("toggleImg");
+
+  // Prüfen, ob der Klick außerhalb des Dropdowns und des Icons erfolgt ist
+  if (!dropdown.contains(event.target) && event.target !== toggleImg) {
+    dropdown.style.display = "none";
+    document.removeEventListener("click", closeDropdown);
+  }
+}
+
 
