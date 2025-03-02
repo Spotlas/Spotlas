@@ -1,0 +1,61 @@
+/* **********************************+ General ********************************************** */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  scroll-behavior: smooth;
+  overflow-y: hidden;
+  background-color: var(--primary-bg-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding: 0;
+  margin: 0;
+}
+
+/* **********************************+ Menu ********************************************** */
+
+#backArrow {
+  padding-bottom: 3%;
+  transition: all ease-in-out 200ms;
+}
+
+#backArrow:hover {
+  cursor: pointer;
+  transform: translateY(-5px);
+}
+
+#backArrow_Style {
+  text-decoration: none;
+  color: black;
+}
+
+#settings_Menu_parent {
+  padding-left: 3.5%;
+}
+
+#settings_Menu_child {
+  padding-top: 3%;
+  padding-left: 6%;
+}
+
+.controlers {
+  padding: 4%;
+  transition: all ease-in-out 200ms;
+}
+
+.controlers:hover {
+  cursor: pointer;
+  transform: translateY(-5px);
+}
+
+#settings {
+  display: grid;
+  grid-template-columns: 30% 20%;
+  padding: 5%;
+}
