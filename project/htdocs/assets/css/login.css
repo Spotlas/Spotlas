@@ -58,7 +58,7 @@ body {
     margin: auto;
 }
 
-.main_box input{
+.main_box input, select{
     padding: 0.8vw 1.2vw;
     border: none;
     border-radius: 8px;
@@ -86,8 +86,14 @@ body {
     transform: translateY(-3px);
 }
 
-.main_box div input:focus{
+.main_box div input:focus, select:focus{
     outline: none;
+}
+
+.main_box label{
+    color: white;
+    text-align: left;
+    font-size: var(--font-size-s);
 }
 
 #header{
