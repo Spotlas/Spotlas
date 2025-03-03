@@ -4,8 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LogIn - Register</title>
+
+    <link rel="stylesheet" href="../../assets/css/global.css">
+
+    <link rel="stylesheet" href="../../assets/css/login.css">
+
+    <script src="../../assets/js/login.js" defer></script>
 </head>
 <body>
-    
+
+    <header id="header">
+        <div id="header_spotlas">
+            <a href="../../index.html"><h1>Spotlas</h1></a>
+        </div>
+
+        <div id="header_ImageItems">
+            <div>
+                <a href="../../pages/add_place/add.html"><img src="../../assets/images/icons/add_icon.svg" alt="add" width="40px" height="40px"></a>
+            </div>
+            <div>
+                <a href="../../pages/profile/profile.html"><img src="../../assets/images/icons/profile_icon.svg" alt="profile" width="40px" height="40px"></a>
+            </div>
+        </div>
+    </header>
+
+    <main id="main_login">
+        <div class="main_box" style="padding: 1vw;">
+            <h1>LogIn</h1>
+            <div>
+                <input type="text" id="login_username" placeholder="Username">
+                <input type="password" id="login_password" placeholder="Password">
+                <button onclick="login()">LogIn</button>
+                <p>Don't have an account? <span onclick="getRegister()">Register here</span></p>
+            </div>
+        </div>
+
+        <div class="main_box">
+            <img src="../../assets/images/login/leafs2.jpg" alt="">
+        </div>
+        
+    </main>
+
+    <main id="main_register" style="display: none;">
+        <div class="main_box">
+            <h1>Register</h1>
+            <div>
+                <input type="text" id="register_username" placeholder="Username">
+                <input type="password" id="register_password" placeholder="Password">
+                <input type="password" id="register_password_repeat" placeholder="Repeat Password">
+                <button onclick="register()">Register</button>
+                <p>Already have an account? <span onclick="getLogin()" >LogIn here</span></p>
+            </div>
+            
+        </div>
+
+        <div class="main_box">
+            <img src="../../assets/images/login/leafs2.jpg" alt="">
+        </div>
+        
+    </main>
+
 </body>
 </html>
