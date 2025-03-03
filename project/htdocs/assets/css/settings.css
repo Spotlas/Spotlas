@@ -59,3 +59,8 @@ h6 {
   grid-template-columns: 30% 20%;
   padding: 5%;
 }
+
+#change_button {
+  background-color: rgba(158, 202, 158, 0.598);
+  border: 5% solid rgba(158, 202, 158, 0.598);
+}
