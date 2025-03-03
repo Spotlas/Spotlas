@@ -61,6 +61,6 @@ h6 {
 }
 
 #change_button {
-  background-color: rgba(158, 202, 158, 0.598);
-  border: 5% solid rgba(158, 202, 158, 0.598);
+  background-color: var(--bg-color-greenButton);
+  border: 5% solid var(--bg-color-greenButton);
 }
