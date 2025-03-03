@@ -133,8 +133,8 @@ h1, h2, h3, h4, h5, h6{
     z-index: 11;
     display: flex;
     gap: 2vw;
-    top: 7vh;
-    left: 50%;
+    top: 10vh;
+    left: 46%;
     transform: translateX(-50%);
     align-items: center;
     justify-content: flex-start;
