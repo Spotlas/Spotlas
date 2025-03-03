@@ -127,7 +127,22 @@ h1, h2, h3, h4, h5, h6{
     gap: 5vw;
 }
 
+.add_content{
+    display: flex;
+    flex-direction: column;
+    gap: 5vw;
+}
+
 .add_name_description div{
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    max-width: 15vw;
+
+    max-height: 10vh;
+}
+
+.add_content div{
     display: flex;
     flex-direction: column;
     gap: 1vw;
@@ -142,6 +157,14 @@ h1, h2, h3, h4, h5, h6{
 
 .add_name_description div input, textarea{
     
+    padding: 0.8vw 1.2vw;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px -6px rgba(0,0,0,0.74);
+}
+
+.add_content div input, textarea{
+    
     padding: 0.5vw 1vw;
     border: none;
     border-radius: 8px;
@@ -149,6 +172,10 @@ h1, h2, h3, h4, h5, h6{
 }
 
 .add_name_description div input:focus, textarea:focus{
+    outline: none;
+}
+
+.add_content div input:focus, textarea:focus{
     outline: none;
 }
 
