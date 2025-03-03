@@ -8,13 +8,13 @@ body {
     font-family: var(--font-family);
 }
 
-#main_login {
+.main {
 
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 8vw 20vw 0 20vw;
-    height: 50vh;
+    height: 55vh;
 
     background: rgba(255, 255, 255, 0.334); /* Transparenter Hintergrund */
     backdrop-filter: blur(10px); /* Verschwommener Hintergrund */
@@ -29,11 +29,12 @@ body {
 }
 
 .main_box img{
+    
     width: 100%;
-    height: 50vh;
+    height: 55vh;
     object-fit: cover;
     border-radius: 0 12px 12px 0;
-    zoom: -10%;
+
 }
 
 .main_box h1{
@@ -65,9 +66,7 @@ body {
 }
 
 .main_box{
-    text-align: center;
-
-   
+    text-align: center; 
 }
 
 .main_box span{
@@ -90,28 +89,6 @@ body {
 .main_box div input:focus{
     outline: none;
 }
-
-#main_register {
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 8vw 20vw 0 20vw;
-    height: 50vh;
-
-    background: rgba(255, 255, 255, 0.334); /* Transparenter Hintergrund */
-    backdrop-filter: blur(10px); /* Verschwommener Hintergrund */
-    -webkit-backdrop-filter: blur(10px); /* Verschwommener Hintergrund für Safari */
-    border-radius: 12px; /* Optional: Abgerundete Ecken */
-
-    display: grid;
-    grid-template-columns: 50% 50%;
-    gap: 1vw;
-
-    box-shadow: 13px 14px 14px 0px rgba(214, 214, 214, 0.312);
-}
-
-
 
 #header{
     height: var(--height_header);
