@@ -136,6 +136,10 @@ h1, h2, h3, h4, h5, h6{
     max-height: 10vh;
 }
 
+#add_description{
+    margin-top: 6vw;
+}
+
 .add_name_description div input, textarea{
     
     padding: 0.5vw 1vw;
