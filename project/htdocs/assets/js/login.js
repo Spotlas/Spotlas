@@ -12,3 +12,7 @@ function register() {
     document.getElementById('registerPage2').style.display = 'grid';
     document.getElementById('register').style.display = 'none';
 }
+
+function registerPage2() {
+    window.location.href = '../../index.html';
+}
