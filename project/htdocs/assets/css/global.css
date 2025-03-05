@@ -6,6 +6,7 @@ body {
   padding: 0;
 
   scroll-behavior: smooth;
+  
 }
 
 :root {
@@ -132,4 +133,55 @@ body {
   justify-content: flex-end;
   align-items: center;
   gap: 1vw;
+}
+
+/* Dropdown */
+
+#dropDown_menu {
+  display: none;
+  position: absolute;
+  right: 10px;
+  top: 50px;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  z-index: 12;
+}
+
+#dropDown_menu.show {
+  display: block;
+}
+
+#dropDown_menu a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+}
+
+#dropDown_menu a:hover {
+  background-color: #f0f0f0;
+}
+
+/* Back Button */
+#add_info_backButton{
+  display: flex;
+  margin: 1.3vw 92vw 0 1.3vw;
+
+  transition: all ease-in-out 200ms;
+}
+
+#add_info_backButton:hover{
+  cursor: pointer;
+  transform: translateY(-5px);
+}
+
+#add_info_backButton img{
+  width: 40px;
+  transform: rotate(90deg);
+}
+#add_info_backButton a{
+  text-decoration: none;
+  color: var(--black-color);
 }

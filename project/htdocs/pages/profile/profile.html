@@ -23,6 +23,8 @@
     <!-- Basic CSS -->
     <link rel="stylesheet" href="../../assets/css/profile.css">
 
+    <script src="../../assets/js/global.js" defer></script>
+
     <script src="../../assets/js/profile.js" defer></script>
 
 </head>
@@ -40,8 +42,22 @@
                 <a href="../../pages/profile/profile.html"><img src="../../assets/images/icons/profile_icon.svg" alt="profile" width="40px" height="40px"></a>
             </div>
             <div>
-                <a href=""><img src="../../assets/images/icons/arrow_icon.svg" alt="options" width="40px" height="40px"></a>
-            </div>
+                <img
+                  id="toggleImg"
+                  onclick="showDropdown()"
+                  src="../../assets/images/icons/arrow_icon.svg"
+                  alt="options"
+                  width="40px"
+                  height="40px"
+                />
+                <div style="display: none; z-index: 12" id="dropDown_menu">
+                  <a href="./pages/settings/settings.html">Settings</a>
+                  <a href="./pages/profile/profile.html">Profile</a>
+                  <a href="./pages/helpCenter/helpcenter.html">Help Center</a>
+                  <a href="./pages/login_register/login.html">Login</a>
+                  <a href="./pages/login_register/login.html">Logout</a>
+                </div>
+              </div>
         </div>
     </header>
 
