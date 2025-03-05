@@ -9,6 +9,10 @@ body {
   
 }
 
+*{
+  font-family: var(--font-family);
+}
+
 :root {
     /* Header */
     --height-header : 80px;
@@ -126,6 +130,7 @@ body {
   color: var(--black-color);
   text-decoration: none;
   max-width: 10vw;
+  font-family: var(--font-family);
 }
 
 #homepage_header_ImageItems{
