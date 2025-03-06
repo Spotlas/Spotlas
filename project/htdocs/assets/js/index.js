@@ -12,8 +12,10 @@ const zoom = 7;
 const lat = 47.6965;
 const lng = 13.3458;
 
-const map = L.map("map", { ...config, zoomControl: false }).setView([lat, lng], zoom);
-
+const map = L.map("map", { ...config, zoomControl: false }).setView(
+  [lat, lng],
+  zoom
+);
 
 L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
@@ -35,7 +37,7 @@ const points = [
     lat: 48.20849,
     lng: 16.37208,
     name: "Wien",
-    image: "wien.jpg",
+    image: "../images/testPic/1.png",
     description: "Die Hauptstadt von Österreich.",
   },
   {
@@ -75,8 +77,8 @@ points.forEach((point) => {
   marker.on("click", () => {
     selectedMarker = marker;
     openSidebarWithContent(`
-      <h3>${point.name}</h3>
       <img src="${point.image}" alt="${point.name}" style="width:100%; max-height:150px; object-fit:cover;">
+      <h3 id="header_point">${point.name}</h3>
       <p>${point.description}</p>
       <p><strong>Koordinaten:</strong> ${point.lat}, ${point.lng}</p>
     `);
@@ -119,7 +121,7 @@ map.on("popupclose", () => {
 
 function showDropdown() {
   const dropdown = document.getElementById("dropDown_menu");
-  
+
   if (dropdown.style.display === "none" || dropdown.style.display === "") {
     dropdown.style.display = "block";
 
@@ -141,5 +143,3 @@ function closeDropdown(event) {
     document.removeEventListener("click", closeDropdown);
   }
 }
-
-

@@ -127,6 +127,10 @@ h1, h2, h3, h4, h5, h6{
     box-shadow: 2px 2px 19px -6px rgba(0,0,0,0.74);
 }
 
+#header_point {
+  
+}
+
 /* ***************************************** Filter ************************************ */
 #homepage_section_filter{
     position: absolute;
