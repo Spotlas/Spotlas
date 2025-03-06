@@ -8,12 +8,6 @@ body {
     font-family: var(--font-family);
 }
 
-#homepage_header_spotlas a{
-    text-align: left;
-    color: var(--black-color);
-    text-decoration: none;
-}
-
 .container {
     display: flex;
     max-width: 70vw;
