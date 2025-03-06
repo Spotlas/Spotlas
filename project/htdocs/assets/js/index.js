@@ -37,35 +37,35 @@ const points = [
     lat: 48.20849,
     lng: 16.37208,
     name: "Wien",
-    image: "../images/testPic/1.png",
+    image: "./assets/images/testPic/1.png",
     description: "Die Hauptstadt von Österreich.",
   },
   {
     lat: 47.2682,
     lng: 11.39277,
     name: "Innsbruck",
-    image: "innsbruck.jpg",
+    image: "./assets/images/testPic/2.png",
     description: "Bekannt für Wintersport.",
   },
   {
     lat: 47.80949,
     lng: 13.05501,
     name: "Salzburg",
-    image: "salzburg.jpg",
+    image: "./assets/images/testPic/3.png",
     description: "Geburtsstadt von Mozart.",
   },
   {
     lat: 46.62472,
     lng: 14.30528,
     name: "Klagenfurt",
-    image: "klagenfurt.jpg",
+    image: "./assets/images/testPic/4.png",
     description: "Hauptstadt von Kärnten.",
   },
   {
     lat: 48.30694,
     lng: 14.28583,
     name: "Linz",
-    image: "linz.jpg",
+    image: "./assets/images/testPic/5.png",
     description: "Kulturhauptstadt Europas 2009.",
   },
 ];
@@ -77,7 +77,7 @@ points.forEach((point) => {
   marker.on("click", () => {
     selectedMarker = marker;
     openSidebarWithContent(`
-      <img src="${point.image}" alt="${point.name}" style="width:100%; max-height:150px; object-fit:cover;">
+      <img id="img_point" src="${point.image}" alt="${point.name}" style="width:100%; max-height:150px; object-fit:cover;">
       <h3 id="header_point">${point.name}</h3>
       <p>${point.description}</p>
       <p><strong>Koordinaten:</strong> ${point.lat}, ${point.lng}</p>
