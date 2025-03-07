@@ -77,6 +77,8 @@ points.forEach((point) => {
   marker.on("click", () => {
     selectedMarker = marker;
     openSidebarWithContent(`
+      <img id="img_saveButton" src="./assets/images/testPic/save.png" alt="${point.name}" style="width:8%; max-height:150px; object-fit:cover; padding-bottom: 2%;">
+      <a href="./pages/fullscreen_startseite/fullscreen.html"><img id="img_großButton" src="./assets/images/testPic/grosmachen.png" alt="${point.name}" style="width:8%; max-height:150px; object-fit:cover; padding-left: 80%; padding-bottom: 2%;"></a>
       <img id="img_point" src="${point.image}" alt="${point.name}" style="width:100%; max-height:150px; object-fit:cover;">
       <h3 id="header_point">${point.name}</h3>
       <p>${point.description}</p>
