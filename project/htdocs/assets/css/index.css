@@ -103,12 +103,19 @@ h1, h2, h3, h4, h5, h6{
     box-shadow: 2px 2px 19px -6px rgba(0,0,0,0.74);
 }
 
-#header_point {
-  
+#beschreibung {
+  font-size: smaller;
 }
 
 #img_point {
   border-radius: 10px;
+}
+
+#button_comments {
+  background-color: var(--bg-color-greenButton);
+  border-radius: 10px;
+  text-align: center;
+  
 }
 
 /* ***************************************** Filter ************************************ */
