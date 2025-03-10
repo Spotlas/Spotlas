@@ -86,7 +86,10 @@ points.forEach((point) => {
           <img id="img_point" src="${point.image}" alt="${point.name}" style="width:10%; max-height:150px; object-fit:cover;">
       
       <img src="./assets/images/testPic/bewertung.png" alt="${point.name}" style="width:40%; max-height:150px; object-fit:cover; padding-left: 25.4%;">
+      <div id="parent_grid" >
       <h3 id="header_point">${point.name}</h3>
+      <img src="./assets/images/testPic/sorte.png" alt="${point.name}" style="width:50%; max-height:150px; object-fit:cover; padding-left: 50.4%;">
+      </div>
       <p id="beschreibung">${point.description}</p>
       <p><strong>|</strong> ${point.lat}, ${point.lng} </p>
       <br>

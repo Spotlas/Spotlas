@@ -151,6 +151,11 @@ h1, h2, h3, h4, h5, h6{
   color: black;
 }
 
+#parent_grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
 /* ***************************************** Filter ************************************ */
 #homepage_section_filter{
     position: absolute;
