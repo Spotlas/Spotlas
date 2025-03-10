@@ -104,11 +104,39 @@ h1, h2, h3, h4, h5, h6{
 }
 
 #beschreibung {
-  font-size: smaller;
+  font-size: smaller;  
+}
+
+#img_big {
+  border-radius: 10px;
+}
+
+#img_großButton {
+  transition: all ease-in-out 200ms;
+}
+
+#img_großButton:hover {
+  cursor: pointer;
+  transform: translateY(-5px);
+}
+
+#img_saveButton {
+  transition: all ease-in-out 200ms;
+}
+
+#img_saveButton:hover {
+  cursor: pointer;
+  transform: translateY(-5px);
 }
 
 #img_point {
   border-radius: 10px;
+  transition: all ease-in-out 200ms;
+}
+
+#img_point:hover {
+  cursor: pointer;
+  transform: translateY(-5px);
 }
 
 #button_comments {
@@ -116,6 +144,16 @@ h1, h2, h3, h4, h5, h6{
   border-radius: 10px;
   text-align: center;
   
+}
+
+#button_comments_link {
+  text-decoration: none;
+  color: black;
+}
+
+#parent_grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
 }
 
 /* ***************************************** Filter ************************************ */
