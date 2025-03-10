@@ -42,7 +42,7 @@
     height: auto;
     display: grid;
     grid-template-columns: 30% 70%;
-    gap: 3vw;
+    gap: 1vw;
     margin: 1vw;
 }
 
@@ -51,6 +51,12 @@
     margin: 1vw;
     padding-right: 3vw;
     border-right: solid black 1px;
+}
+
+#fullscreen_main_right{
+    height: auto;
+    margin: 1vw;
+    padding-left: 3vw;
 }
 
 /* Kommentare */
@@ -66,14 +72,14 @@
 }
 
 #comments {
-    margin-bottom: 20px;
+    margin-bottom: 1vw;
 }
 
 .comment {
     padding: 10px;
     margin-bottom: 10px;
     background: #f9f9f9;
-    border-left: 5px solid #007BFF;
+    border-left: 5px solid var(--secondary-color);
     border-radius: 5px;
 }
 
@@ -95,10 +101,9 @@ textarea {
     resize: none;
 }
 
-button {
-    margin-top: 10px;
-    padding: 10px;
-    background: #007BFF;
+#submit {
+    padding: 0.3vw;
+    background: var(--accent-color);
     color: white;
     border: none;
     border-radius: 5px;
@@ -106,6 +111,6 @@ button {
     height: auto;
 }
 
-button:hover {
-    background: #0056b3;
+#submit:hover {
+    background: var(--accent-color);
 }
