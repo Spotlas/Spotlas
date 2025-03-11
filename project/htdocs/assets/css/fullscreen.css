@@ -1,7 +1,5 @@
-
-/* Foto Gallerie test */
-#preview_images {
-   
+body{
+    background-color: var(--primary-bg-color);
 }
 
 #mainImg {
@@ -113,4 +111,15 @@ textarea {
 
 #submit:hover {
     background: var(--accent-color);
+}
+
+.flex_box{
+    display: flex;
+    gap: 5vw;
+    align-items: center;
+}
+
+#description_spot{
+    margin-top: 2vw;
+    max-width: 15vw;
 }
