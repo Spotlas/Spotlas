@@ -20,7 +20,7 @@ if (isset($_GET['userId']) && is_numeric($_GET['userId'])) {
         $response['code'] = 200;
     }
     
-    // Locations abrufen, die vom Nutzer erstellt wurden (Feld: created_by)
+    // Locations abrufen, die vom Nutzer erstellt wurden 
     $sqlLocations = "SELECT * FROM Locations WHERE created_by = $userId";
     $resultLocations = $conn->query($sqlLocations);
     if ($resultLocations && $resultLocations->num_rows > 0) {
