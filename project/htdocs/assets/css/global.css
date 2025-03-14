@@ -6,12 +6,12 @@ body {
   padding: 0;
 
   scroll-behavior: smooth;
-  
 }
 
 *{
   font-family: var(--font-family);
 }
+
 
 :root {
     /* Header */
