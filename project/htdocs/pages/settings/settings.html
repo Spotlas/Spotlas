@@ -53,8 +53,8 @@
         </div>
 
         <div id="settings_Menu_child">
-          <div onclick="showEditProfil()" class="controlers">Profil bearbeiten</div>
-          <div onclick="showKontoVerwaltung()" class="controlers">Kontoverwaltung</div>
+          <div id="editp" onclick="showEditProfil()" class="controlers">Profil bearbeiten</div>
+          <div id="kontov" onclick="showKontoVerwaltung()" class="controlers">Kontoverwaltung</div>
         </div>
       </div>
 
@@ -63,10 +63,12 @@
       </div>
     </div>
 
+   
+
     <div class="overlay" id="usernameOverlay" style="display: none;">
       <div class="input-box">
-        <h3>Neuen Benutzernamen eingeben:</h3>
-        <input type="text" id="newUserName" placeholder="Neuer Benutzername">
+        <h3>Neue Eingabe hier:</h3>
+        <input type="text" id="newUserName" placeholder="Ihre Eingabe">
         <br>
         <button class="buttons" onclick="saveUserName()">Speichern</button>
         <button class="buttons" onclick="closeOverlay()">Abbrechen</button>

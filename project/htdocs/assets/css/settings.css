@@ -20,6 +20,26 @@ h6 {
 
 /* **********************************+ Menu ********************************************** */
 
+#homepage_header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 99%;
+  height: 60px; 
+  z-index: 1000; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+#settings {
+  margin-top: 70px; /* Abstand nach unten, damit der Inhalt nicht unter den Header rutscht */
+}
+
+
+
 #backArrow {
   padding-bottom: 3%;
   transition: all ease-in-out 200ms;
@@ -125,3 +145,5 @@ h6 {
   cursor: pointer;
   transform: translateY(-5px);
 }
+
+
