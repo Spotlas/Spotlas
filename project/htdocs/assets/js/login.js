@@ -1,6 +1,7 @@
 function getLogin() {
     document.getElementById('register').style.display = 'none';
     document.getElementById('login').style.display = 'grid';
+    document.getElementById('registerPage2').style.display = 'none';
 }
 
 function getRegister() {

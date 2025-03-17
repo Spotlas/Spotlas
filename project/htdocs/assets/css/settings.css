@@ -4,7 +4,7 @@ body {
   padding: 0;
   font-family: var(--font-family);
   scroll-behavior: smooth;
-  overflow-y: hidden;
+  overflow-y: auto;
   background-color: var(--primary-bg-color);
 }
 
@@ -19,6 +19,26 @@ h6 {
 }
 
 /* **********************************+ Menu ********************************************** */
+
+#homepage_header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 99%;
+  height: 60px; 
+  z-index: 1000; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+#settings {
+  margin-top: 70px; /* Abstand nach unten, damit der Inhalt nicht unter den Header rutscht */
+}
+
+
 
 #backArrow {
   padding-bottom: 3%;
@@ -63,4 +83,65 @@ h6 {
 #change_button {
   background-color: var(--bg-color-greenButton);
   border: 5% solid var(--bg-color-greenButton);
+}
+
+/* **********************************+ ChangeUsername ********************************************** */
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Graue Schattierung */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.input-box input {
+  padding: 10px;
+  width: 80%;
+  margin-bottom: 10px;
+}
+
+.input-box button {
+  margin: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.buttons {
+  background-color: var(--bg-color-greenButton);
+  border-radius: 20px;
+  border-color: var(--bg-color-greenButton);
+  transition: all ease-in-out 200ms;
+}
+
+.buttons:hover {
+  cursor: pointer;
+  transform: translateY(-5px);
+}
+
+
+#profilPic {
+  transition: all ease-in-out 200ms;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#profilPic:hover {
+  cursor: pointer;
+  transform: translateY(-5px);
 }

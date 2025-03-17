@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="./assets/css/index.css" />
 
     <!-- Karten JavaScript -->
+     <script src="./assets/js/fetches.js" defer></script>
     <script src="./assets/js/index.js" defer></script>
   </head>
   <body>
@@ -97,24 +98,24 @@
         />
       </div>
 
-      <div id="homepage_filters">
+      <div onclick="fetchLocationsByCategory('food')" id="homepage_filters">
         <div class="homepage_filter">
           <img src="./assets/images/icons/filter/food.svg" alt="" />
           <h2>Food</h2>
         </div>
-        <div class="homepage_filter">
+        <div onclick="fetchLocationsByCategory('waters')" class="homepage_filter">
           <img src="./assets/images/icons/filter/waters.svg" alt="" />
           <h2>Waters</h2>
         </div>
-        <div class="homepage_filter">
+        <div onclick="fetchLocationsByCategory('rating')" class="homepage_filter">
           <img src="./assets/images/icons/filter/rating.svg" alt="" />
           <h2>Rating</h2>
         </div>
-        <div class="homepage_filter">
+        <div onclick="fetchLocationsByCategory('stays')" class="homepage_filter">
           <img src="./assets/images/icons/filter/stays.svg" alt="" />
           <h2>Stays</h2>
         </div>
-        <div class="homepage_filter">
+        <div onclick="fetchLocationsByCategory('mountains')" class="homepage_filter">
           <img
             src="./assets/images/icons/filter/mountains-sun-svgrepo-com.svg"
             alt=""

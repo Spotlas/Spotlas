@@ -9,6 +9,8 @@
 
     <link rel="stylesheet" href="../../assets/css/login.css">
 
+    <script src="../../assets/js/fetches.js" defer></script>
+
     <script src="../../assets/js/login.js" defer></script>
 </head>
 <body>
@@ -64,13 +66,10 @@
                 <input type="text" id="register_username" placeholder="Username">
                 <label for="register_birthday">Day of Birth</label>
                 <input type="date" id="register_birthday" placeholder="Birthday">
-                <select id="register_gender">
-                    <option value="" disabled selected>Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                </select>
+
                 <button onclick="registerPage2()">Register</button>
+
+                <p>Already have an account? <span onclick="getLogin()" >LogIn here</span></p>
             </div>
             
         </div>

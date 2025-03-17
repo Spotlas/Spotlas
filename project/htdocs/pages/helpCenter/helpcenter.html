@@ -9,6 +9,8 @@
 
     <link rel="stylesheet" href="../../assets/css/helpcenter.css">
 
+    <script src="../../assets/js/fetches.js" defer></script>
+
     <script src="../../assets/js/global.js" defer></script>
 
     <script src="../../assets/js/helpcenter.js" defer></script>
@@ -68,10 +70,22 @@
         
         <!-- Fragenbereich -->
         <main class="content">
-            <div class="ask-question">
-            <input type="text" placeholder="Ask a question...">
-            <button>Send</button>
-            </div>
+            <form
+            action="https://formspree.io/f/mwplkzzy"
+            method="POST"
+            >
+                <label>
+                    Your email:
+                    <input type="email" name="email" placeholder="max.mustermann@gmail.com">
+                </label>
+                <label>
+                    Your message:
+                    <textarea class="ask-question" name="message" placeholder="Your Questions..."></textarea>
+                </label>
+                <!-- your other form fields go here -->
+                <button type="submit">Send</button>
+            </form>
+            
             
             <section class="questions">
                 <div class="accordion">
