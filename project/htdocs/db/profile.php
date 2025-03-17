@@ -34,3 +34,4 @@ if (isset($_GET['userId']) && is_numeric($_GET['userId'])) {
 echo json_encode($response);
 $conn->close();
 ?>
+
