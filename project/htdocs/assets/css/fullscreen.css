@@ -113,6 +113,25 @@ textarea {
     background: var(--accent-color);
 }
 
+/* Infos zum Ort */
+
+#category_spot{
+    padding: 0 0.8vw;
+    background-color: rgb(70, 70, 255);
+    border-radius: 12px 0 0 12px;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    gap: 0.3vw;
+}
+
+#category_spot svg{
+    width: 1.5vw;
+    height: 1.5vw;
+    margin-right: 0.2vw;
+}
+
 .flex_box{
     display: flex;
     gap: 5vw;
