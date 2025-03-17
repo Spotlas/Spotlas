@@ -18,16 +18,34 @@ function showEditProfil() {
 
             <div>
                 <br><br>
+                <label style="font-size: 20px;" for="vorname">Vorname</label>
+                <label style="font-size: 20px;" for="nachname">Nachname</label>
+                <p id="vorname">Viki</p>
+                <button class="buttons" onclick="changeUserName('vorname')">Ändern</button>
+                <p id="nachname">V</p>
+                <button class="buttons" onclick="changeUserName('nachname')">Ändern</button>
+            </div>
+
+            <div>
+                <br><br>
                 <label style="font-size: 20px;" for="benutzername">Benutzername</label>
                 <p id="username">@viktoria.explorer69</p>
                 <button class="buttons" onclick="changeUserName('username')">Ändern</button>
             </div>
+
+            <div>
+                <br><br>
+                <label style="font-size: 20px;" for="benutzername">Benutzername</label>
+                <p id="username">@viktoria.explorer69</p>
+                <button class="buttons" onclick="changeUserName('username')">Ändern</button>
+            </div>
+            
         </div>
     `;
 }
 
   
-  //showEditProfil();
+  showEditProfil();
   
   let currentField = ""; // Speichert das aktuelle Feld, das geändert wird
 
@@ -64,7 +82,7 @@ function previewProfilePicture(event) {
 
 /* **********************************+ Kontoverwaltung ********************************************** */
 
-showKontoVerwaltung();
+//showKontoVerwaltung();
 
 function showKontoVerwaltung() {
     document.getElementById("outp").innerHTML = `
