@@ -35,9 +35,9 @@ function showEditProfil() {
 
             <div>
                 <br><br>
-                <label style="font-size: 20px;" for="benutzername">Benutzername</label>
-                <p id="username">@viktoria.explorer69</p>
-                <button class="buttons" onclick="changeUserName('username')">Ändern</button>
+                <label style="font-size: 20px;" for="benutzername">Kurzinfo</label>
+                <p style="font-size: 13px; color: grey;" id="info">Ich bin leidenschaftlich kreativ und liebe es, Inspiration zu teilen! Auf meinem Pinterest findest du alles von DIY-Projekten über Interieur-Ideen bis hin zu Fashion und Lifehacks. Ich bin immer auf der Suche nach neuen Ideen und freue mich, meine Entdeckungen mit anderen zu teilen. Lass dich von meinen Pins inspirieren!</p>
+                <button class="buttons" onclick="changeUserName('info')">Ändern</button>
             </div>
             
         </div>
