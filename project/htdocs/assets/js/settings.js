@@ -110,7 +110,7 @@ function showKontoVerwaltung() {
               <br>
               <br>
               <div>
-              <label style="font-size: 20px;" for="password">Geschlächt</label>
+              <label style="font-size: 20px;" for="gesch">Geschlecht</label>
                 <form>
                     <input type="radio" id="weiblich" name="geschlecht" value="Weiblich">
                     <label for="weiblich">Weiblich</label>
@@ -119,6 +119,13 @@ function showKontoVerwaltung() {
                     <input type="radio" id="divers" name="geschlecht" value="divers">
                     <label for="divers">Divers</label>
                 </form>
+              </div>
+
+              <div>
+                  <br><br>
+                  <label style="font-size: 20px;" for="land">Land</label>
+                  <p id="land">Österreich</p>
+                  <button class="buttons" onclick="changeUserName('land')">Ändern</button>
               </div>
           </div>
     `;
