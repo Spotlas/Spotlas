@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Spotlas" company="HTL Leonding" webLink="http://" view-date="2025-02-03" view-index="0" gantt-divider-location="310" resource-divider-location="300" version="3.3.3312" locale="de_DE">
+<?xml version="1.0" encoding="UTF-8"?><project name="Spotlas" company="HTL Leonding" webLink="http://" view-date="2024-12-30" view-index="0" gantt-divider-location="280" resource-divider-location="300" version="3.3.3312" locale="de_DE">
     <description><![CDATA[Projekt]]></description>
-    <view zooming-state="default:6" id="gantt-chart">
-        <field id="tpd3" name="Vorgang" width="147" order="0"/>
-        <field id="tpd4" name="Anfang" width="71" order="1"/>
-        <field id="tpd5" name="Ende" width="76" order="2"/>
+    <view zooming-state="default:5" id="gantt-chart">
+        <field id="tpd3" name="Vorgang" width="132" order="0"/>
+        <field id="tpd4" name="Anfang" width="63" order="1"/>
+        <field id="tpd5" name="Ende" width="69" order="2"/>
         <field id="tpd15" name="Notizen" width="20" order="3"/>
         <option id="filter.completedTasks" value="false"/>
         <option id="filter.dueTodayTasks" value="false"/>
         <option id="filter.overdueTasks" value="false"/>
         <option id="filter.inProgressTodayTasks" value="false"/>
-        <timeline><![CDATA[0,12,14,16,1,15,2]]></timeline>
+        <timeline><![CDATA[0,16,12,1,15,2,14]]></timeline>
         <option id="color.recent"><![CDATA[#ccffcc #ccccff #ff3333 #ff0033 #ccff00 #ff0000 #ccffff #ff66ff]]></option>
     </view>
     <view id="resource-table">
@@ -40,7 +40,7 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
-        <task id="0" uid="7a066ddda1f84b82803ead74836f0668" name="Datenbank" color="#ccffff" meeting="false" start="2025-01-06" duration="40" complete="100" thirdDate="2025-01-06" thirdDate-constraint="1" priority="2" expand="false">
+        <task id="0" uid="7a066ddda1f84b82803ead74836f0668" name="Datenbank" color="#ccffff" meeting="false" start="2025-01-06" duration="40" complete="100" thirdDate="2025-01-06" thirdDate-constraint="1" priority="2" expand="true">
             <depend id="32" type="2" difference="0" hardness="Strong"/>
             <task id="1" uid="4ec156d0af314cf3bcdd893f1d8561ea" name="Anforderungsanalyse" color="#ccffff" meeting="false" start="2025-01-06" duration="1" complete="100" thirdDate="2025-01-06" thirdDate-constraint="1" expand="true">
                 <depend id="2" type="2" difference="0" hardness="Strong"/>
