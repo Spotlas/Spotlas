@@ -1,6 +1,10 @@
 /* **********************************+ Profil bearbeiten ********************************************** */
 
 function showEditProfil() {
+    const textElement = document.getElementById("kontov");
+    textElement.setAttribute("style", "text-decoration: none;");
+    const textElement2 = document.getElementById("editp");
+    textElement2.setAttribute("style", "text-decoration: underline;");
     document.getElementById("outp").innerHTML = `
         <div id="profilBearbeiten">
             <label style="font-size: 30px;" for="profilbild">Profil bearbeiten</label> 
@@ -45,7 +49,7 @@ function showEditProfil() {
 }
 
   
-  showEditProfil();
+  //showEditProfil();
   
   let currentField = ""; // Speichert das aktuelle Feld, das geändert wird
 
@@ -82,9 +86,13 @@ function previewProfilePicture(event) {
 
 /* **********************************+ Kontoverwaltung ********************************************** */
 
-//showKontoVerwaltung();
+showKontoVerwaltung();
 
 function showKontoVerwaltung() {
+    const textElement = document.getElementById("editp");
+    textElement.setAttribute("style", "text-decoration: none;");
+    const textElement2 = document.getElementById("kontov");
+    textElement2.setAttribute("style", "text-decoration: underline;");
     document.getElementById("outp").innerHTML = `
     <div id="profilBearbeiten">
               <label style="font-size: 30px;" for="profilbild">Kontoverwaltung</label> 
@@ -98,6 +106,19 @@ function showKontoVerwaltung() {
                   <label style="font-size: 20px;" for="password">Passwort</label>
                   <p id="password">1234password</p>
                   <button class="buttons" onclick="changeUserName('password')">Ändern</button>
+              </div>
+              <br>
+              <br>
+              <div>
+              <label style="font-size: 20px;" for="password">Geschlächt</label>
+                <form>
+                    <input type="radio" id="weiblich" name="geschlecht" value="Weiblich">
+                    <label for="weiblich">Weiblich</label>
+                    <input type="radio" id="männlich" name="geschlecht" value="männlich">
+                    <label for="männlich">Männlich</label>
+                    <input type="radio" id="divers" name="geschlecht" value="divers">
+                    <label for="divers">Divers</label>
+                </form>
               </div>
           </div>
     `;
