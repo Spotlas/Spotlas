@@ -146,3 +146,24 @@ textarea {
 .info_box{
     
 }
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+.rating input {
+    display: none;
+}
+.rating label {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: gray;
+    transition: color 0.3s;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+.rating input:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+    color: gold;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.6);
+}
