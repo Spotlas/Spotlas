@@ -14,20 +14,24 @@ function applyUnderlineEffect(elementId) {
     underline.style.height = "2px";
     underline.style.backgroundColor = "black";
     underline.style.transform = "scaleX(0)";
-    underline.style.transition = "transform 0.3s ease-in-out";
+    underline.style.transition = "transform 0.2s ease-in-out";
     underline.classList.add("underlineEffect");
 
     element.appendChild(underline);
+
+    setTimeout(() => {
+        underline.style.transform = "scaleX(1)";
+    }, 10);
+
+
 }
 
 
 /* **********************************+ Profil bearbeiten ********************************************** */
 
 function showEditProfil() {
-    const textElement = document.getElementById("kontov");
-    textElement.setAttribute("style", "text-decoration: none;");
-    const textElement2 = document.getElementById("editp");
-    textElement2.setAttribute("style", "text-decoration: underline;");
+    document.getElementById("kontov").querySelector(".underlineEffect")?.remove();
+    applyUnderlineEffect("editp");
     document.getElementById("outp").innerHTML = `
         <div id="profilBearbeiten">
             <label style="font-size: 30px;" for="profilbild">Profil bearbeiten</label> 
@@ -112,10 +116,8 @@ function previewProfilePicture(event) {
 showKontoVerwaltung();
 
 function showKontoVerwaltung() {
-    const textElement = document.getElementById("editp");
-    textElement.setAttribute("style", "text-decoration: none;");
-    const textElement2 = document.getElementById("kontov");
-    textElement2.setAttribute("style", "text-decoration: underline;");
+    document.getElementById("editp").querySelector(".underlineEffect")?.remove();
+    applyUnderlineEffect("kontov");
     document.getElementById("outp").innerHTML = `
     <div id="profilBearbeiten">
               <label style="font-size: 30px;" for="profilbild">Kontoverwaltung</label> 
