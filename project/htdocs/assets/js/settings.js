@@ -1,3 +1,26 @@
+/* **********************************+ Underline Effekt ********************************************** */
+
+function applyUnderlineEffect(elementId) {
+    const element = document.getElementById(elementId);
+    element.style.position = "relative";
+    element.style.display = "inline-block";
+    element.style.textDecoration = "none";
+
+    let underline = document.createElement("span");
+    underline.style.position = "absolute";
+    underline.style.left = "0";
+    underline.style.bottom = "-2px";
+    underline.style.width = "100%";
+    underline.style.height = "2px";
+    underline.style.backgroundColor = "black";
+    underline.style.transform = "scaleX(0)";
+    underline.style.transition = "transform 0.3s ease-in-out";
+    underline.classList.add("underlineEffect");
+
+    element.appendChild(underline);
+}
+
+
 /* **********************************+ Profil bearbeiten ********************************************** */
 
 function showEditProfil() {
