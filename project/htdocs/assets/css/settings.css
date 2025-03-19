@@ -147,3 +147,11 @@ h6 {
 }
 
 
+#settings_Menu_child {
+  padding-top: 3%;
+  padding-left: 6%;
+  display: flex;
+  flex-direction: column;
+  margin-right: 30%;
+  gap: 10px;
+}
