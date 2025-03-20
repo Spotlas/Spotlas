@@ -7,12 +7,15 @@
 let config = {
   minZoom: 3,
   maxZoom: 30,
+  zoomControl: false
 };
 const zoom = 7;
 const lat = 47.6965;
 const lng = 13.3458;
 
-const map = L.map("map", config).setView([lat, lng], zoom);
+
+
+const map = L.map("map", config).setView([lat, lng],zoom);
 
 L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
