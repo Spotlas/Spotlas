@@ -1,84 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profile</title>
 
-
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
 
-     <!-- Font -->
+    <!-- Font -->
 
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap"
+      rel="stylesheet"
+    />
 
-     <!-- Globale Variablen -->
-    <link rel="stylesheet" href="../../assets/css/global.css">
+    <!-- Globale Variablen -->
+    <link rel="stylesheet" href="../../assets/css/global.css" />
 
     <!-- Basic CSS -->
-    <link rel="stylesheet" href="../../assets/css/profile.css">
+    <link rel="stylesheet" href="../../assets/css/profile.css" />
 
     <script src="../../assets/js/fetches.js" defer></script>
 
     <script src="../../assets/js/global.js" defer></script>
 
     <script src="../../assets/js/profile.js" defer></script>
-
-</head>
-<body>
+  </head>
+  <body>
     <header id="homepage_header">
-        <div id="homepage_header_spotlas">
-            <a href="../../index.html"><h1>Spotlas</h1></a>
-        </div>
+      <div id="homepage_header_spotlas">
+        <a href="../../index.html"><h1>Spotlas</h1></a>
+      </div>
 
-        <div id="homepage_header_ImageItems">
-            <div>
-                <a href="../../pages/add_place/add.html"><img src="../../assets/images/icons/add_icon.svg" alt="add" width="40px" height="40px"></a>
-            </div>
-            <div>
-                <a href="../../pages/profile/profile.html"><img src="../../assets/images/icons/profile_icon.svg" alt="profile" width="40px" height="40px"></a>
-            </div>
-            <div>
-                <img
-                  id="toggleImg"
-                  onclick="showDropdown()"
-                  src="../../assets/images/icons/arrow_icon.svg"
-                  alt="options"
-                  width="40px"
-                  height="40px"
-                />
-                <div style="display: none; z-index: 12" id="dropDown_menu">
-                  <a href="../settings/settings.html">Settings</a>
-                  <a href="../profile/profile.html">Profile</a>
-                  <a href="../helpCenter/helpcenter.html">Help Center</a>
-                  <a href="../login_register/login.html">Login</a>
-                  <a href="../login_register/login.html">Logout</a>
-                </div>
-              </div>
+      <div id="homepage_header_ImageItems">
+        <div>
+          <a href="../../pages/add_place/add.html"
+            ><img
+              src="../../assets/images/icons/add_icon.svg"
+              alt="add"
+              width="40px"
+              height="40px"
+          /></a>
         </div>
+        <div>
+          <a href="../../pages/profile/profile.html"
+            ><img
+              src="../../assets/images/icons/profile_icon.svg"
+              alt="profile"
+              width="40px"
+              height="40px"
+          /></a>
+        </div>
+        <div>
+          <img
+            id="toggleImg"
+            onclick="showDropdown()"
+            src="../../assets/images/icons/arrow_icon.svg"
+            alt="options"
+            width="40px"
+            height="40px"
+          />
+          <div style="display: none; z-index: 12" id="dropDown_menu">
+            <a href="../settings/settings.html">Settings</a>
+            <a href="../profile/profile.html">Profile</a>
+            <a href="../helpCenter/helpcenter.html">Help Center</a>
+            <a href="../login_register/login.html">Login</a>
+            <a href="../login_register/login.html">Logout</a>
+          </div>
+        </div>
+      </div>
     </header>
 
     <main id="profile_main">
-        <section id="profile_infoSection">
-            <div onclick="backHome()" id="profile_info_backButton">
-                <img src="../../assets/images/icons/arrow_icon.svg" alt="">
-                <p>Back</p>
-            </div>
+      <section id="profile_infoSection">
+        <div onclick="backHome()" id="profile_info_backButton">
+          <img src="../../assets/images/icons/arrow_icon.svg" alt="" />
+          <p>Back</p>
+        </div>
+      </section>
 
-        </section>
-
-        <section id="profile_contentSection">
-
-        </section>
+      <section id="profile_contentSection"></section>
     </main>
 
+    <div id="profile_infos">
+      <img
+        id="profilPic"
+        src="../../assets/images/testPic/Bildschirmfoto 2025-03-20 um 08.33.43.png"
+        alt="profilPic"
+        width="13%"
+      />
+    </div>
+
     <footer>
-        <div id="homepage_footer"></div>
+      <div id="homepage_footer"></div>
     </footer>
-</body>
+  </body>
 </html>
