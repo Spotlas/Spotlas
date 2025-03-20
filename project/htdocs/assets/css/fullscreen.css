@@ -115,6 +115,11 @@ textarea {
 
 /* Infos zum Ort */
 
+#name_spot{
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+}
+
 #category_spot{
     padding: 0 0.8vw;
     background-color: rgb(70, 70, 255);
@@ -133,19 +138,31 @@ textarea {
 }
 
 .flex_box{
+    margin-top: 1vw;
     display: flex;
-    gap: 5vw;
+    gap: 4vw;
     align-items: center;
 }
 
 #description_spot{
     margin-top: 2vw;
-    max-width: 15vw;
+    max-width: 20vw;
+}
+
+#allInfoBox{
+    padding-top: 1vw;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin-top: 0;
 }
 
 .info_box{
-    
+    display: flex;
+    gap: 1vw;
+    margin-top: 1vw;
+    flex-direction: column;    
 }
+
 .rating {
     display: flex;
     flex-direction: row-reverse;
