@@ -12,10 +12,7 @@ const zoom = 7;
 const lat = 47.6965;
 const lng = 13.3458;
 
-const map = L.map("map", { ...config, zoomControl: false }).setView(
-  [lat, lng],
-  zoom
-);
+const map = L.map("map", config).setView([lat, lng], zoom);
 
 L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
@@ -34,6 +31,7 @@ function openSidebarWithContent(content) {
 
 const points = [
   {
+    id: 1,
     lat: 48.20849,
     lng: 16.37208,
     name: "Wien",
@@ -41,6 +39,7 @@ const points = [
     description: "Die Hauptstadt von Österreich.",
   },
   {
+    id: 2,
     lat: 47.2682,
     lng: 11.39277,
     name: "Innsbruck",
@@ -48,6 +47,7 @@ const points = [
     description: "Bekannt für Wintersport.",
   },
   {
+    id: 3,
     lat: 47.80949,
     lng: 13.05501,
     name: "Salzburg",
@@ -55,6 +55,7 @@ const points = [
     description: "Geburtsstadt von Mozart.",
   },
   {
+    id: 4,
     lat: 46.62472,
     lng: 14.30528,
     name: "Klagenfurt",
@@ -62,6 +63,7 @@ const points = [
     description: "Hauptstadt von Kärnten.",
   },
   {
+    id: 5,
     lat: 48.30694,
     lng: 14.28583,
     name: "Linz",
@@ -78,7 +80,7 @@ points.forEach((point) => {
     selectedMarker = marker;
     openSidebarWithContent(`
       <img id="img_saveButton" src="./assets/images/testPic/save.png" alt="${point.name}" style="width:8%; max-height:150px; object-fit:cover; padding-bottom: 2%;">
-      <a href="./pages/fullscreen_startseite/fullscreen.html"><img id="img_großButton" src="./assets/images/testPic/grosmachen.png" alt="${point.name}" style="width:8%; max-height:150px; object-fit:cover; padding-left: 80%; padding-bottom: 2%;"></a>
+      <a href="./pages/fullscreen_startseite/fullscreen.html?id=${point.id}"><img id="img_großButton" src="./assets/images/testPic/grosmachen.png" alt="${point.name}" style="width:8%; max-height:150px; object-fit:cover; padding-left: 80%; padding-bottom: 2%;"></a>
       <img id="img_big" src="${point.image}" alt="${point.name}" style="width:100%; max-height:150px; object-fit:cover;">
       
           <img id="img_point" src="${point.image}" alt="${point.name}" style="width:10%; max-height:150px; object-fit:cover;">

@@ -354,11 +354,61 @@ function loadAll(){
 function goToAdd() {
     window.location.href = './add.html';
 }
+            
 
-function gotoHome() {
-    window.location.href = '../../index.html';
-}
+            function gotoHome() {
+                console.log("gotoHome() wurde aufgerufen");
+            
+                // Setze die Werte zuerst in den HTML-Elementen
+                document.getElementById('placeName').innerHTML = sessionStorage.getItem('name');
+                document.getElementById('placeDescription').innerHTML = sessionStorage.getItem('Description');
+                document.getElementById('placeCategory').innerHTML = sessionStorage.getItem('Category');
+                document.getElementById('latitude2').innerHTML = sessionStorage.getItem('latitude');
+                document.getElementById('longitude2').innerHTML = sessionStorage.getItem('longitude');
+                document.getElementById('placeAddress').innerHTML = sessionStorage.getItem('Address');
+                document.getElementById('placePriceRange').innerHTML = sessionStorage.getItem('Price');
+                document.getElementById('placeOpeningHours').innerHTML = sessionStorage.getItem('OpeningHours');
+                document.getElementById('placeSeason').innerHTML = sessionStorage.getItem('Season');
+                document.getElementById('placeAccessibility').innerHTML = sessionStorage.getItem('Accessibility');
+                document.getElementById('placeWebsiteUrl').innerHTML = `<a href="https://${sessionStorage.getItem('Website')}" target="_blank">${sessionStorage.getItem('Website')}</a>`;
+                document.getElementById('placeSpecialFeatures').innerHTML = sessionStorage.getItem('SpecialFeatures');
+            
+                // Erstelle das newLocation-Objekt
+                const newLocation = {
+                    name: sessionStorage.getItem('name'),
+                    description: sessionStorage.getItem('Description'),
+                    category_id: sessionStorage.getItem('Category'),
+                    latitude: sessionStorage.getItem('latitude'),
+                    longitude: sessionStorage.getItem('longitude'),
+                    address: sessionStorage.getItem('Address'),
+                    price_range: sessionStorage.getItem('Price'),
+                    opening_hours: sessionStorage.getItem('OpeningHours'),
+                    season: sessionStorage.getItem('Season'),
+                    accessibility: sessionStorage.getItem('Accessibility'),
+                    website_url: sessionStorage.getItem('Website'),
+                    special_features: sessionStorage.getItem('SpecialFeatures'),
+                    created_by: 1,
+                    status_id: 1 // optional
+                };
+            
+                uploadNewLocation(newLocation);
+            }
 
 function clickComments() {
     console.log('Checkbox clicked');
+}
+
+function uploadNewLocation(locationData) {
+    return fetch('../../api/upload.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(locationData)
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Neue Location hochgeladen:', data);
+        })
+        .catch(error => console.error('Fehler beim Hochladen der neuen Location:', error));
 }

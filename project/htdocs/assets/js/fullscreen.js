@@ -7,6 +7,15 @@ document.querySelectorAll('.rating input').forEach((radio) => {
     });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const pointId = params.get("id");
+    if (pointId) {
+      console.log("Geladene ID:", pointId);
+        fetchLocationDetails(pointId);
+    }
+  });
+
 // Holt detaillierte Informationen zu einer Location inkl. Kommentare und Bilder
 function fetchLocationDetails(id) {
     fetch(`../../api/location.php?action=details&id=${id}`)
@@ -21,17 +30,20 @@ function fetchLocationDetails(id) {
             //const location = data.location;
             document.querySelector('#name_spot').innerHTML = location.name;
             document.querySelectorAll('.rating input').forEach(input => {
-                if (parseInt(input.value) === average_rating) {
+                if (parseInt(input.value) === rating) {
                     input.checked = true;
                 }
             });
             document.querySelector('#description_spot').innerHTML = location.description;
-            document.querySelector('#name_spot').innerHTML = location.name;
+            document.querySelector('#name_category').innerHTML = location.name + ', ' + location.category;
+            document.querySelector('#website_url').innerHTML = location.website_url;
+            document.querySelector('#openinghours').innerHTML = "Openinghours: " + location.opening_hours;
+            
 
         })
         .catch(error => console.error('Error fetching location details:', error));
   }
 
-document.addEventListener('DOMContentLoaded', () => {
+/* document.addEventListener('DOMContentLoaded', () => {
     fetchLocationDetails(2);
-});
+}); */
