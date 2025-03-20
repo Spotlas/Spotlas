@@ -365,8 +365,11 @@ function goToAdd() {
   window.location.href = "./add.html";
 }
 
-function saveLocation() {
-  console.log("gotoHome() wurde aufgerufen");
+async function saveLocation() {
+  console.log("saveLocation() wurde aufgerufen");
+  console.log("Place Name:", sessionStorage.getItem("name"));
+console.log("Place Description:", sessionStorage.getItem("Description"));
+
 
   // Setze die Werte zuerst in den HTML-Elementen
   document.getElementById("placeName").innerHTML =
@@ -401,7 +404,7 @@ function saveLocation() {
   const newLocation = {
     name: sessionStorage.getItem("name"),
     description: sessionStorage.getItem("Description"),
-    category_id: sessionStorage.getItem("Category"),
+    category_id: 2,
     latitude: sessionStorage.getItem("latitude"),
     longitude: sessionStorage.getItem("longitude"),
     address: sessionStorage.getItem("Address"),
@@ -415,26 +418,29 @@ function saveLocation() {
     status_id: 1, // optional
   };
 
+  console.log("New location:", newLocation);
+
+  // Warte auf den Upload und leite dann weiter
   uploadNewLocation(newLocation);
 }
 
-function clickComments() {
-  console.log("Checkbox clicked");
-}
-
 function uploadNewLocation(locationData) {
-  return fetch("../../api/upload.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(locationData),
+  fetch('../../api/upload.php', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(locationData)
   })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Neue Location hochgeladen:", data);
-    })
-    .catch((error) =>
-      console.error("Fehler beim Hochladen der neuen Location:", error)
-    );
+  .then(response => response.text()) // Zuerst den Rohtext der Antwort lesen
+  .then(text => {
+      console.log('Server response:', text); // Logge den Rohtext
+      try {
+          const data = JSON.parse(text); // Versuche, den Text als JSON zu parsen
+          console.log('New location uploaded:', data);
+      } catch (e) {
+          console.error('Failed to parse JSON:', e);
+      }
+  })
+  .catch(error => console.error('Error uploading new location:', error));
 }
