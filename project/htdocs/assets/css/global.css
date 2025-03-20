@@ -33,7 +33,7 @@ body {
     --bg-color-white: #ffffff;
 
     --bg-color-redButton: rgba(255, 171, 171, 0.707);
-    --bg-color-greenButton: rgba(158, 202, 158, 0.598);
+    --bg-color-greenButton: #a3ac9f;
 
     /* Primary, Secondary, Accent colors */
     --primary-color: #e9e9e1; /*#2f27ce*/

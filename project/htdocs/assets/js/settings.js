@@ -24,6 +24,8 @@ function applyUnderlineEffect(elementId) {
   }, 10);
 }
 
+document.addEventListener("DOMContentLoaded", showEditProfil);
+
 /* **********************************+ Profil bearbeiten ********************************************** */
 
 function showEditProfil() {
@@ -31,41 +33,46 @@ function showEditProfil() {
   applyUnderlineEffect("editp");
   document.getElementById("outp").innerHTML = `
         <div id="profilBearbeiten">
-            <label style="font-size: 30px;" for="profilbild">Profil bearbeiten</label> 
+            <label style="font-size: 30px;" for="profilbild">Edit Profile</label> 
             <p style="font-size: 13px; color: grey;">
-                Informationen, die du hier hinzufügst, sind für alle Nutzer sichtbar, die dein Profil ansehen können.
+                Information you add here will be visible to all users who can view your profile.
             </p>
 
             <div>
-                <label style="font-size: 20px;" for="profilbild">Profilbild</label><br><br>
+                <label style="font-size: 20px;" for="profilbild">Profile Picture</label><br><br>
                 <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="previewProfilePicture(event)">
-                <img id="profilPic" src="../../assets/images/profilPicture_test.png" alt="Profilbild" 
+                <img id="profilPic" src="../../assets/images/profilPicture_test.png" alt="Profile Picture" 
                      width="100" height="100" style="cursor: pointer; border-radius: 50%;" 
                      onclick="document.getElementById('fileInput').click();"/>
             </div>
 
             <div>
-                <br><br>
-                <label style="font-size: 20px;" for="vorname">Vorname</label>
-                <label style="font-size: 20px;" for="nachname">Nachname</label>
-                <p id="vorname">Viki</p>
-                <button class="buttons" onclick="changeUserName('vorname')">Ändern</button>
-                <p id="nachname">V</p>
-                <button class="buttons" onclick="changeUserName('nachname')">Ändern</button>
+               
+            <div id="names">
+                <div id="input_vorname"> 
+                  <label for="vorname">First Name</label>
+                  <input type="text" name="Vorname" id="vorname" placeholder="First name e.g. Emma">
+                </div>
+
+                <div id="input_nachname">
+                  <label for="nachname">Last Name</label>
+                  <input type="text" name="Nachname" id="nachname" placeholder="Last name e.g. Mustermann">
+                </div>
+              </div>
             </div>
 
             <div>
                 <br><br>
-                <label style="font-size: 20px;" for="benutzername">Benutzername</label>
+                <label style="font-size: 20px;" for="benutzername">Username</label>
                 <p id="username">@viktoria.explorer69</p>
-                <button class="buttons" onclick="changeUserName('username')">Ändern</button>
+                <button class="buttons" onclick="changeUserName('username')">Change</button>
             </div>
 
             <div>
-                <br><br>
-                <label style="font-size: 20px;" for="benutzername">Kurzinfo</label>
-                <p style="font-size: 13px; color: grey;" id="info">Ich bin leidenschaftlich kreativ und liebe es, Inspiration zu teilen! Auf meinem Pinterest findest du alles von DIY-Projekten über Interieur-Ideen bis hin zu Fashion und Lifehacks. Ich bin immer auf der Suche nach neuen Ideen und freue mich, meine Entdeckungen mit anderen zu teilen. Lass dich von meinen Pins inspirieren!</p>
-                <button class="buttons" onclick="changeUserName('info')">Ändern</button>
+               
+                <label style="font-size: 20px;" for="benutzername">Short Info</label>
+                <p style="font-size: 13px; color: grey;" id="info">I am passionately creative and love to share inspiration! On my Pinterest, you'll find everything from DIY projects to interior ideas, fashion, and life hacks. I'm always on the lookout for new ideas and excited to share my discoveries with others. Let my pins inspire you!</p>
+                <button class="buttons" onclick="changeUserName('info')">Change</button>
             </div>
             
         </div>
@@ -117,43 +124,87 @@ function showKontoVerwaltung() {
 
   document.getElementById("outp").innerHTML = `
     <div id="profilBearbeiten">
-              <label style="font-size: 30px;" for="profilbild">Kontoverwaltung</label> 
-              <p style="font-size: 13px; color: grey;">Nimm Änderungen an deinen persönlichen Daten oder deinem Kontotyp vor.</p>
+              <label style="font-size: 30px;" for="profilbild">Account Management</label> 
+              <p style="font-size: 13px; color: grey;">Make changes to your personal data or account type.</p>
               <div> 
                   <br><br>
-                  <label style="font-size: 20px;" for="email">E-Mail</label>
+                  <label style="font-size: 20px;" for="email">Email</label>
                   <p id="email">viki.v@gmail.com</p>
-                  <button class="buttons" onclick="changeUserName('email')">Ändern</button>
+                  <button class="buttons" onclick="changeUserName('email')">Change</button>
                   <br><br>
-                  <label style="font-size: 20px;" for="password">Passwort</label>
+                  <label style="font-size: 20px;" for="password">Password</label>
                   <p id="password">${maskedPassword}</p>
-                  <button class="buttons" onclick="changeUserName('password')">Ändern</button>
+                  <button class="buttons" onclick="changeUserName('password')">Change</button>
               </div>
               <br>
               <br>
               <div>
-              <label style="font-size: 20px;" for="gesch">Geschlecht</label>
-                <form>
-                    <input type="radio" id="weiblich" name="geschlecht" value="Weiblich">
-                    <label for="weiblich">Weiblich</label>
-                    <input type="radio" id="männlich" name="geschlecht" value="männlich">
-                    <label for="männlich">Männlich</label>
-                    <input type="radio" id="divers" name="geschlecht" value="divers">
-                    <label for="divers">Divers</label>
+                 <form>
+                    <div id="geschlecht_container">
+                      <label for="geschlecht">Gender:</label>
+                      <select id="geschlecht" name="geschlecht">
+                        <option value="weiblich">Female</option>
+                        <option value="männlich">Male</option>
+                        <option value="divers">Diverse</option>
+                      </select>
+                    </div>
                 </form>
               </div>
 
-              <div>
-                  <br><br>
-                  <label style="font-size: 20px;" for="land">Land</label>
-                  <p id="land">Österreich</p>
-                  <button class="buttons" onclick="changeUserName('land')">Ändern</button>
+              <div id="choose_country">
+                  <br>
+                  <label for="land">Choose a Country:</label>
+                  <select id="land" name="land">
+                    <option value="austria">Austria</option>
+                    <option value="germany">Germany</option>
+                    <option value="switzerland">Switzerland</option>
+                    <option value="france">France</option>
+                    <option value="usa">USA</option>
+                    <option value="italy">Italy</option>
+                    <option value="spain">Spain</option>
+                    <option value="portugal">Portugal</option>
+                    <option value="sweden">Sweden</option>
+                    <option value="norway">Norway</option>
+                    <option value="denmark">Denmark</option>
+                    <option value="netherlands">Netherlands</option>
+                    <option value="belgium">Belgium</option>
+                    <option value="luxembourg">Luxembourg</option>
+                    <option value="poland">Poland</option>
+                    <option value="czech_republic">Czech Republic</option>
+                    <option value="hungary">Hungary</option>
+                    <option value="slovakia">Slovakia</option>
+                    <option value="slovenia">Slovenia</option>
+                    <option value="croatia">Croatia</option>
+                    <option value="bosnia">Bosnia</option>
+                    <option value="serbia">Serbia</option>
+                    <option value="montenegro">Montenegro</option>
+                    <option value="albania">Albania</option>
+                    <option value="north_macedonia">North Macedonia</option>
+                    <option value="greece">Greece</option>
+                    <option value="turkey">Turkey</option>
+                    <option value="cyprus">Cyprus</option>
+                    <option value="malta">Malta</option>
+                    <option value="iceland">Iceland</option>
+                    <option value="ireland">Ireland</option>
+                    <option value="united_kingdom">United Kingdom</option>
+                    <option value="finland">Finland</option>
+                    <option value="estonia">Estonia</option>
+                    <option value="latvia">Latvia</option>
+                    <option value="lithuania">Lithuania</option>
+                    <option value="belarus">Belarus</option>
+                    <option value="ukraine">Ukraine</option>
+                    <option value="moldova">Moldova</option>
+                    <option value="romania">Romania</option>
+                    <option value="bulgaria">Bulgaria</option>
+                  </select>
               </div>
               <br>
               <div>
-                <a class="buttons" href="../../pages/login_register/login.html">Account Löschen</a>
+                <a class="buttons" href="../../pages/login_register/login.html">Delete Account</a>
               </div>
           </div>
     `;
 }
 
+
+// <button class="buttons" onclick="changeUserName('land')">Ändern</button>

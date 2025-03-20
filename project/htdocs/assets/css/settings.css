@@ -20,25 +20,34 @@ h6 {
 
 /* **********************************+ Menu ********************************************** */
 
-#homepage_header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 99%;
-  height: 60px; 
-  z-index: 1000; 
-  display: flex;
+#homepage_header{
+  height: var(--height_header);
+  display: grid;
+  grid-template-columns: 50% 50%;
+  background-color: var(--bg-color-header);
+  padding: 0 1vw 0 1vw;
+  height: 80px;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
-#settings {
-  margin-top: 70px; /* Abstand nach unten, damit der Inhalt nicht unter den Header rutscht */
+#homepage_header_spotlas a{
+  text-align: left;
+  color: var(--black-color);
+  text-decoration: none;
+  max-width: 10vw;
+  font-family: var(--font-family);
 }
 
+#homepage_header_ImageItems{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1vw;
+}
 
+main{
+
+}
 
 #backArrow {
   padding-bottom: 3%;
@@ -121,15 +130,19 @@ h6 {
 }
 
 .buttons {
+  margin-bottom: 1vw;
+  color: white;
+  padding: 10px;
   background-color: var(--bg-color-greenButton);
-  border-radius: 20px;
+  border-radius: 12px;
+  border: none;
   border-color: var(--bg-color-greenButton);
   transition: all ease-in-out 200ms;
 }
 
 .buttons:hover {
   cursor: pointer;
-  transform: translateY(-5px);
+  transform: translateY(-3px);
 }
 
 
@@ -161,4 +174,69 @@ a {
   color: black;
   font-size: 15px;
   padding: 2%;
+}
+
+/* Xhange Country */
+
+#land{
+  z-index: 20;
+  padding: 0.5vw 1vw;
+  background-color: var(--white-color);
+  border: none;
+  border-radius: var(--border-radius-m);
+  box-shadow: 2px 2px 10px -6px rgba(0,0,0,0.74);
+}
+
+#choose_country{
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+  margin-bottom: 2vw;
+}
+
+#names {
+  margin-top: 0.5vw;
+  display: flex;
+  gap: 2vw; /* Abstand zwischen den Feldern */
+}
+
+/* Stil für jedes Input-Feld */
+#input_vorname, #input_nachname {
+  flex: 1; /* Felder gleichmäßig verteilen */
+}
+
+#input_vorname label{
+  font-weight: bold;
+  font-size: var(--font-size-m);
+  margin-bottom: 1vw;
+}
+
+#names div input[type="text"] {
+  margin-top: 1vw;
+  width: 100%;
+  padding: 10px;
+  border:none;
+  border-radius: 8px;
+  box-shadow: 2px 2px 10px -6px rgba(0,0,0,0.74);
+}
+
+#geschlecht_container{
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+}
+
+#geschlecht{
+  margin-top: 0.5vw;
+  z-index: 20;
+  padding: 0.5vw 1vw;
+  background-color: var(--white-color);
+  border: none;
+  border-radius: var(--border-radius-m);
+  box-shadow: 2px 2px 10px -6px rgba(0,0,0,0.74);
+}
+
+label{
+  font-weight: bold;
+  font-size: var(--font-size-m);
 }
