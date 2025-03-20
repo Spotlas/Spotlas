@@ -43,3 +43,24 @@ h1, h2, h3, h4, h5, h6{
     border-radius: 50%;
     
 }
+
+#profile_grandparent {
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+#profile_infos {
+    margin-top: 3%;
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+#profile_info_child {
+    margin-left: -18%;
+    margin-top: 4%;
+}
+
+#info_mini {
+    color: var(--grey-font-color);
+    font-size: 12px;
+}
