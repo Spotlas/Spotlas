@@ -1,38 +1,35 @@
 /* **********************************+ Underline Effekt ********************************************** */
 
 function applyUnderlineEffect(elementId) {
-    const element = document.getElementById(elementId);
-    element.style.position = "relative";
-    element.style.display = "inline-block";
-    element.style.textDecoration = "none";
+  const element = document.getElementById(elementId);
+  element.style.position = "relative";
+  element.style.display = "inline-block";
+  element.style.textDecoration = "none";
 
-    let underline = document.createElement("span");
-    underline.style.position = "absolute";
-    underline.style.left = "0";
-    underline.style.bottom = "-2px";
-    underline.style.width = "100%";
-    underline.style.height = "2px";
-    underline.style.backgroundColor = "black";
-    underline.style.transform = "scaleX(0)";
-    underline.style.transition = "transform 0.2s ease-in-out";
-    underline.classList.add("underlineEffect");
+  let underline = document.createElement("span");
+  underline.style.position = "absolute";
+  underline.style.left = "0";
+  underline.style.bottom = "-2px";
+  underline.style.width = "100%";
+  underline.style.height = "2px";
+  underline.style.backgroundColor = "black";
+  underline.style.transform = "scaleX(0)";
+  underline.style.transition = "transform 0.2s ease-in-out";
+  underline.classList.add("underlineEffect");
 
-    element.appendChild(underline);
+  element.appendChild(underline);
 
-    setTimeout(() => {
-        underline.style.transform = "scaleX(1)";
-    }, 10);
-
-
+  setTimeout(() => {
+    underline.style.transform = "scaleX(1)";
+  }, 10);
 }
-
 
 /* **********************************+ Profil bearbeiten ********************************************** */
 
 function showEditProfil() {
-    document.getElementById("kontov").querySelector(".underlineEffect")?.remove();
-    applyUnderlineEffect("editp");
-    document.getElementById("outp").innerHTML = `
+  document.getElementById("kontov").querySelector(".underlineEffect")?.remove();
+  applyUnderlineEffect("editp");
+  document.getElementById("outp").innerHTML = `
         <div id="profilBearbeiten">
             <label style="font-size: 30px;" for="profilbild">Profil bearbeiten</label> 
             <p style="font-size: 13px; color: grey;">
@@ -75,40 +72,36 @@ function showEditProfil() {
     `;
 }
 
-  
-  //showEditProfil();
-  
-  let currentField = ""; // Speichert das aktuelle Feld, das geändert wird
+//showEditProfil();
 
-  function changeUserName(field) {
-      currentField = field; // Speichert, welches Feld geändert wird
-      document.getElementById("usernameOverlay").style.display = "flex"; // Zeigt das Overlay an
-  }
-  
-  function closeOverlay() {
-      document.getElementById("usernameOverlay").style.display = "none"; // Versteckt das Overlay
-  }
-  
-  function saveUserName() {
-      let newValue = document.getElementById("newUserName").value;
-      if (newValue.trim() !== "") {
-          document.getElementById(currentField).textContent = newValue; // Setzt den neuen Wert an der richtigen Stelle
-      }
-      closeOverlay(); // Overlay schließen nach dem Speichern
-  }
-  
+let currentField = ""; // Speichert das aktuelle Feld, das geändert wird
 
+function changeUserName(field) {
+  currentField = field; // Speichert, welches Feld geändert wird
+  document.getElementById("usernameOverlay").style.display = "flex"; // Zeigt das Overlay an
+}
 
+function closeOverlay() {
+  document.getElementById("usernameOverlay").style.display = "none"; // Versteckt das Overlay
+}
+
+function saveUserName() {
+  let newValue = document.getElementById("newUserName").value;
+  if (newValue.trim() !== "") {
+    document.getElementById(currentField).textContent = newValue; // Setzt den neuen Wert an der richtigen Stelle
+  }
+  closeOverlay(); // Overlay schließen nach dem Speichern
+}
 
 function previewProfilePicture(event) {
-    let file = event.target.files[0];
-    if (file) {
-        let reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById("profilPic").src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
+  let file = event.target.files[0];
+  if (file) {
+    let reader = new FileReader();
+    reader.onload = function (e) {
+      document.getElementById("profilPic").src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
 }
 
 /* **********************************+ Kontoverwaltung ********************************************** */
@@ -116,9 +109,13 @@ function previewProfilePicture(event) {
 showKontoVerwaltung();
 
 function showKontoVerwaltung() {
-    document.getElementById("editp").querySelector(".underlineEffect")?.remove();
-    applyUnderlineEffect("kontov");
-    document.getElementById("outp").innerHTML = `
+  document.getElementById("editp").querySelector(".underlineEffect")?.remove();
+  applyUnderlineEffect("kontov");
+
+  let password = "1234password";
+  let maskedPassword = "*".repeat(password.length);
+
+  document.getElementById("outp").innerHTML = `
     <div id="profilBearbeiten">
               <label style="font-size: 30px;" for="profilbild">Kontoverwaltung</label> 
               <p style="font-size: 13px; color: grey;">Nimm Änderungen an deinen persönlichen Daten oder deinem Kontotyp vor.</p>
@@ -129,7 +126,7 @@ function showKontoVerwaltung() {
                   <button class="buttons" onclick="changeUserName('email')">Ändern</button>
                   <br><br>
                   <label style="font-size: 20px;" for="password">Passwort</label>
-                  <p id="password">1234password</p>
+                  <p id="password">${maskedPassword}</p>
                   <button class="buttons" onclick="changeUserName('password')">Ändern</button>
               </div>
               <br>
@@ -151,6 +148,10 @@ function showKontoVerwaltung() {
                   <label style="font-size: 20px;" for="land">Land</label>
                   <p id="land">Österreich</p>
                   <button class="buttons" onclick="changeUserName('land')">Ändern</button>
+              </div>
+              <br>
+              <div>
+                <a class="buttons" href="../../pages/login_register/login.html">Account Löschen</a>
               </div>
           </div>
     `;
