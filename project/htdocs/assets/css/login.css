@@ -58,6 +58,12 @@ body {
     margin: auto;
 }
 
+#loginForm, #registerForm{
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
 .main_box input, select{
     padding: 0.8vw 1.2vw;
     border: none;
