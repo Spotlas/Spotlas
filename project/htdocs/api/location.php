@@ -38,12 +38,22 @@ if (isset($_GET['action']) && isset($_GET['id']) && is_numeric($_GET['id'])) {
                     $images[] = $row;
                 }
             }
+
+            // Durchschnittliches Rating berechnen
+            $averageRating = null;
+            $sqlAverageRating = "SELECT AVG(rating) AS avg_rating FROM Ratings WHERE location_id = $id";
+            $resultAverageRating = $conn->query($sqlAverageRating);
+            if ($resultAverageRating && $resultAverageRating->num_rows > 0) {
+                $averageRatingRow = $resultAverageRating->fetch_assoc();
+                $averageRating = floatval($averageRatingRow['avg_rating']);
+            }
             
             $response['code'] = 200;
             $response['data'] = array(
                 "location" => $location,
                 "comments" => $comments,
-                "images" => $images
+                "images" => $images,
+                "average_rating" => $averageRating
             );
         }
     }
