@@ -155,3 +155,10 @@ h6 {
   margin-right: 30%;
   gap: 10px;
 }
+
+a {
+  text-decoration: none;
+  color: black;
+  font-size: 15px;
+  padding: 2%;
+}
