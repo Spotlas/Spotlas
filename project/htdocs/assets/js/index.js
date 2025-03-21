@@ -99,7 +99,7 @@ points.forEach((point) => {
       <p><strong>|</strong> ${point.lat}, ${point.lng} </p>
       <br>
     
-      <a id="button_comments_link" href="./pages/fullscreen_startseite/fullscreen.html"><div id="button_comments"><p>show Comments</p></div></a>
+      <a id="button_comments_link" href="./pages/fullscreen_startseite/fullscreen.html?id=${point.id}"><div id="button_comments"><p>show Comments</p></div></a>
 
     `);
   });

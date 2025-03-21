@@ -7,6 +7,15 @@ document.querySelectorAll('.rating input').forEach((radio) => {
     });
 });
 
+document.querySelectorAll('.ratings input').forEach((radio) => {
+    radio.addEventListener('change', (e) => {
+        document.querySelectorAll('.ratings input').forEach((radio) => {
+            radio.parentNode.classList.remove('checked');
+        });
+        e.target.parentNode.classList.add('checked');
+    });
+});
+
 document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     const pointId = params.get("id");
@@ -47,3 +56,25 @@ function fetchLocationDetails(id) {
 /* document.addEventListener('DOMContentLoaded', () => {
     fetchLocationDetails(2);
 }); */
+
+function rate(rating) {
+    const pointId = 2;
+    const userId = 3 // TODO: Get user ID from session
+    rateLocation(pointId, userId, rating);    
+}
+
+function rateLocation(id, userId, rating) {
+    const payload = { user_id: userId, rating: rating };
+    fetch(`../../api/location.php?action=rate&id=${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Rating response:', data);
+        })
+        .catch(error => console.error('Error rating location:', error));
+  }

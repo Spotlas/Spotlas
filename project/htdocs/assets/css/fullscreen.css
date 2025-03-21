@@ -184,3 +184,24 @@ textarea {
     color: gold;
     text-shadow: 0 0 5px rgba(255, 215, 0, 0.6);
 }
+.ratings {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+.ratings input {
+    display: none;
+}
+.ratings label {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: gray;
+    transition: color 0.3s;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+.ratings input:checked ~ label,
+.ratings label:hover,
+.ratings label:hover ~ label {
+    color: gold;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.6);
+}

@@ -7,7 +7,6 @@
 
     <link rel="stylesheet" href="../../assets/css/global.css">
     <script src="https://api.websynthesis.org/stars/v2/stars.js"></script>
-    <script src="../../assets/js/fetches.js" defer></script>
     <script src="../../assets/js/global.js" defer></script>
     <script src="../../assets/js/index.js" defer></script>
     <script src="../../assets/js/fullscreen.js" defer></script>
@@ -97,6 +96,21 @@
                             <path d="M12 22C9.49345 22 7.91806 20.6547 6.86651 19.3888C6.42721 18.8599 5.58617 18.867 5.20168 19.4323C4.50078 20.4629 3.68402 21.4127 2 21.7859M22 21.7859C20.4123 21.4341 19.5955 20.5697 18.9199 19.6083C18.4965 19.0059 17.5655 19.0425 17.1055 19.6208C16.6953 20.1365 16.2063 20.6119 15.6148 21" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         <p>Lakes</p>
+                    </div>
+                    <div id="rateThisLocation">
+                        <p>Rate this Location!</p>
+                        <div class="ratings">
+                            <input onclick="rate(5)" type="radio" id="stern5" name="rating" value="5">
+                            <label for="stern5">★</label>
+                            <input onclick="rate(4)" type="radio" id="stern4" name="rating" value="4">
+                            <label for="stern4">★</label>
+                            <input onclick="rate(3)" type="radio" id="stern3" name="rating" value="3">
+                            <label for="stern3">★</label>
+                            <input onclick="rate(2)" type="radio" id="stern2" name="rating" value="2">
+                            <label for="stern2">★</label>
+                            <input onclick="rate(1)" type="radio" id="stern1" name="rating" value="1">
+                            <label for="stern1">★</label>
+                        </div>
                     </div>
                 </div>
 
