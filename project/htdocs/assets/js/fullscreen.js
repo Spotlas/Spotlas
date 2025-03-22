@@ -107,7 +107,25 @@ function rateLocation(id, userId, rating) {
 
         if (isSaved) {
             this.src = "../../assets/images/icons/bookmark-fill.svg"; // Gespeichert-Bild
+            favoriteLocation(pointId, userId);
         } else {
             this.src = "../../assets/images/icons/bookmark_unsaved.svg"; // Nicht gespeichert-Bild
         }
     });
+
+    // Markiert eine Location als Favorit
+    function favoriteLocation(id, userId) {
+        const payload = { user_id: userId };
+        fetch(`./api/location.php?action=favorite&id=${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Favorite response:', data);
+            })
+            .catch(error => console.error('Error favoriting location:', error));
+    }
