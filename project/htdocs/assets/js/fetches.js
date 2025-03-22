@@ -1,3 +1,14 @@
+// Ruft alle Locations aus der API ab
+function fetchAllLocations() {
+    fetch('./api/home.php')
+        .then(response => response.json())
+        .then(data => {
+            console.log('All locations:', data.locations);
+        })
+        .catch(error => console.error('Error fetching all locations:', error));
+}
+
+
 // Ruft eine Location anhand der ID ab
 function fetchLocationById(id) {
   fetch(`./api/home.php?id=${id}`)
@@ -27,6 +38,7 @@ function fetchLocationsByCategory(category) {
       })
       .catch(error => console.error('Error fetching locations by category:', error));
 }
+
 
 // Holt das Profilbild eines Nutzers (über die userId)
 function fetchProfilePicture(userId) {
@@ -131,4 +143,18 @@ function createUser(fullName, username, password, profilePicture, phoneNumber, d
       console.log('User creation response:', data);
   })
   .catch(error => console.error('Error creating user:', error));
+}
+
+// Kategorie-ID anhand des Namens abrufen
+function getCategoryId(categoryName) {
+    fetch(`getCategoryId.php?name=${encodeURIComponent(categoryName)}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.code === 200) {
+                console.log(`Die ID der Kategorie "${categoryName}" ist: ${data.category_id}`);
+            } else {
+                console.error(`Fehler: ${data.message}`);
+            }
+        })
+        .catch(error => console.error('Fehler beim Abrufen der Kategorie-ID:', error));
 }

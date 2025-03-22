@@ -57,21 +57,39 @@ if (isset($_GET['action']) && isset($_GET['id']) && is_numeric($_GET['id'])) {
             );
         }
     }
-    // Bewertung hinzufügen
+    // Bewertung hinzufügen oder aktualisieren
     else if ($action == 'rate' && $_SERVER['REQUEST_METHOD'] == 'POST') {
         $data = json_decode(file_get_contents('php://input'), true);
-        // Erwartet: user_id und rating im Request
         $user_id = intval($data['user_id']);
         $rating  = intval($data['rating']);
-        $sqlRate = "INSERT INTO Ratings (location_id, user_id, rating) VALUES ($id, $user_id, $rating)";
-        if ($conn->query($sqlRate) === TRUE) {
-            $response['code'] = 200;
-            $response['data'] = array("message" => "Rating added successfully");
+
+        // Prüfen, ob der Nutzer bereits eine Bewertung für diese Location abgegeben hat
+        $sqlCheck = "SELECT * FROM Ratings WHERE location_id = $id AND user_id = $user_id";
+        $resultCheck = $conn->query($sqlCheck);
+
+        if ($resultCheck && $resultCheck->num_rows > 0) {
+            // Falls es bereits eine Bewertung gibt, update
+            $sqlUpdate = "UPDATE Ratings SET rating = $rating WHERE location_id = $id AND user_id = $user_id";
+            if ($conn->query($sqlUpdate) === TRUE) {
+                $response['code'] = 200;
+                $response['data'] = array("message" => "Rating updated successfully");
+            } else {
+                $response['code'] = 500;
+                $response['data'] = array("message" => "Error updating rating: " . $conn->error);
+            }
         } else {
-            $response['code'] = 500;
-            $response['data'] = array("message" => "Error: " . $conn->error);
+            // Falls keine Bewertung existiert, insert
+            $sqlInsert = "INSERT INTO Ratings (location_id, user_id, rating) VALUES ($id, $user_id, $rating)";
+            if ($conn->query($sqlInsert) === TRUE) {
+                $response['code'] = 200;
+                $response['data'] = array("message" => "Rating added successfully");
+            } else {
+                $response['code'] = 500;
+                $response['data'] = array("message" => "Error inserting rating: " . $conn->error);
+            }
         }
-    }
+}
+
     // Location als Favorit markieren
     else if ($action == 'favorite' && $_SERVER['REQUEST_METHOD'] == 'POST') {
         $data = json_decode(file_get_contents('php://input'), true);

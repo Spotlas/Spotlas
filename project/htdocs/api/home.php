@@ -5,6 +5,18 @@ header('Content-Type: application/json');
 
 $locations = [];
 
+// Standard: Alle Locations abrufen (z.B. für die Karte)
+$sql = "SELECT * FROM Locations";
+$result = $conn->query($sql);
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $locations[] = $row;
+    }
+}
+echo json_encode(array("code" => 200, "locations" => $locations));
+
+$conn->close();
+
 // Falls per GET ein bestimmter Parameter gesetzt ist, wird der jeweilige Query ausgeführt.
 // Suche per ID:
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
@@ -66,15 +78,4 @@ if (isset($_GET['profile_picture']) && is_numeric($_GET['profile_picture'])) {
     exit();
 }
 
-// Standard: Alle Locations abrufen (z.B. für die Karte)
-$sql = "SELECT * FROM Locations";
-$result = $conn->query($sql);
-if ($result && $result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $locations[] = $row;
-    }
-}
-echo json_encode(array("code" => 200, "locations" => $locations));
-
-$conn->close();
 ?>
