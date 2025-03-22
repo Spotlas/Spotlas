@@ -39,6 +39,20 @@ function fetchLocationsByCategory(category) {
       .catch(error => console.error('Error fetching locations by category:', error));
 }
 
+// Holt alle Kommentare zu einer bestimmten Location
+function fetchCommentsForLocation(locationId) {
+    fetch(`./api/location.php?action=comments&id=${locationId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.code === 200) {
+                console.log('Kommentare:', data.comments);
+            } else {
+                console.error('Fehler beim Abrufen der Kommentare:', data.message);
+            }
+        })
+        .catch(error => console.error('Fehler beim Fetchen der Kommentare:', error));
+}
+
 
 // Holt das Profilbild eines Nutzers (über die userId)
 function fetchProfilePicture(userId) {
