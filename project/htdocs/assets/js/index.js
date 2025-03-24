@@ -5,10 +5,11 @@
 // config map
 let config = {
   minZoom: 3,
-  maxZoom: 30,
+  maxZoom: 50,
   zoomControl: false
 };
 const zoom = 7;
+const zoompoint = 10;
 const lat = 47.6965;
 const lng = 13.3458;
 let points = []; // Array für die Orte
@@ -70,7 +71,15 @@ function addMarkersToMap(points) {
   const fg = L.featureGroup().addTo(map);
 
   points.forEach((point) => {
-    const marker = L.marker([point.lat, point.lng]).addTo(fg);
+    const customIcon = L.icon({
+      iconUrl: '../../assets/images/icons/marker2.png', // Pfad zum eigenen Marker-Bild
+      iconSize: [32, 32], // Größe des Icons
+      iconAnchor: [16, 32], // Position des Icons relativ zum Standort
+      popupAnchor: [0, -32] // Wo sich das Popup öffnet
+    });
+    
+    const marker = L.marker([point.lat, point.lng], { icon: customIcon }).addTo(fg);
+    
     
     // Füge die id als benutzerdefiniertes Attribut hinzu
     marker.markerId = point.id;
@@ -118,7 +127,7 @@ function listMarkers(points) {
       el.textContent = point ? point.name : "Unbekannter Ort"; // Sicherstellen, dass der Name gefunden wird
 
       el.onclick = () => {
-        map.setView(layer.getLatLng(), zoom);
+        map.setView(layer.getLatLng(), zoompoint);
         layer.openPopup();
       };
 
