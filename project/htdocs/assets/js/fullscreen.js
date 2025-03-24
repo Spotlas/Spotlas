@@ -129,3 +129,18 @@ function rateLocation(id, userId, rating) {
             })
             .catch(error => console.error('Error favoriting location:', error));
     }
+
+    // Kategorie-ID anhand des Namens abrufen
+function getCategoryId(categoryName) {
+    fetch(`getCategoryId.php?name=${encodeURIComponent(categoryName)}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.code === 200) {
+                console.log(`Die ID der Kategorie "${categoryName}" ist: ${data.category_id}`);
+                
+            } else {
+                console.error(`Fehler: ${data.message}`);
+            }
+        })
+        .catch(error => console.error('Fehler beim Abrufen der Kategorie-ID:', error));
+}
