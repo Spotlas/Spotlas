@@ -93,7 +93,6 @@ if (isset($_GET['action']) && isset($_GET['id']) && is_numeric($_GET['id'])) {
     // Location als Favorit markieren
     else if ($action == 'favorite' && $_SERVER['REQUEST_METHOD'] == 'POST') {
         $data = json_decode(file_get_contents('php://input'), true);
-        // Erwartet: user_id im Request
         $user_id = intval($data['user_id']);
         $sqlFav = "INSERT INTO Favorites (location_id, user_id) VALUES ($id, $user_id)";
         if ($conn->query($sqlFav) === TRUE) {
@@ -104,6 +103,22 @@ if (isset($_GET['action']) && isset($_GET['id']) && is_numeric($_GET['id'])) {
             $response['data'] = array("message" => "Error: " . $conn->error);
         }
     }
+
+    // Location von Favoriten entfernen
+    else if ($action == 'remove_favorite' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $user_id = intval($data['user_id']);
+        
+        $sqlRemoveFav = "DELETE FROM Favorites WHERE location_id = $id AND user_id = $user_id";
+        if ($conn->query($sqlRemoveFav) === TRUE) {
+            $response['code'] = 200;
+            $response['data'] = array("message" => "Location removed from favorites");
+        } else {
+            $response['code'] = 500;
+            $response['data'] = array("message" => "Error: " . $conn->error);
+        }
+    }
+    
 }
 
 echo json_encode($response);
