@@ -8,6 +8,16 @@ function fetchAllLocations() {
         .catch(error => console.error('Error fetching all locations:', error));
 }
 
+// Fetch damit die Locations auf der Karte angezeigt werden
+function fetchAllLocations() {
+    fetch('./api/home.php')
+        .then(response => response.json())
+        .then(data => {
+            console.log('All locations für Map:', data.locations);
+        })
+        .catch(error => console.error('Error fetching all locations:', error));
+}
+
 
 // Ruft eine Location anhand der ID ab
 function fetchLocationById(id) {
@@ -133,6 +143,25 @@ function favoriteLocation(id, userId) {
       })
       .catch(error => console.error('Error favoriting location:', error));
 }
+
+// Entfernt eine Location aus den Favoriten
+function removeFavoriteLocation(id, userId) {
+    const payload = { user_id: userId };
+    
+    fetch(`./api/location.php?action=remove_favorite&id=${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Remove favorite response:', data);
+    })
+    .catch(error => console.error('Error removing favorite location:', error));
+}
+
 
 // Erstellen eines neuen Nutzers
 function createUser(fullName, username, password, profilePicture, phoneNumber, description) {
