@@ -84,3 +84,21 @@ hr {
     margin-right: 9%;
 }
 
+.switches {
+    cursor: pointer;
+    padding: 5px;
+    display: inline-block;
+    position: relative;
+}
+
+p.active::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: black;
+    position: absolute;
+    bottom: -7px;
+    left: 0;
+    
+}
