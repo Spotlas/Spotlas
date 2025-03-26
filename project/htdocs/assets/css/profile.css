@@ -92,6 +92,7 @@ hr {
 }
 
 p.active {
+
     display: inline-block;
 }
 
@@ -106,3 +107,4 @@ p.active::after {
     left: 0;
     
 }
+
