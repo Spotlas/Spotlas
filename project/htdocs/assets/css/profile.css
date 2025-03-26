@@ -75,7 +75,7 @@ hr {
 
 #erstellt_parent {
     display: grid;
-    grid-template-columns: 26% 74%;
+    grid-template-columns: 19% 4.5% 1% 5.5% 70%;
     margin-bottom: -20px;
 }
 
