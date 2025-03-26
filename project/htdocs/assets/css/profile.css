@@ -91,6 +91,10 @@ hr {
     position: relative;
 }
 
+p.active {
+    display: inline-block;
+}
+
 p.active::after {
     content: "";
     display: block;
