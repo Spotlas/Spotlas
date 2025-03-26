@@ -175,3 +175,46 @@ function closeDropdown(event) {
     document.removeEventListener("click", closeDropdown);
   }
 }
+
+document.getElementById("homepage_filter_search").addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+      event.preventDefault(); // Verhindert das Absenden eines Formulars
+      let searchTerm = document.getElementById("homepage_filter_search").value;
+      searchLocationsByName(searchTerm);
+  }
+});
+
+// Sucht Locations anhand eines Namens
+function searchLocationsByName(searchTerm) {
+  fetch(`./api/home.php?search=${encodeURIComponent(searchTerm)}`)
+      .then(response => response.json())
+      .then(data => {
+          console.log('Search results:', data);
+      })
+      .catch(error => console.error('Error searching locations:', error));
+}
+
+// Ruft Locations anhand der Kategorie ab
+function fetchLocationsByCategory(category) {
+  fetch(`./api/home.php?category=${encodeURIComponent(category)}`)
+      .then(response => response.json())
+      .then(data => {
+          console.log('Locations by category:', data);
+      })
+      .catch(error => console.error('Error fetching locations by category:', error));
+}
+
+// Kategorie-ID anhand des Namens abrufen
+function getCategoryId(categoryName) {
+  fetch(`./api/getCategory.php?name=${encodeURIComponent(categoryName)}`)
+      .then(response => response.json())
+      .then(data => {
+          if (data.code === 200) {
+              console.log(`Die ID der Kategorie "${categoryName}" ist: ${data.category_id}`);
+              fetchLocationsByCategory(data.category_id);
+          } else {
+              console.error(`Fehler: ${data.message}`);
+          }
+      })
+      .catch(error => console.error('Fehler beim Abrufen der Kategorie-ID:', error));
+}

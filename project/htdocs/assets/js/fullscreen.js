@@ -34,6 +34,7 @@ function fetchLocationDetails(id) {
 
             const location = data.data.location;
             const rating = data.data.average_rating;
+            const comments = data.data.comments;
 
             generateStars(rating);
 
@@ -44,7 +45,14 @@ function fetchLocationDetails(id) {
             document.querySelector('#name_category').innerHTML = location.name + ', ' + location.category;
             document.querySelector('#website_url').innerHTML = location.website_url;
             document.querySelector('#openinghours').innerHTML = "Openinghours: " + location.opening_hours;
-            
+
+            let htmlCode = "";
+
+            for (let i = 0; i < comments.length; i++) {
+                htmlCode = `<div class="comment"><strong>User ${comments[i].user_id}:</strong> ${comments[i].comment_text} </div>`
+            }
+
+            document.querySelector('#comments').innerHTML = htmlCode;
 
         })
         .catch(error => console.error('Error fetching location details:', error));
@@ -102,21 +110,26 @@ function rateLocation(id, userId, rating) {
     let isSaved = false;
     const bookmarkIcon = document.getElementById("bookmarkIcon");
 
+
     bookmarkIcon.addEventListener("click", function () {
         isSaved = !isSaved; // Umschalten des Zustands
+        const params = new URLSearchParams(window.location.search);
+        const pointId = params.get("id");
+        const userId = 3; // TODO: Get user ID from session
 
         if (isSaved) {
             this.src = "../../assets/images/icons/bookmark-fill.svg"; // Gespeichert-Bild
             favoriteLocation(pointId, userId);
         } else {
             this.src = "../../assets/images/icons/bookmark_unsaved.svg"; // Nicht gespeichert-Bild
+            removeFavoriteLocation(pointId, userId);
         }
     });
 
     // Markiert eine Location als Favorit
     function favoriteLocation(id, userId) {
         const payload = { user_id: userId };
-        fetch(`./api/location.php?action=favorite&id=${id}`, {
+        fetch(`../../api/location.php?action=favorite&id=${id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -130,18 +143,23 @@ function rateLocation(id, userId, rating) {
             .catch(error => console.error('Error favoriting location:', error));
     }
 
-    // Kategorie-ID anhand des Namens abrufen
-function getCategoryId(categoryName) {
-    fetch(`getCategoryId.php?name=${encodeURIComponent(categoryName)}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.code === 200) {
-                console.log(`Die ID der Kategorie "${categoryName}" ist: ${data.category_id}`);
-                
-            } else {
-                console.error(`Fehler: ${data.message}`);
-            }
-        })
-        .catch(error => console.error('Fehler beim Abrufen der Kategorie-ID:', error));
+// Entfernt eine Location aus den Favoriten
+function removeFavoriteLocation(id, userId) {
+    const payload = { user_id: userId };
+    
+    fetch(`../../api/location.php?action=remove_favorite&id=${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Remove favorite response:', data);
+    })
+    .catch(error => console.error('Error removing favorite location:', error));
 }
+
+
 
