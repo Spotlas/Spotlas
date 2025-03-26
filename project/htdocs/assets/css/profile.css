@@ -66,11 +66,12 @@ h1, h2, h3, h4, h5, h6{
 }
 
 hr {
-    width: 80%;
+    width: 90%;
     border: 0.5px solid rgb(215, 209, 209);
     margin: 10px 0;
     display: block;
-    margin-left: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
   }
 
 #erstellt_parent {
