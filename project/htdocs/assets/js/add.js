@@ -444,3 +444,11 @@ function uploadNewLocation(locationData) {
   })
   .catch(error => console.error('Error uploading new location:', error));
 }
+
+function clickComments() {
+  const comments = document.getElementById("comments_input_checkbox");
+  console.log(comments.checked);
+  return comments.checked;
+} 
+
+

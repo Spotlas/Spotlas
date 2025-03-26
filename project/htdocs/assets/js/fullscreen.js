@@ -144,3 +144,4 @@ function getCategoryId(categoryName) {
         })
         .catch(error => console.error('Fehler beim Abrufen der Kategorie-ID:', error));
 }
+
