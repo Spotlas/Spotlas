@@ -39,28 +39,28 @@ function loadErstellte(clickedPTag) {
 function loadFavouriten(clickedPTag) {
     showLine(clickedPTag);
   document.getElementById("bilder").innerHTML = `
-    <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/2.png" alt="test" /></div>`;
+    <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
+      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>`;
 }
