@@ -206,6 +206,7 @@ function fetchLocationsByCategory(category) {
 
 // Kategorie-ID anhand des Namens abrufen
 function getCategoryId(categoryName) {
+  console.log(`getCategoryId aufgerufen mit: ${categoryName}`);
   fetch(`./api/getCategory.php?name=${encodeURIComponent(categoryName)}`)
       .then(response => response.json())
       .then(data => {

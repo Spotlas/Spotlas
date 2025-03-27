@@ -40,7 +40,6 @@
     <link rel="stylesheet" href="./assets/css/index.css" />
 
     <!-- Karten JavaScript -->
-     <script src="./assets/js/fetches.js" defer></script>
      <script src="./assets/js/fullscreen.js" defer></script>
     <script src="./assets/js/index.js" defer></script>
   </head>
@@ -99,7 +98,7 @@
         />
       </div>
 
-      <div onclick="getCategoryId('Restaurants')" id="homepage_filters">
+      <div onclick="getCategoryId('Restaurants'), event.stopPropagation();" id="homepage_filters">
         <div class="homepage_filter">
           <img src="./assets/images/icons/filter/food.svg" alt="" />
           <h2>Restaurants</h2>
