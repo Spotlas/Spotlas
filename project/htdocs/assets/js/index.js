@@ -196,6 +196,7 @@ function searchLocationsByName(searchTerm) {
 
 // Ruft Locations anhand der Kategorie ab
 function fetchLocationsByCategory(category) {
+  console.log(`fetchLocationbyCategory aufgerufen mit: ${category}`);
   fetch(`./api/home.php?category=${encodeURIComponent(category)}`)
       .then(response => response.json())
       .then(data => {

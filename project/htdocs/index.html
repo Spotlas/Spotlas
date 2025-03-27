@@ -98,12 +98,12 @@
         />
       </div>
 
-      <div onclick="getCategoryId('Restaurants'), event.stopPropagation();" id="homepage_filters">
-        <div class="homepage_filter">
+      <div id="homepage_filters">
+        <div onclick="fetchLocationsByCategory('Restaurants'), event.stopPropagation();" class="homepage_filter">
           <img src="./assets/images/icons/filter/food.svg" alt="" />
           <h2>Restaurants</h2>
         </div>
-        <div onclick="getCategoryId('Natur')" class="homepage_filter">
+        <div onclick="fetchLocationsByCategory('Natur')" class="homepage_filter">
           <img src="./assets/images/icons/filter/waters.svg" alt="" />
           <h2>Nature</h2>
         </div>
@@ -111,18 +111,18 @@
           <img src="./assets/images/icons/filter/rating.svg" alt="" />
           <h2>Rating</h2>
         </div>
-        <div onclick="getCategoryId('Hotels')" class="homepage_filter">
+        <div onclick="fetchLocationsByCategory('Hotels')" class="homepage_filter">
           <img src="./assets/images/icons/filter/stays.svg" alt="" />
           <h2>Stays</h2>
         </div>
-        <div onclick="getCategoryId('Sehenswürdigkeiten')" class="homepage_filter">
+        <div onclick="fetchLocationsByCategory('Sehenswürdigkeiten')" class="homepage_filter">
           <img
             src="./assets/images/icons/filter/sights.svg"
             alt=""
           />
           <h2>Sights</h2>
         </div>
-        <div onclick="getCategoryId('Museen')" class="homepage_filter">
+        <div onclick="fetchLocationsByCategory('Museen')" class="homepage_filter">
           <img
             src="./assets/images/icons/filter/museum.svg"
             alt=""
