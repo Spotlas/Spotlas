@@ -110,13 +110,12 @@ p.active::after {
 }
 
 #bilder {
-  padding: 3%;
   margin: 3%;
   position: relative;
   bottom: 30%;
   text-align: center;
-  margin-right: 6%;
-  margin-top: 1%;
+  margin-right: 3%;
+  margin-top: 2%;
   display: grid;
   grid-template-columns: 20% 20% 20% 20% 20%;  
   overflow-y: scroll;
