@@ -114,13 +114,13 @@ p.active::after {
   padding: 3%;
   margin: 3%;
   position: relative;
-  bottom: 90%;
+  bottom: 10%;
   text-align: center;
-  display: flex;
-  overflow: hidden;
-  overflow-y: scroll;
   display: grid;
-  grid-template-columns: 33% 33% 33%;
+  grid-template-columns: 33% 33% 33%;  
+  overflow-y: scroll;
+  max-height: 500px;
+  
 }
 
 #div.img {
