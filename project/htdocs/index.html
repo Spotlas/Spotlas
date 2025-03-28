@@ -40,7 +40,6 @@
     <link rel="stylesheet" href="./assets/css/index.css" />
 
     <!-- Karten JavaScript -->
-     <script src="./assets/js/fetches.js" defer></script>
      <script src="./assets/js/fullscreen.js" defer></script>
     <script src="./assets/js/index.js" defer></script>
   </head>
@@ -99,29 +98,36 @@
         />
       </div>
 
-      <div onclick="fetchLocationsByCategory('food')" id="homepage_filters">
-        <div class="homepage_filter">
+      <div id="homepage_filters">
+        <div onclick="fetchLocationsByCategory('Restaurants'), event.stopPropagation();" class="homepage_filter">
           <img src="./assets/images/icons/filter/food.svg" alt="" />
-          <h2>Food</h2>
+          <h2>Restaurants</h2>
         </div>
-        <div onclick="fetchLocationsByCategory('waters')" class="homepage_filter">
+        <div onclick="fetchLocationsByCategory('Natur')" class="homepage_filter">
           <img src="./assets/images/icons/filter/waters.svg" alt="" />
-          <h2>Waters</h2>
+          <h2>Nature</h2>
         </div>
-        <div onclick="fetchLocationsByCategory('rating')" class="homepage_filter">
+        <div onclick="" class="homepage_filter">
           <img src="./assets/images/icons/filter/rating.svg" alt="" />
           <h2>Rating</h2>
         </div>
-        <div onclick="fetchLocationsByCategory('stays')" class="homepage_filter">
+        <div onclick="fetchLocationsByCategory('Hotels')" class="homepage_filter">
           <img src="./assets/images/icons/filter/stays.svg" alt="" />
           <h2>Stays</h2>
         </div>
-        <div onclick="fetchLocationsByCategory('mountains')" class="homepage_filter">
+        <div onclick="fetchLocationsByCategory('Sehenswürdigkeiten')" class="homepage_filter">
           <img
-            src="./assets/images/icons/filter/mountains-sun-svgrepo-com.svg"
+            src="./assets/images/icons/filter/sights.svg"
             alt=""
           />
-          <h2>Mountains</h2>
+          <h2>Sights</h2>
+        </div>
+        <div onclick="fetchLocationsByCategory('Museen')" class="homepage_filter">
+          <img
+            src="./assets/images/icons/filter/museum.svg"
+            alt=""
+          />
+          <h2>Museums</h2>
         </div>
       </div>
     </section>

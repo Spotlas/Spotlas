@@ -400,11 +400,13 @@ console.log("Place Description:", sessionStorage.getItem("Description"));
   document.getElementById("placeSpecialFeatures").innerHTML =
     sessionStorage.getItem("SpecialFeatures");
 
+    let categoryID = getCategoryId(sessionStorage.getItem("Category"));
+
   // Erstelle das newLocation-Objekt
   const newLocation = {
     name: sessionStorage.getItem("name"),
     description: sessionStorage.getItem("Description"),
-    category_id: 2,
+    category_id: categoryID,
     latitude: sessionStorage.getItem("latitude"),
     longitude: sessionStorage.getItem("longitude"),
     address: sessionStorage.getItem("Address"),
@@ -444,3 +446,25 @@ function uploadNewLocation(locationData) {
   })
   .catch(error => console.error('Error uploading new location:', error));
 }
+
+function clickComments() {
+  const comments = document.getElementById("comments_input_checkbox");
+  console.log(comments.checked);
+  return comments.checked;
+} 
+
+// Kategorie-ID anhand des Namens abrufen
+function getCategoryId(categoryName) {
+  fetch(`getCategoryId.php?name=${encodeURIComponent(categoryName)}`)
+      .then(response => response.json())
+      .then(data => {
+          if (data.code === 200) {
+              console.log(`Die ID der Kategorie "${categoryName}" ist: ${data.category_id}`);
+              return data.category_id;
+          } else {
+              console.error(`Fehler: ${data.message}`);
+          }
+      })
+      .catch(error => console.error('Fehler beim Abrufen der Kategorie-ID:', error));
+}
+
