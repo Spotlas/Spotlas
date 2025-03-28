@@ -28,6 +28,7 @@
                 <form id="loginForm" onsubmit="login(event)">
                     <input type="text" id="login_username" name="username" placeholder="Username" required>
                     <input type="password" id="login_password" name="password" placeholder="Password" required>
+                    <div id="login-message" class="message-container"></div>
                     <button type="submit">LogIn</button>
                 </form>
                 <p>Don't have an account? <span onclick="getRegister()">Register here</span></p>
@@ -48,6 +49,7 @@
                     <input type="email" id="register_email" name="email" placeholder="Email" required>
                     <input type="password" id="register_password" name="password" placeholder="Password" required>
                     <input type="password" id="register_password_repeat" name="password_repeat" placeholder="Repeat Password" required>
+                    <div id="register-message" class="message-container"></div>
                     <button type="submit">Next</button>
                 </form>
                 <p>Already have an account? <span onclick="getLogin()" >LogIn here</span></p>
@@ -71,6 +73,7 @@
                     <input type="text" id="register_username" name="username" placeholder="Username" required>
                     <label for="register_birthday">Day of Birth</label>
                     <input type="date" id="register_birthday" name="birthday" required>
+                    <div id="register2-message" class="message-container"></div>
                     <button type="submit">Register</button>
                 </form>
                 <p>Already have an account? <span onclick="getLogin()" >LogIn here</span></p>
