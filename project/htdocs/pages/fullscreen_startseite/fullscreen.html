@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Details</title>
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="../../assets/css/global.css">
     <script src="https://api.websynthesis.org/stars/v2/stars.js"></script>
     <script src="../../assets/js/global.js" defer></script>
@@ -18,7 +20,7 @@
 <body>
     <header id="homepage_header">
         <div id="homepage_header_spotlas">
-            <a href="../../index.html"><h1>Spotlas</h1></a>
+            <a href="../../index.html"><img src="../../assets/images/logo_schwarz.png" width="180" alt=""></a>
         </div>
 
         <div id="homepage_header_ImageItems">
@@ -104,29 +106,64 @@
 
 
                 <div id="allInfoBox">
+                    <!-- Name und Kategorie -->
                     <div class="info_box">
                         <div class="info_box_item">
-                            <div class="info_box_item_icon"><img src="../../assets/images/icons/location_icon.svg" alt=""></div>
+                            <div class="info_box_item_icon"><i class="fas fa-map-marker-alt"></i></div>
                             <div class="info_box_item_text" id="name_category"></div>
                         </div>
+                    </div>
+                
+                    <!-- Website URL -->
+                    <div class="info_box">
                         <div class="info_box_item">
-                            <div class="info_box_item_icon"><img src="../../assets/images/icons/website_icon.svg" alt=""></div>
+                            <div class="info_box_item_icon"><i class="fas fa-link"></i></div>
                             <div class="info_box_item_text" id="website_url"></div>
                         </div>
+                    </div>
+                
+                    <!-- Öffnungszeiten -->
+                    <div class="info_box">
                         <div class="info_box_item">
-                            <div class="info_box_item_icon"><img src="../../assets/images/icons/opening_hours_icon.svg" alt=""></div>
+                            <div class="info_box_item_icon"><i class="fas fa-clock"></i></div>
                             <div class="info_box_item_text" id="openinghours"></div>
                         </div>
                     </div>
                 
-                
+                    <!-- Adresse -->
                     <div class="info_box">
                         <div class="info_box_item">
-                            <div class="info_box_item_icon"><img src="../../assets/images/icons/location_icon.svg" alt=""></div>
-                            <div class="info_box_item_text"></div>
+                            <div class="info_box_item_icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div class="info_box_item_text" id="address"></div>
+                        </div>
+                    </div>
+                
+                    <!-- Preisbereich -->
+                    <div class="info_box">
+                        <div class="info_box_item">
+                            <div class="info_box_item_icon"><i class="fas fa-dollar-sign"></i></div>
+                            <div class="info_box_item_text" id="price_range"></div>
+                        </div>
+                    </div>
+                
+                    <!-- Saison -->
+                    <div class="info_box">
+                        <div class="info_box_item">
+                            <div class="info_box_item_icon"><i class="fas fa-calendar-alt"></i></div>
+                            <div class="info_box_item_text" id="season"></div>
+                        </div>
+                    </div>
+                
+                    <!-- Besondere Merkmale -->
+                    <div class="info_box">
+                        <div class="info_box_item">
+                            <div class="info_box_item_icon"><i class="fas fa-star"></i></div>
+                            <div class="info_box_item_text" id="special_features"></div>
                         </div>
                     </div>
                 </div>
+                
+                
 
                 
             </div>

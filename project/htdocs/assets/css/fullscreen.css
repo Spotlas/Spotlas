@@ -152,8 +152,9 @@ textarea {
 #allInfoBox{
     padding-top: 1vw;
     display: grid;
-    grid-template-columns: 50% 50%;
-    margin-top: 0;
+    grid-template-columns: 40% 60%;
+    margin-top: 3vw;
+    gap: 1vw;
 }
 
 .info_box{
@@ -161,6 +162,12 @@ textarea {
     gap: 1vw;
     margin-top: 1vw;
     flex-direction: column;    
+}
+
+.info_box_item{
+    display: flex;
+    gap: 0.5vw;
+    align-items: center;
 }
 
 .ratings {

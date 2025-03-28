@@ -14,6 +14,7 @@ const lat = 47.6965;
 const lng = 13.3458;
 let points = []; // Array für die Orte
 
+
 function fetchAllLocations() {
   fetch('./api/home.php')
     .then(response => response.json())
@@ -67,6 +68,7 @@ function openSidebarWithContent(content) {
   sidebar.innerHTML = content;
   sidebar.classList.add("open");
 }
+
 function addMarkersToMap(points) {
   const fg = L.featureGroup().addTo(map);
 
@@ -226,15 +228,21 @@ function printToMap(data) {
   let points = [];
   for (let i = 0; i < data.length; i++) {
       points.push({
-          id: data[i].id,
-          lat: data[i].latitude,
-          lng: data[i].longitude,
-          name: data[i].name,
-          image: data[i].image,
-          description: data[i].description,
+          id: data[i].location.id,
+          lat: data[i].location.latitude,
+          lng: data[i].location.longitude,
+          name: data[i].location.name,
+          image: data[i].location.image,
+          description: data[i].location.description,
       });
   }
-  
+  clearMarkers();
   addMarkersToMap(points);
   listMarkers(points);
+}
+
+let markersLayer = L.featureGroup().addTo(map); // Layer für Marker
+
+function clearMarkers() {
+  markersLayer.clearLayers();
 }

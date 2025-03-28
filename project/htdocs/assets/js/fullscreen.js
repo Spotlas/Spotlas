@@ -36,34 +36,37 @@ function fetchLocationDetails(id) {
             const rating = data.data.average_rating;
             const comments = data.data.comments;
 
+            // Füge Bewertungen hinzu
             generateStars(rating);
 
-            // Update location details
-            //const location = data.location;
+            // Aktualisiere die verschiedenen Felder
             document.querySelector('#name_spot').innerHTML = location.name;
-            document.querySelector('#description_spot').innerHTML = location.description;
-            document.querySelector('#name_category').innerHTML = location.name + ', ' + location.category;
-            document.querySelector('#website_url').innerHTML = location.website_url;
-            document.querySelector('#openinghours').innerHTML = "Openinghours: " + location.opening_hours;
+            document.querySelector('#name_category').innerHTML = location.name + ', ' + (location.category_id || 'Keine Kategorie');
+            document.querySelector('#website_url').innerHTML = location.website_url ? `<a href="${location.website_url}" target="_blank">${location.website_url}</a>` : 'Kein Link verfügbar';
+            document.querySelector('#openinghours').innerHTML = "Openinghours: " + (location.opening_hours || 'Keine Angaben');
+            document.querySelector('#address').innerHTML = location.address || 'Keine Adresse verfügbar';
+            document.querySelector('#description_spot').innerHTML = location.description || 'Keine Beschreibung verfügbar';
+            document.querySelector('#price_range').innerHTML = "Price Range: " + (location.price_range || 'Keine Angabe');
+            document.querySelector('#season').innerHTML = "Season: " + (location.season || 'Keine Saisonangabe');
+            document.querySelector('#special_features').innerHTML = location.special_features || 'Keine besonderen Merkmale';
 
+            // Kommentare anzeigen
             let htmlCode = "";
-
             for (let i = 0; i < comments.length; i++) {
-                htmlCode = `<div class="comment"><strong>User ${comments[i].user_id}:</strong> ${comments[i].comment_text} </div>`
+                htmlCode += `<div class="comment"><strong>User ${comments[i].user_id}:</strong> ${comments[i].comment_text}</div>`;
             }
-
             document.querySelector('#comments').innerHTML = htmlCode;
-
         })
         .catch(error => console.error('Error fetching location details:', error));
-  }
+}
 
 /* document.addEventListener('DOMContentLoaded', () => {
     fetchLocationDetails(2);
 }); */
 
 function rate(rating) {
-    const pointId = 1;
+    const params = new URLSearchParams(window.location.search);
+    const pointId = params.get("id");
     const userId = 3 // TODO: Get user ID from session
     rateLocation(pointId, userId, rating);  
     
@@ -111,20 +114,28 @@ function rateLocation(id, userId, rating) {
     const bookmarkIcon = document.getElementById("bookmarkIcon");
 
 
-    bookmarkIcon.addEventListener("click", function () {
-        isSaved = !isSaved; // Umschalten des Zustands
-        const params = new URLSearchParams(window.location.search);
-        const pointId = params.get("id");
-        const userId = 3; // TODO: Get user ID from session
-
-        if (isSaved) {
-            this.src = "../../assets/images/icons/bookmark-fill.svg"; // Gespeichert-Bild
-            favoriteLocation(pointId, userId);
+    document.addEventListener("DOMContentLoaded", () => {
+        const bookmarkIcon = document.getElementById("bookmarkIcon");
+        if (bookmarkIcon) {
+            bookmarkIcon.addEventListener("click", function () {
+                isSaved = !isSaved;
+                const params = new URLSearchParams(window.location.search);
+                const pointId = params.get("id");
+                const userId = 3;
+    
+                if (isSaved) {
+                    this.src = "../../assets/images/icons/bookmark-fill.svg";
+                    favoriteLocation(pointId, userId);
+                } else {
+                    this.src = "../../assets/images/icons/bookmark_unsaved.svg";
+                    removeFavoriteLocation(pointId, userId);
+                }
+            });
         } else {
-            this.src = "../../assets/images/icons/bookmark_unsaved.svg"; // Nicht gespeichert-Bild
-            removeFavoriteLocation(pointId, userId);
+            console.warn("Bookmark Icon nicht gefunden.");
         }
     });
+    
 
     // Markiert eine Location als Favorit
     function favoriteLocation(id, userId) {
