@@ -1,10 +1,59 @@
+// Helper function to display messages
+function showMessage(containerId, message, type) {
+    const container = document.getElementById(containerId);
+    if (!container) {
+        console.error(`Message container with ID '${containerId}' not found`);
+        alert(message); // Fallback to alert if container doesn't exist
+        return;
+    }
+    
+    // Keep messages concise
+    if (message.length > 60) {
+        message = message.substring(0, 57) + '...';
+    }
+    
+    // Reset animation by removing and re-adding the class
+    container.className = 'message-container';
+    
+    // Force browser to recognize the change
+    void container.offsetWidth;
+    
+    container.textContent = message;
+    container.className = 'message-container ' + type;
+    
+    // Automatically clear success messages after 3 seconds
+    if (type === 'success') {
+        setTimeout(() => {
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(-5px)';
+            
+            setTimeout(() => {
+                container.textContent = '';
+                container.className = 'message-container';
+                container.style.opacity = '';
+                container.style.transform = '';
+            }, 300);
+        }, 3000);
+    }
+}
+
+// Clear all message containers
+function clearMessages() {
+    document.querySelectorAll('.message-container').forEach(container => {
+        container.textContent = '';
+        container.className = 'message-container';
+    });
+}
+
 function getLogin() {
+    clearMessages();
     document.getElementById('register').style.display = 'none';
     document.getElementById('login').style.display = 'grid';
     document.getElementById('registerPage2').style.display = 'none';
 }
 
 function getRegister() {
+    clearMessages();
     document.getElementById('register').style.display = 'grid';
     document.getElementById('login').style.display = 'none';
 }
@@ -13,6 +62,7 @@ function getRegister() {
 let registeredUserId = null;
 
 function getRegisterPage2() {
+    clearMessages();
     document.getElementById('register').style.display = 'none';
     document.getElementById('registerPage2').style.display = 'grid';
 }
@@ -21,6 +71,11 @@ function login(event) {
     event.preventDefault();
     const username = document.getElementById('login_username').value;
     const password = document.getElementById('login_password').value;
+    const button = event.target.querySelector('button');
+    
+    // Show loading state
+    button.classList.add('loading');
+    button.disabled = true;
 
     fetch('../../api/login_user.php', {
         method: 'POST',
@@ -35,14 +90,21 @@ function login(event) {
     })
     .then(data => {
         if (data.code === 200) {
-            alert('Login successful');
-            window.location.href = '../../index.html';
+            showMessage('login-message', 'Login successful! Redirecting...', 'success');
+            setTimeout(() => {
+                window.location.href = '../../index.html';
+            }, 1000);
         } else {
-            alert(data.message);
+            showMessage('login-message', data.message, 'error');
         }
     })
     .catch(error => {
-        alert('Error during login. Please try again later.');
+        showMessage('login-message', 'Error during login. Please try again later.', 'error');
+    })
+    .finally(() => {
+        // Remove loading state
+        button.classList.remove('loading');
+        button.disabled = false;
     });
 }
 
@@ -51,9 +113,16 @@ function register(event) {
     const email = document.getElementById('register_email').value;
     const password = document.getElementById('register_password').value;
     const password_repeat = document.getElementById('register_password_repeat').value;
+    const button = event.target.querySelector('button');
+    
+    // Show loading state
+    button.classList.add('loading');
+    button.disabled = true;
 
     if (password !== password_repeat) {
-        alert('Passwords do not match');
+        showMessage('register-message', 'Passwords do not match', 'error');
+        button.classList.remove('loading');
+        button.disabled = false;
         return;
     }
     
@@ -65,15 +134,22 @@ function register(event) {
     .then(response => response.json())
     .then(data => {
         if (data.code === 200) {
-            alert('Initial registration successful. Please complete your profile.');
+            showMessage('register-message', 'Initial registration successful! Please complete your profile.', 'success');
             registeredUserId = data.user_id;
-            getRegisterPage2();
+            setTimeout(() => {
+                getRegisterPage2();
+            }, 1000);
         } else {
-            alert(data.message || 'Unknown error occurred');
+            showMessage('register-message', data.message || 'Unknown error occurred', 'error');
         }
     })
     .catch(error => {
-        alert('Error during registration. Please try again later.');
+        showMessage('register-message', 'Error during registration. Please try again later.', 'error');
+    })
+    .finally(() => {
+        // Remove loading state
+        button.classList.remove('loading');
+        button.disabled = false;
     });
 }
 
@@ -81,8 +157,10 @@ function registerPage2(event) {
     event.preventDefault();
     
     if (!registeredUserId) {
-        alert('Registration error: User ID not found. Please start over.');
-        getLogin();
+        showMessage('register2-message', 'Registration error: User ID not found. Please start over.', 'error');
+        setTimeout(() => {
+            getLogin();
+        }, 2000);
         return;
     }
     
@@ -91,6 +169,11 @@ function registerPage2(event) {
     const phone = document.getElementById('register_phone').value;
     const username = document.getElementById('register_username').value;
     const birthday = document.getElementById('register_birthday').value;
+    const button = event.target.querySelector('button');
+    
+    // Show loading state
+    button.classList.add('loading');
+    button.disabled = true;
     
     fetch('../../api/create_user.php', {
         method: 'POST',
@@ -108,18 +191,27 @@ function registerPage2(event) {
     .then(response => response.json())
     .then(data => {
         if (data.code === 200) {
-            alert('Registration completed successfully!');
-            window.location.href = '../../index.html';
+            showMessage('register2-message', 'Registration completed successfully! Redirecting...', 'success');
+            setTimeout(() => {
+                window.location.href = '../../index.html';
+            }, 1500);
         } else {
-            alert(data.message || 'Unknown error occurred');
+            showMessage('register2-message', data.message || 'Unknown error occurred', 'error');
         }
     })
     .catch(error => {
-        alert('Error completing registration. Please try again later.');
+        showMessage('register2-message', 'Error completing registration. Please try again later.', 'error');
+    })
+    .finally(() => {
+        // Remove loading state
+        button.classList.remove('loading');
+        button.disabled = false;
     });
 }
 
-// Add event listener for the first form
+// Add event listeners when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('registerForm').addEventListener('submit', register);
+    document.getElementById('loginForm').addEventListener('submit', login);
+    document.getElementById('registerPage2Form').addEventListener('submit', registerPage2);
 });

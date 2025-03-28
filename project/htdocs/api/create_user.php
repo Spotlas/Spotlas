@@ -31,33 +31,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $temp_username = explode('@', $email)[0] . '_' . rand(1000, 9999);
         $temp_full_name = "New User";
         
-        // Check username
-        $check_stmt = $conn->prepare("SELECT id FROM Users WHERE username = ?");
-        $check_stmt->bind_param("s", $temp_username);
-        $check_stmt->execute();
-        $check_stmt->store_result();
+        // Check if email already exists
+        $email_check = $conn->prepare("SELECT id FROM Users WHERE email = ?");
+        $email_check->bind_param("s", $email);
+        $email_check->execute();
+        $email_check->store_result();
         
-        if ($check_stmt->num_rows > 0) {
+        if ($email_check->num_rows > 0) {
             $response["code"] = 409;
-            $response["message"] = "Generated username already exists, please try again";
+            $response["message"] = "Email address already in use";
         } else {
-            // Create user
-            $stmt = $conn->prepare("INSERT INTO Users (username, password_hash, email, full_name, profile_picture_url, description) 
-                   VALUES (?, ?, ?, ?, 'default.jpg', '')");
-            $stmt->bind_param("ssss", $temp_username, $password, $email, $temp_full_name);
+            // Check username
+            $check_stmt = $conn->prepare("SELECT id FROM Users WHERE username = ?");
+            $check_stmt->bind_param("s", $temp_username);
+            $check_stmt->execute();
+            $check_stmt->store_result();
             
-            if ($stmt->execute()) {
-                $response["code"] = 200;
-                $response["message"] = "User created successfully, please complete your profile";
-                $response["user_id"] = $stmt->insert_id;
-                $response["temp_username"] = $temp_username;
+            if ($check_stmt->num_rows > 0) {
+                $response["code"] = 409;
+                $response["message"] = "Generated username already exists, please try again";
             } else {
-                $response["code"] = 500;
-                $response["message"] = "Could not create user. Please try again.";
+                // Create user
+                $stmt = $conn->prepare("INSERT INTO Users (username, password_hash, email, full_name, profile_picture_url, description) 
+                       VALUES (?, ?, ?, ?, 'default.jpg', '')");
+                $stmt->bind_param("ssss", $temp_username, $password, $email, $temp_full_name);
+                
+                if ($stmt->execute()) {
+                    $response["code"] = 200;
+                    $response["message"] = "User created successfully, please complete your profile";
+                    $response["user_id"] = $stmt->insert_id;
+                    $response["temp_username"] = $temp_username;
+                } else {
+                    $response["code"] = 500;
+                    $response["message"] = "Could not create user. Please try again.";
+                }
+                $stmt->close();
             }
-            $stmt->close();
+            $check_stmt->close();
         }
-        $check_stmt->close();
+        $email_check->close();
     } 
     // Stage 2: Update user profile
     elseif (isset($data["user_id"]) && isset($data["username"])) {
