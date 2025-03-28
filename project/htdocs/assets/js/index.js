@@ -201,6 +201,7 @@ function fetchLocationsByCategory(category) {
       .then(response => response.json())
       .then(data => {
           console.log('Locations by category:', data);
+          printToMap(data);
       })
       .catch(error => console.error('Error fetching locations by category:', error));
 }
@@ -219,4 +220,21 @@ function getCategoryId(categoryName) {
           }
       })
       .catch(error => console.error('Fehler beim Abrufen der Kategorie-ID:', error));
+}
+
+function printToMap(data) {
+  let points = [];
+  for (let i = 0; i < data.length; i++) {
+      points.push({
+          id: data[i].id,
+          lat: data[i].latitude,
+          lng: data[i].longitude,
+          name: data[i].name,
+          image: data[i].image,
+          description: data[i].description,
+      });
+  }
+  
+  addMarkersToMap(points);
+  listMarkers(points);
 }
