@@ -15,7 +15,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 // Suche per Name:
 elseif (isset($_GET['search']) && !empty($_GET['search'])) {
     $search = $conn->real_escape_string($_GET['search']);
-    $sql = "SELECT * FROM Locations WHERE name LIKE '%$search%'";
+    $sql = "SELECT * FROM Locations WHERE lower(name) LIKE '%$search%'";
 }
 
 // Suche per Kategorie:

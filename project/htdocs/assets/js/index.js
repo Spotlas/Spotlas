@@ -182,7 +182,11 @@ document.getElementById("homepage_filter_search").addEventListener("keydown", fu
   if (event.key === "Enter") {
       event.preventDefault(); // Verhindert das Absenden eines Formulars
       let searchTerm = document.getElementById("homepage_filter_search").value;
-      searchLocationsByName(searchTerm);
+      if (searchTerm != " ") {
+        searchLocationsByName(searchTerm);
+      }else{
+        alert("Bitte geben Sie einen Suchbegriff ein");
+      }
   }
 });
 
