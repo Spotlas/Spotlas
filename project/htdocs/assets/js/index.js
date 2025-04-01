@@ -114,6 +114,34 @@ function addMarkersToMap(points) {
   listMarkers(points);
 }
 
+function addMarkersToMap(points) {
+  markersLayer.clearLayers(); // Lösche alte Marker
+  points.forEach((point) => {
+    const customIcon = L.icon({
+      iconUrl: '../../assets/images/icons/marker2.png',
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32]
+    });
+
+    const marker = L.marker([point.lat, point.lng], { icon: customIcon }).addTo(markersLayer);
+    marker.markerId = point.id;
+
+    marker.on("click", () => {
+      selectedMarker = marker;
+      openSidebarWithContent(`
+        <h3>${point.name}</h3>
+        <img src="${point.image}" alt="${point.name}" style="width:100%;">
+        <p>${point.description}</p>
+        <p><strong>|</strong> ${point.lat}, ${point.lng} </p>
+      `);
+    });
+  });
+
+  listMarkers(points);
+}
+
+
 
 function listMarkers(points) {
   if (selectedMarker) return; // Zeige nur die Namen, wenn kein Marker aktiv ist
@@ -181,7 +209,7 @@ function closeDropdown(event) {
 document.getElementById("homepage_filter_search").addEventListener("keydown", function(event) {
   if (event.key === "Enter") {
       event.preventDefault(); // Verhindert das Absenden eines Formulars
-      let searchTerm = document.getElementById("homepage_filter_search").value;
+      let searchTerm = document.getElementById("homepage_filter_search_input").value;
       if (searchTerm != " ") {
         searchLocationsByName(searchTerm);
       }else{
@@ -192,10 +220,14 @@ document.getElementById("homepage_filter_search").addEventListener("keydown", fu
 
 // Sucht Locations anhand eines Namens
 function searchLocationsByName(searchTerm) {
+  console.log(`searchLocationsByName aufgerufen mit: ${searchTerm}`);
   fetch(`./api/home.php?search=${encodeURIComponent(searchTerm)}`)
       .then(response => response.json())
       .then(data => {
           console.log('Search results:', data);
+
+          printToMap(data);
+
       })
       .catch(error => console.error('Error searching locations:', error));
 }
@@ -229,18 +261,24 @@ function getCategoryId(categoryName) {
 }
 
 function printToMap(data) {
-  let points = [];
-  for (let i = 0; i < data.length; i++) {
-      points.push({
-          id: data[i].location.id,
-          lat: data[i].location.latitude,
-          lng: data[i].location.longitude,
-          name: data[i].location.name,
-          image: data[i].location.image,
-          description: data[i].location.description,
-      });
-  }
+  sidebar.innerHTML = "";
   clearMarkers();
+  let points = [];
+  points = data.locations.map(location => {
+    // Überprüfen, ob die notwendigen Felder vorhanden sind
+    if (location.latitude && location.longitude) {
+      return {
+        id: location.id || 0,
+        lat: location.latitude,
+        lng: location.longitude,
+        name: location.name ,
+        image: location.image ,
+        description: location.description ,
+      };
+    }
+    return null; // Falls kein gültiger Ort, gebe null zurück
+  }).filter(location => location !== null); // Entferne null-Werte
+  
   addMarkersToMap(points);
   listMarkers(points);
 }
