@@ -130,10 +130,24 @@ function addMarkersToMap(points) {
     marker.on("click", () => {
       selectedMarker = marker;
       openSidebarWithContent(`
-        <h3>${point.name}</h3>
-        <img src="${point.image}" alt="${point.name}" style="width:100%;">
-        <p>${point.description}</p>
+        <img id="img_saveButton" src="./assets/images/testPic/save.png" alt="${point.name}" style="width:8%; max-height:150px; object-fit:cover; padding-bottom: 2%;">
+        <a href="./pages/fullscreen_startseite/fullscreen.html?id=${point.id}"><img id="img_großButton" src="./assets/images/testPic/grosmachen.png" alt="${point.name}" style="width:8%; max-height:150px; object-fit:cover; padding-left: 80%; padding-bottom: 2%;"></a>
+        <img id="img_big" src="${point.image}" alt="${point.name}" style="width:100%; max-height:150px; object-fit:cover;">
+        
+        <img id="img_point" src="${point.image}" alt="${point.name}" style="width:10%; max-height:150px; object-fit:cover;">
+        <img id="img_point" src="${point.image}" alt="${point.name}" style="width:10%; max-height:150px; object-fit:cover;">
+        <img id="img_point" src="${point.image}" alt="${point.name}" style="width:10%; max-height:150px; object-fit:cover;">
+        
+        <img src="./assets/images/testPic/bewertung.png" alt="${point.name}" style="width:40%; max-height:150px; object-fit:cover; padding-left: 25.4%;">
+        <div id="parent_grid" >
+        <h3 id="header_point">${point.name}</h3>
+        <img src="./assets/images/testPic/sorte.png" alt="${point.name}" style="width:50%; max-height:150px; object-fit:cover; padding-left: 50.4%;">
+        </div>
+        <p id="beschreibung">${point.description}</p>
         <p><strong>|</strong> ${point.lat}, ${point.lng} </p>
+        <br>
+      
+        <a id="button_comments_link" href="./pages/fullscreen_startseite/fullscreen.html?id=${point.id}"><div id="button_comments"><p>show Comments</p></div></a>
       `);
     });
   });
