@@ -9,7 +9,7 @@ let config = {
   zoomControl: false
 };
 const zoom = 7;
-const zoompoint = 10;
+const zoompoint = 11;
 const lat = 47.6965;
 const lng = 13.3458;
 let points = []; // Array für die Orte

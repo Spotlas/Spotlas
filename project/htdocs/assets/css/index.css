@@ -117,7 +117,7 @@ h1, h2, h3, h4, h5, h6{
 
 #img_großButton:hover {
   cursor: pointer;
-  transform: translateY(-5px);
+  transform: translateY(-3px);
 }
 
 #img_saveButton {
@@ -126,7 +126,7 @@ h1, h2, h3, h4, h5, h6{
 
 #img_saveButton:hover {
   cursor: pointer;
-  transform: translateY(-5px);
+  transform: translateY(-3px);
 }
 
 #img_point {
@@ -136,7 +136,7 @@ h1, h2, h3, h4, h5, h6{
 
 #img_point:hover {
   cursor: pointer;
-  transform: translateY(-5px);
+  transform: translateY(-3px);
 }
 
 #button_comments {

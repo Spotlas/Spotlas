@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Spotlas" company="HTL Leonding" webLink="http://" view-date="2025-02-09" view-index="0" gantt-divider-location="264" resource-divider-location="300" version="3.3.3312" locale="en_US">
+<?xml version="1.0" encoding="UTF-8"?><project name="Spotlas" company="HTL Leonding" webLink="http://" view-date="2025-03-09" view-index="0" gantt-divider-location="264" resource-divider-location="300" version="3.3.3312" locale="en_US">
     <description><![CDATA[Projekt]]></description>
     <view zooming-state="default:5" id="gantt-chart">
         <field id="tpd3" name="Name" width="124" order="0"/>

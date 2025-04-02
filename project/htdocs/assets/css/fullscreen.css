@@ -207,3 +207,24 @@ textarea {
     overflow: hidden;
     width: calc(4.5 / 5 * 100%);
   }
+
+  #add_info_backButton{
+    display: flex;
+    margin: 1.3vw 92vw 0 1.3vw;
+
+    transition: all ease-in-out 200ms;
+}
+
+#add_info_backButton:hover{
+    cursor: pointer;
+    transform: translateY(-5px);
+}
+
+#add_info_backButton img{
+    width: 40px;
+    transform: rotate(90deg);
+}
+#add_info_backButton a{
+    text-decoration: none;
+    color: var(--black-color);
+}
