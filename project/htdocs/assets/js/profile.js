@@ -7,8 +7,12 @@ function showLine(clickedPTag) {
   clickedPTag.classList.add("active");
 }
 
+loadErstellte(clickedPTag);
+
+function showWhenFirstLoad() {}
+
 function loadErstellte(clickedPTag) {
-    showLine(clickedPTag);
+  showLine(clickedPTag);
   document.getElementById("bilder").innerHTML = `
     <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
       <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
@@ -37,7 +41,7 @@ function loadErstellte(clickedPTag) {
 }
 
 function loadFavouriten(clickedPTag) {
-    showLine(clickedPTag);
+  showLine(clickedPTag);
   document.getElementById("bilder").innerHTML = `
     <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
       <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
@@ -64,3 +68,12 @@ function loadFavouriten(clickedPTag) {
       <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
       <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>`;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const erstelltSwitch = document.getElementById("switches_erstellt");
+  if (erstelltSwitch) {
+    loadErstellte(erstelltSwitch); // ← jetzt wird es korrekt aufgerufen
+  }
+});
+
+
