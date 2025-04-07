@@ -141,11 +141,7 @@ p.active::after {
   display: inline-block; /* passt sich der Bildgröße an */
 }
 
-.image-wrapper img {
-  display: block;
-  width: 100%; /* oder feste Größe */
-  height: auto;
-}
+
 
 .image-wrapper .overlay {
   position: absolute;
