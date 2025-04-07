@@ -7,37 +7,39 @@ function showLine(clickedPTag) {
   clickedPTag.classList.add("active");
 }
 
-loadErstellte(clickedPTag);
+loadErstellteBilder();
 
-function showWhenFirstLoad() {}
+function loadErstellteBilder() {
+  document.getElementById("bilder").innerHTML = `
+  <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
+    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>`;
+}
 
 function loadErstellte(clickedPTag) {
   showLine(clickedPTag);
-  document.getElementById("bilder").innerHTML = `
-    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>`;
+  loadErstellteBilder();
 }
 
 function loadFavouriten(clickedPTag) {
