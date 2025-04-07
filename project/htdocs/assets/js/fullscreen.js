@@ -49,11 +49,13 @@ function fetchLocationDetails(id) {
             document.querySelector('#price_range').innerHTML = "Price Range: " + (location.price_range || 'Keine Angabe');
             document.querySelector('#season').innerHTML = "Season: " + (location.season || 'Keine Saisonangabe');
             document.querySelector('#special_features').innerHTML = location.special_features || 'Keine besonderen Merkmale';
+            document.querySelector('#category_spot_name').innerHTML = location.category_id
+            
 
             // Kommentare anzeigen
             let htmlCode = "";
             for (let i = 0; i < comments.length; i++) {
-                htmlCode += `<div class="comment"><strong>User ${comments[i].user_id}:</strong> ${comments[i].comment_text}</div>`;
+                htmlCode += `<div class="comment"><strong><a href="../profile/profile.html?userId=${comments[i].user_id}" >${comments[i].user_id}</a>:</strong> ${comments[i].comment_text}</div>`;
             }
             document.querySelector('#comments').innerHTML = htmlCode;
         })
@@ -171,6 +173,4 @@ function removeFavoriteLocation(id, userId) {
     })
     .catch(error => console.error('Error removing favorite location:', error));
 }
-
-
 

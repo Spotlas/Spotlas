@@ -228,3 +228,7 @@ textarea {
     text-decoration: none;
     color: var(--black-color);
 }
+
+#user_data{
+    margin-top: 6vw;
+}
