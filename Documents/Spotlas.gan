@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Spotlas" company="HTL Leonding" webLink="http://" view-date="2025-03-09" view-index="0" gantt-divider-location="264" resource-divider-location="300" version="3.3.3312" locale="en_US">
+<?xml version="1.0" encoding="UTF-8"?><project name="Spotlas" company="HTL Leonding" webLink="http://" view-date="2025-02-16" view-index="0" gantt-divider-location="248" resource-divider-location="300" version="3.3.3312" locale="en_US">
     <description><![CDATA[Projekt]]></description>
     <view zooming-state="default:5" id="gantt-chart">
-        <field id="tpd3" name="Name" width="124" order="0"/>
-        <field id="tpd4" name="Begin date" width="59" order="1"/>
-        <field id="tpd5" name="End date" width="65" order="2"/>
+        <field id="tpd3" name="Name" width="116" order="0"/>
+        <field id="tpd4" name="Begin date" width="55" order="1"/>
+        <field id="tpd5" name="End date" width="61" order="2"/>
         <field id="tpd15" name="Notes" width="20" order="3"/>
         <option id="filter.completedTasks" value="false"/>
         <option id="filter.dueTodayTasks" value="false"/>
         <option id="filter.overdueTasks" value="false"/>
         <option id="filter.inProgressTodayTasks" value="false"/>
-        <timeline><![CDATA[12,0,14,16,2,15,1]]></timeline>
+        <timeline><![CDATA[15,29,0,14,16,1,28,12,2]]></timeline>
         <option id="color.recent"><![CDATA[#ccffcc #ccccff #ff3333 #ff0033 #ccff00 #ff0000 #ccffff #ff66ff]]></option>
     </view>
     <view id="resource-table">
@@ -103,7 +103,7 @@
             </task>
             <task id="20" uid="eaeb0c1c69f34a6682fa3e210abde93b" name="M_Server fertiggestellt" color="#ff0000" meeting="true" start="2025-04-11" duration="0" complete="0" expand="true"/>
         </task>
-        <task id="21" uid="56fd6143e0874702b8aa7417642bad6a" name="Frontend" color="#ccccff" meeting="false" start="2024-12-01" duration="143" complete="81" expand="true">
+        <task id="21" uid="56fd6143e0874702b8aa7417642bad6a" name="Frontend" color="#ccccff" meeting="false" start="2024-12-01" duration="151" complete="83" expand="true">
             <depend id="32" type="2" difference="0" hardness="Strong"/>
             <task id="22" uid="71a08a834bb64771bbe3d61ee583bab7" name="Moodboard" color="#ccccff" meeting="false" start="2024-12-01" duration="7" complete="100" thirdDate="2024-12-01" thirdDate-constraint="1" expand="true">
                 <depend id="23" type="2" difference="0" hardness="Strong"/>
@@ -123,23 +123,23 @@
             <task id="27" uid="f10dcda1cb0140b186fc9f6c2efdb0c1" name="Basic CSS" color="#ccccff" meeting="false" start="2025-02-24" duration="7" complete="100" thirdDate="2025-02-24" thirdDate-constraint="1" expand="true">
                 <depend id="28" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="28" uid="668d3c4401e942dcbe9983da3f3e992d" name="Detailiertes CSS" color="#ccccff" meeting="false" start="2025-03-03" duration="14" complete="95" thirdDate="2025-03-03" thirdDate-constraint="1" expand="true">
+            <task id="28" uid="668d3c4401e942dcbe9983da3f3e992d" name="Detailiertes CSS" color="#ccccff" meeting="false" start="2025-03-03" duration="17" complete="97" thirdDate="2025-03-03" thirdDate-constraint="1" expand="true">
                 <depend id="29" type="2" difference="0" hardness="Strong"/>
                 <depend id="34" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="34" uid="f99b1cd2f6c04c5bb46fb10dec06dee8" name="M_CSS fertig" color="#ff3333" meeting="true" start="2025-03-17" duration="0" complete="0" expand="true"/>
-            <task id="29" uid="e85962ceebe04c8abdf4c9846673fcb4" name="Interaktive Elemente" color="#ccccff" meeting="false" start="2025-03-17" duration="7" complete="90" thirdDate="2025-03-17" thirdDate-constraint="1" expand="true">
+            <task id="34" uid="f99b1cd2f6c04c5bb46fb10dec06dee8" name="M_CSS fertig" color="#ff3333" meeting="true" start="2025-03-20" duration="0" complete="0" expand="true"/>
+            <task id="29" uid="e85962ceebe04c8abdf4c9846673fcb4" name="Interaktive Elemente" color="#ccccff" meeting="false" start="2025-03-20" duration="12" complete="100" thirdDate="2025-03-17" thirdDate-constraint="1" expand="true">
                 <depend id="30" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="30" uid="505f68ba9bb14be0a202fd063c40d702" name="Dynamische Contentgenerierung" color="#ccccff" meeting="false" start="2025-03-24" duration="10" complete="70" thirdDate="2025-03-24" thirdDate-constraint="1" expand="true">
+            <task id="30" uid="505f68ba9bb14be0a202fd063c40d702" name="Dynamische Contentgenerierung" color="#ccccff" meeting="false" start="2025-04-01" duration="10" complete="80" thirdDate="2025-03-24" thirdDate-constraint="1" expand="true">
                 <depend id="31" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="31" uid="483e33758694476d9085943f2d66f5bd" name="Responsive" color="#ccccff" meeting="false" start="2025-04-03" duration="20" complete="0" thirdDate="2025-03-31" thirdDate-constraint="1" expand="true">
+            <task id="31" uid="483e33758694476d9085943f2d66f5bd" name="Responsive" color="#ccccff" meeting="false" start="2025-04-11" duration="20" complete="0" thirdDate="2025-03-31" thirdDate-constraint="1" expand="true">
                 <depend id="36" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="36" uid="34772a4882924cfab71a1f16507475fe" name="M_Frontend fertig" color="#ff3333" meeting="true" start="2025-04-23" duration="0" complete="0" expand="true"/>
+            <task id="36" uid="34772a4882924cfab71a1f16507475fe" name="M_Frontend fertig" color="#ff3333" meeting="true" start="2025-05-01" duration="0" complete="0" expand="true"/>
         </task>
-        <task id="32" uid="fea6f5f137244d1ea93eab392537677f" name="Verbesserungsphase" color="#ccff00" meeting="false" start="2025-04-23" duration="40" complete="0" thirdDate="2025-04-20" thirdDate-constraint="1" expand="true"/>
+        <task id="32" uid="fea6f5f137244d1ea93eab392537677f" name="Verbesserungsphase" color="#ccff00" meeting="false" start="2025-05-01" duration="40" complete="0" thirdDate="2025-04-20" thirdDate-constraint="1" expand="true"/>
     </tasks>
     <resources>
         <resource id="3" name="Erik Bergmair" function="Default:1" contacts="bergi.rik@gmail.com" phone=""/>

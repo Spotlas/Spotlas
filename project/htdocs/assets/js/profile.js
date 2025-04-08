@@ -7,60 +7,109 @@ function showLine(clickedPTag) {
   clickedPTag.classList.add("active");
 }
 
-function loadErstellte(clickedPTag) {
-    showLine(clickedPTag);
+loadErstellteBilder();
+
+function loadErstellteBilder() {
   document.getElementById("bilder").innerHTML = `
-    <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>
-      <div><img class="images" src="../../assets/images/testPic/1.png" alt="test" /></div>`;
+  <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">Overlay Text</div>
+  </div>
+    <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">Overlay Text</div>
+  </div>
+  <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">Overlay Text</div>
+  </div>
+  <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">Overlay Text</div>
+  </div>
+    <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">Overlay Text</div>
+  </div>
+  <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">Overlay Text</div>
+  </div>
+  <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">Overlay Text</div>
+  </div>
+    <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">Overlay Text</div>
+  </div>
+  <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">Overlay Text</div>
+  </div>
+  <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">Overlay Text</div>
+  </div>
+    <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">Overlay Text</div>
+  </div>
+  <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">Overlay Text</div>
+  </div>`;
+}
+
+function loadErstellte(clickedPTag) {
+  showLine(clickedPTag);
+  loadErstellteBilder();
 }
 
 function loadFavouriten(clickedPTag) {
-    showLine(clickedPTag);
+  showLine(clickedPTag);
   document.getElementById("bilder").innerHTML = `
-    <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>
-      <div><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" /></div>`;
+    <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
+      <div class="overlay">Overlay Text</div>
+    </div>
+      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
+        <div class="overlay">Overlay Text</div>
+      </div>
+      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
+      <div class="overlay">Overlay Text</div>
+    </div>
+      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
+        <div class="overlay">Overlay Text</div>
+      </div>
+      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
+      <div class="overlay">Overlay Text</div>
+    </div>
+      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
+        <div class="overlay">Overlay Text</div>
+      </div>
+      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
+      <div class="overlay">Overlay Text</div>
+    </div>
+      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
+        <div class="overlay">Overlay Text</div>
+      </div>
+      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
+      <div class="overlay">Overlay Text</div>
+    </div>
+      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
+        <div class="overlay">Overlay Text</div>
+      </div>
+      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
+      <div class="overlay">Overlay Text</div>
+    </div>
+      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
+        <div class="overlay">Overlay Text</div>
+      </div>
+      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
+      <div class="overlay">Overlay Text</div>
+    </div>
+      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
+        <div class="overlay">Overlay Text</div>
+      </div>
+      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
+      <div class="overlay">Overlay Text</div>
+    </div>
+      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
+        <div class="overlay">Overlay Text</div>
+      </div>`;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const erstelltSwitch = document.getElementById("switches_erstellt");
+  if (erstelltSwitch) {
+    loadErstellte(erstelltSwitch); // ← jetzt wird es korrekt aufgerufen
+  }
+});
