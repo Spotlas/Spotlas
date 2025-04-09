@@ -75,41 +75,25 @@ body {
 }
 
 /* Back Button - Clean Design */
-#add_info_backButton {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    padding: 8px 15px;
-    border-radius: 24px;
-    background-color: transparent;
-    transition: color 0.3s ease, transform 0.3s ease;
-    position: relative;
-    z-index: 2;
+#add_info_backButton{
+    display: flex;
+    margin: 1.3vw 92vw 0 1.3vw;
+
+    transition: all ease-in-out 200ms;
 }
 
-#add_info_backButton:hover {
+#add_info_backButton:hover{
     cursor: pointer;
-    color: var(--accent-color);
-    transform: translateX(-5px);
+    transform: translateY(-3px);
 }
 
-#add_info_backButton img {
-    width: 20px;
-    height: 20px;
+#add_info_backButton img{
+    width: 40px;
     transform: rotate(90deg);
-    transition: transform 0.3s ease;
 }
-
-#add_info_backButton:hover img {
-    transform: rotate(90deg) translateX(-3px);
-}
-
-#add_info_backButton a, #add_info_backButton p {
+#add_info_backButton a{
     text-decoration: none;
-    color: inherit;
-    font-weight: 500;
-    margin: 0;
+    color: var(--black-color);
 }
 
 /* Comments Section - Modern Design */
@@ -155,10 +139,6 @@ body {
     border-left: 3px solid var(--accent-color);
     border-radius: 10px;
     transition: transform 0.2s ease;
-}
-
-.comment:hover {
-    transform: translateX(3px);
 }
 
 .comment strong {
