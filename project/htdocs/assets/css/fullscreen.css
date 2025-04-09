@@ -227,6 +227,8 @@ textarea {
 #add_info_backButton a{
     text-decoration: none;
     color: var(--black-color);
+}
+
 body{
     background-color: var(--primary-bg-color);
 }
