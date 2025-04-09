@@ -103,6 +103,10 @@ h1, h2, h3, h4, h5, h6{
     box-shadow: 2px 2px 19px -6px rgba(0,0,0,0.74);
 }
 
+.sidebar-el:hover{
+  cursor: pointer;
+}
+
 #beschreibung {
   font-size: smaller;  
 }
