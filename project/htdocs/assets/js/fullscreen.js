@@ -16,6 +16,11 @@ document.querySelectorAll('.ratings input').forEach((radio) => {
     });
 });
 
+// Add event listeners when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('comment_form').addEventListener('submit', writeAComment);
+});
+
 document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     const pointId = params.get("id");
@@ -24,6 +29,36 @@ document.addEventListener("DOMContentLoaded", () => {
         fetchLocationDetails(pointId);
     }
   });
+
+  function writeAComment(event) {
+    event.preventDefault();
+    
+    const params = new URLSearchParams(window.location.search);
+    const pointId = params.get("id");
+    const userId = 3 // TODO: Get user ID from session
+    const commentText = document.querySelector('#comment_input').value;
+
+    const payload = { user_id: userId, comment_text: commentText };
+
+    fetch(`../../api/location.php?action=comment&id=${pointId}&userId=${userId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Comment response:', data);
+            if (data.code === 200) {
+                document.querySelector('#comment_text').value = ''; // Clear the input field
+                fetchLocationDetails(pointId); // Refresh comments
+            } else {
+                console.error('Error:', data.message);
+            }
+        })
+        .catch(error => console.error('Error writing comment:', error));
+  }
 
 // Holt detaillierte Informationen zu einer Location inkl. Kommentare und Bilder
 function fetchLocationDetails(id) {
