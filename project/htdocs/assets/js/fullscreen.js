@@ -40,18 +40,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const payload = { user_id: userId, comment_text: commentText };
 
-    fetch(`../../api/location.php?action=comment&id=${pointId}&userId=${userId}`, {
+    fetch(`../../api/add_comment.php`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(payload)
-    })
+        body: JSON.stringify({
+            user_id: userId,
+            comment_text: commentText,
+            location_id: pointId
+        })
+    })    
         .then(response => response.json())
         .then(data => {
             console.log('Comment response:', data);
-            if (data.code === 200) {
-                document.querySelector('#comment_text').value = ''; // Clear the input field
+            if (data.code === 201) {
+                document.querySelector('#comment_input').value = ""; // Clear the input field
                 fetchLocationDetails(pointId); // Refresh comments
             } else {
                 console.error('Error:', data.message);
