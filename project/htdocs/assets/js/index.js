@@ -6,7 +6,7 @@
 let config = {
   minZoom: 3,
   maxZoom: 50,
-  zoomControl: false
+  zoomControl: false,
 };
 const zoom = 7;
 const zoompoint = 11;
@@ -14,45 +14,46 @@ const lat = 47.6965;
 const lng = 13.3458;
 let points = []; // Array für die Orte
 
-
 function fetchAllLocations() {
-  fetch('./api/home.php')
-    .then(response => response.json())
-    .then(data => {
-      console.log('API Antwort:', data); // Sieh dir die API-Daten an
+  fetch("./api/home.php")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("API Antwort:", data); // Sieh dir die API-Daten an
 
       // Überprüfe, ob 'locations' vorhanden ist und die Struktur stimmt
       if (data.locations && Array.isArray(data.locations)) {
         // Erstelle das points Array
-        points = data.locations.map(location => {
-          // Überprüfen, ob die notwendigen Felder vorhanden sind
-          if (location.latitude && location.longitude) {
-            return {
-              id: location.id || 0,
-              lat: location.latitude,
-              lng: location.longitude,
-              name: location.name ,
-              image: location.image ,
-              description: location.description ,
-            };
-          }
-          return null; // Falls kein gültiger Ort, gebe null zurück
-        }).filter(location => location !== null); // Entferne null-Werte
+        points = data.locations
+          .map((location) => {
+            // Überprüfen, ob die notwendigen Felder vorhanden sind
+            if (location.latitude && location.longitude) {
+              return {
+                id: location.id || 0,
+                lat: location.latitude,
+                lng: location.longitude,
+                name: location.name,
+                image: location.image,
+                description: location.description,
+              };
+            }
+            return null; // Falls kein gültiger Ort, gebe null zurück
+          })
+          .filter((location) => location !== null); // Entferne null-Werte
 
-        console.log('Gefundene Orte:', points);
+        console.log("Gefundene Orte:", points);
 
         // Karte mit den abgerufenen Markern füllen
         addMarkersToMap(points);
       } else {
-        console.error('Keine gültigen Orte gefunden.');
+        console.error("Keine gültigen Orte gefunden.");
       }
     })
-    .catch(error => {
-      console.error('Error fetching all locations:', error);
+    .catch((error) => {
+      console.error("Error fetching all locations:", error);
     });
 }
 
-const map = L.map("map", config).setView([lat, lng],zoom);
+const map = L.map("map", config).setView([lat, lng], zoom);
 
 L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
@@ -74,15 +75,16 @@ function addMarkersToMap(points) {
 
   points.forEach((point) => {
     const customIcon = L.icon({
-      iconUrl: '../../assets/images/icons/marker2.png', // Pfad zum eigenen Marker-Bild
+      iconUrl: "../../assets/images/icons/marker2.png", // Pfad zum eigenen Marker-Bild
       iconSize: [32, 32], // Größe des Icons
       iconAnchor: [16, 32], // Position des Icons relativ zum Standort
-      popupAnchor: [0, -32] // Wo sich das Popup öffnet
+      popupAnchor: [0, -32], // Wo sich das Popup öffnet
     });
-    
-    const marker = L.marker([point.lat, point.lng], { icon: customIcon }).addTo(fg);
-    
-    
+
+    const marker = L.marker([point.lat, point.lng], { icon: customIcon }).addTo(
+      fg
+    );
+
     // Füge die id als benutzerdefiniertes Attribut hinzu
     marker.markerId = point.id;
 
@@ -118,13 +120,15 @@ function addMarkersToMap(points) {
   markersLayer.clearLayers(); // Lösche alte Marker
   points.forEach((point) => {
     const customIcon = L.icon({
-      iconUrl: '../../assets/images/icons/marker2.png',
+      iconUrl: "../../assets/images/icons/marker2.png",
       iconSize: [32, 32],
       iconAnchor: [16, 32],
-      popupAnchor: [0, -32]
+      popupAnchor: [0, -32],
     });
 
-    const marker = L.marker([point.lat, point.lng], { icon: customIcon }).addTo(markersLayer);
+    const marker = L.marker([point.lat, point.lng], { icon: customIcon }).addTo(
+      markersLayer
+    );
     marker.markerId = point.id;
 
     marker.on("click", () => {
@@ -155,19 +159,20 @@ function addMarkersToMap(points) {
   listMarkers(points);
 }
 
-
-
 function listMarkers(points) {
   if (selectedMarker) return; // Zeige nur die Namen, wenn kein Marker aktiv ist
   sidebar.innerHTML = "<h3>Orte im aktuellen Kartenausschnitt:</h3><br>";
-  
+
   map.eachLayer(function (layer) {
-    if (layer instanceof L.Marker && map.getBounds().contains(layer.getLatLng())) {
+    if (
+      layer instanceof L.Marker &&
+      map.getBounds().contains(layer.getLatLng())
+    ) {
       const el = document.createElement("div");
       el.className = "sidebar-el";
 
       // Benutze die markerId, um den Punkt zu finden
-      const point = points.find(p => p.id === layer.markerId);
+      const point = points.find((p) => p.id === layer.markerId);
       el.textContent = point ? point.name : "Unbekannter Ort"; // Sicherstellen, dass der Name gefunden wird
 
       el.onclick = () => {
@@ -179,8 +184,6 @@ function listMarkers(points) {
     }
   });
 }
-
-
 
 map.on("moveend", () => {
   listMarkers(points);
@@ -220,79 +223,90 @@ function closeDropdown(event) {
   }
 }
 
-document.getElementById("homepage_filter_search").addEventListener("keydown", function(event) {
-  if (event.key === "Enter") {
+document
+  .getElementById("homepage_filter_search")
+  .addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
       event.preventDefault(); // Verhindert das Absenden eines Formulars
-      let searchTerm = document.getElementById("homepage_filter_search_input").value;
+      let searchTerm = document.getElementById(
+        "homepage_filter_search_input"
+      ).value;
       if (searchTerm != " ") {
         searchLocationsByName(searchTerm);
-      }else{
+      } else {
         alert("Bitte geben Sie einen Suchbegriff ein");
       }
-  }
-});
+    }
+  });
 
 // Sucht Locations anhand eines Namens
 function searchLocationsByName(searchTerm) {
   console.log(`searchLocationsByName aufgerufen mit: ${searchTerm}`);
   fetch(`./api/home.php?search=${encodeURIComponent(searchTerm)}`)
-      .then(response => response.json())
-      .then(data => {
-          console.log('Search results:', data);
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Search results:", data);
 
-          printToMap(data);
-
-      })
-      .catch(error => console.error('Error searching locations:', error));
+      printToMap(data);
+    })
+    .catch((error) => console.error("Error searching locations:", error));
 }
 
 // Ruft Locations anhand der Kategorie ab
 function fetchLocationsByCategory(category) {
   console.log(`fetchLocationbyCategory aufgerufen mit: ${category}`);
   fetch(`./api/home.php?category=${encodeURIComponent(category)}`)
-      .then(response => response.json())
-      .then(data => {
-          console.log('Locations by category:', data);
-          printToMap(data);
-      })
-      .catch(error => console.error('Error fetching locations by category:', error));
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Locations by category:", data);
+      printToMap(data);
+    })
+    .catch((error) =>
+      console.error("Error fetching locations by category:", error)
+    );
 }
 
 // Kategorie-ID anhand des Namens abrufen
 function getCategoryId(categoryName) {
   console.log(`getCategoryId aufgerufen mit: ${categoryName}`);
   fetch(`./api/getCategory.php?name=${encodeURIComponent(categoryName)}`)
-      .then(response => response.json())
-      .then(data => {
-          if (data.code === 200) {
-              console.log(`Die ID der Kategorie "${categoryName}" ist: ${data.category_id}`);
-              fetchLocationsByCategory(data.category_id);
-          } else {
-              console.error(`Fehler: ${data.message}`);
-          }
-      })
-      .catch(error => console.error('Fehler beim Abrufen der Kategorie-ID:', error));
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.code === 200) {
+        console.log(
+          `Die ID der Kategorie "${categoryName}" ist: ${data.category_id}`
+        );
+        fetchLocationsByCategory(data.category_id);
+      } else {
+        console.error(`Fehler: ${data.message}`);
+      }
+    })
+    .catch((error) =>
+      console.error("Fehler beim Abrufen der Kategorie-ID:", error)
+    );
 }
 
 function printToMap(data) {
   sidebar.innerHTML = "";
   clearMarkers();
   let points = [];
-  points = data.locations.map(location => {
-    // Überprüfen, ob die notwendigen Felder vorhanden sind
-    if (location.latitude && location.longitude) {
-      return {
-        id: location.id || 0,
-        lat: location.latitude,
-        lng: location.longitude,
-        name: location.name ,
-        image: location.image ,
-        description: location.description ,
-      };
-    }
-    return null; // Falls kein gültiger Ort, gebe null zurück
-  }).filter(location => location !== null); // Entferne null-Werte
-  
+  points = data.locations
+    .map((location) => {
+      // Überprüfen, ob die notwendigen Felder vorhanden sind
+      if (location.latitude && location.longitude) {
+        return {
+          id: location.id || 0,
+          lat: location.latitude,
+          lng: location.longitude,
+          name: location.name,
+          image: location.image,
+          description: location.description,
+        };
+      }
+      return null; // Falls kein gültiger Ort, gebe null zurück
+    })
+    .filter((location) => location !== null); // Entferne null-Werte
+
   addMarkersToMap(points);
   listMarkers(points);
 }

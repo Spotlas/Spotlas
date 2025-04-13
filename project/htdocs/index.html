@@ -40,13 +40,15 @@
     <link rel="stylesheet" href="./assets/css/index.css" />
 
     <!-- Karten JavaScript -->
-     <script src="./assets/js/fullscreen.js" defer></script>
-    <script src="./assets/js/index.js" defer></script>
+    <script src="./assets/js/fullscreen.js" defer></script>
+    <script src="./assets/js/index_probe.js" defer></script>
   </head>
   <body>
     <header id="homepage_header">
       <div id="homepage_header_spotlas">
-        <a href="./index.html"><img src="./assets/images/logo_schwarz.png" width="180" alt=""></a>
+        <a href="./index.html"
+          ><img src="./assets/images/logo_schwarz.png" width="180" alt=""
+        /></a>
       </div>
 
       <div id="homepage_header_ImageItems">
@@ -77,7 +79,7 @@
             width="40px"
             height="40px"
           />
-            <div style="display: none; z-index: 12" id="dropDown_menu">
+          <div style="display: none; z-index: 12" id="dropDown_menu">
             <a href="./pages/settings/settings.html">Settings</a>
             <a href="./pages/profile/profile.html">Profile</a>
             <a href="./pages/helpCenter/helpcenter.html">Help Center</a>
@@ -99,11 +101,17 @@
       </div>
 
       <div id="homepage_filters">
-        <div onclick="fetchLocationsByCategory('Restaurants'), event.stopPropagation();" class="homepage_filter">
+        <div
+          onclick="fetchLocationsByCategory('Restaurants'), event.stopPropagation();"
+          class="homepage_filter"
+        >
           <img src="./assets/images/icons/filter/food.svg" alt="" />
           <h2>Restaurants</h2>
         </div>
-        <div onclick="fetchLocationsByCategory('Natur')" class="homepage_filter">
+        <div
+          onclick="fetchLocationsByCategory('Natur')"
+          class="homepage_filter"
+        >
           <img src="./assets/images/icons/filter/waters.svg" alt="" />
           <h2>Nature</h2>
         </div>
@@ -111,27 +119,30 @@
           <img src="./assets/images/icons/filter/rating.svg" alt="" />
           <h2>Rating</h2>
         </div>
-        <div onclick="fetchLocationsByCategory('Hotels')" class="homepage_filter">
+        <div
+          onclick="fetchLocationsByCategory('Hotels')"
+          class="homepage_filter"
+        >
           <img src="./assets/images/icons/filter/stays.svg" alt="" />
           <h2>Stays</h2>
         </div>
-        <div onclick="fetchLocationsByCategory('Sehenswürdigkeiten')" class="homepage_filter">
-          <img
-            src="./assets/images/icons/filter/sights.svg"
-            alt=""
-          />
+        <div
+          onclick="fetchLocationsByCategory('Sehenswürdigkeiten')"
+          class="homepage_filter"
+        >
+          <img src="./assets/images/icons/filter/sights.svg" alt="" />
           <h2>Sights</h2>
         </div>
-        <div onclick="fetchLocationsByCategory('Museen')" class="homepage_filter">
-          <img
-            src="./assets/images/icons/filter/museum.svg"
-            alt=""
-          />
+        <div
+          onclick="fetchLocationsByCategory('Museen')"
+          class="homepage_filter"
+        >
+          <img src="./assets/images/icons/filter/museum.svg" alt="" />
           <h2>Museums</h2>
         </div>
 
         <div onclick="fetchAllLocations()" class="homepage_filter">
-          <img src="./assets/images/icons/delete.svg" alt="">
+          <img src="./assets/images/icons/delete.svg" alt="" />
           <h2>Delete Filters</h2>
         </div>
       </div>
