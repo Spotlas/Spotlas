@@ -83,17 +83,17 @@ function showEditProfil() {
 
 let currentField = ""; // Speichert das aktuelle Feld, das geändert wird
 
-/*function changeUserName(field) {
-  currentField = field; // Speichert, welches Feld geändert wird
-  document.getElementById("usernameOverlay").style.display = "flex"; // Zeigt das Overlay an
-}*/
 
 function changeUserName(field) {
   currentField = field;
   const input = document.getElementById("newUserName");
   const title = document.getElementById("overlayTitle");
+  const error = document.getElementById("emailError");
 
-  // Setze Input-Typ und Platzhalter dynamisch
+  // Reset error state
+  error.style.display = "none";
+  input.classList.remove("invalid");
+
   if (field === 'email') {
     input.type = 'email';
     input.placeholder = 'Enter new email';
@@ -111,33 +111,34 @@ function changeUserName(field) {
   document.getElementById("usernameOverlay").style.display = "flex";
 }
 
-function closeOverlay() {
-  document.getElementById("usernameOverlay").style.display = "none"; // Versteckt das Overlay
+function saveUserName() {
+  const newValue = document.getElementById("newUserName").value.trim();
+  const error = document.getElementById("emailError");
+  const input = document.getElementById("newUserName");
+
+  if (currentField === 'email') {
+    // E-Mail Validierung mit Regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(newValue)) {
+      error.style.display = "block";
+      input.classList.add("invalid");
+      return;
+    }
+  }
+
+  if (newValue !== "") {
+    document.getElementById(currentField).textContent = newValue;
+  }
+  
+  closeOverlay();
 }
 
-/*function saveUserName() {
-  let newValue = document.getElementById("newUserName").value;
-  if (newValue.trim() !== "") {
-    document.getElementById(currentField).textContent = newValue; // Setzt den neuen Wert an der richtigen Stelle
-  }
-  closeOverlay(); // Overlay schließen nach dem Speichern
-}*/
-
-function saveUserName() {
-  let newValue = document.getElementById("newUserName").value;
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  if (currentField === 'email' && !emailPattern.test(newValue)) {
-    alert('Please enter a valid email address');
-    return;
-  }
-
-  if (newValue.trim() !== "") {
-    document.getElementById(currentField).textContent = currentField === 'password' 
-      ? '*'.repeat(newValue.length) 
-      : newValue;
-  }
-  closeOverlay();
+function closeOverlay() {
+  document.getElementById("usernameOverlay").style.display = "none";
+  // Reset input field and error
+  document.getElementById("newUserName").value = "";
+  document.getElementById("emailError").style.display = "none";
+  document.getElementById("newUserName").classList.remove("invalid");
 }
 
 function previewProfilePicture(event) {

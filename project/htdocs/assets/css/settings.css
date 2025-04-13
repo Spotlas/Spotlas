@@ -240,3 +240,15 @@ label{
   font-weight: bold;
   font-size: var(--font-size-m);
 }
+
+/* Zusätzliche CSS-Regeln für Fehlermeldungen */
+#emailError {
+  color: red;
+  font-size: 12px;
+  display: none;
+  margin-top: 5px;
+}
+
+.input-box input.invalid {
+  border: 1px solid red;
+}

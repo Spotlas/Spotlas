@@ -82,25 +82,15 @@
         </div>
       </div>
 
-      <!--<div class="overlay" id="usernameOverlay" style="display: none">
-        <div class="input-box">
-          <h3>Neue Eingabe hier:</h3>
-          <input type="text" id="newUserName" placeholder="Ihre Eingabe" />
-          <br />
-          <button class="buttons" onclick="saveUserName()">Speichern</button>
-          <button class="buttons" onclick="closeOverlay()">Abbrechen</button>
-        </div>
-      </div>-->
 
-      <div id="usernameOverlay">
-        <div class="overlay-content">
-          <h3 id="overlayTitle">Change</h3>
-          <input type="text" 
-                 id="newUserName" 
-                 placeholder="Enter new value"
-                 autocomplete="off">
-          <button onclick="saveUserName()">Save</button>
-          <button onclick="closeOverlay()">Cancel</button>
+      <div class="overlay" id="usernameOverlay" style="display: none">
+        <div class="input-box">
+          <h3 id="overlayTitle">Change Email</h3>
+          <input type="email" id="newUserName" placeholder="Enter new email" />
+          <span id="emailError">Please enter a valid email address</span>
+          <br />
+          <button class="buttons" onclick="saveUserName()">Save</button>
+          <button class="buttons" onclick="closeOverlay()">Cancel</button>
         </div>
       </div>
     </main>
