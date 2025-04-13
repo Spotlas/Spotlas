@@ -88,11 +88,12 @@ function changeUserName(field) {
   currentField = field;
   const input = document.getElementById("newUserName");
   const title = document.getElementById("overlayTitle");
-  const error = document.getElementById("emailError");
+  const error = document.getElementById("inputError");
 
-  // Reset error state
+  // Reset previous states
   error.style.display = "none";
   input.classList.remove("invalid");
+  input.value = "";
 
   if (field === 'email') {
     input.type = 'email';
@@ -102,6 +103,12 @@ function changeUserName(field) {
     input.type = 'password';
     input.placeholder = 'Enter new password';
     title.textContent = 'Change Password';
+  } else if (field === 'username') {
+    input.type = 'text';
+    input.placeholder = '@username';
+    title.textContent = 'Change Username';
+    // Aktuellen Benutzernamen vorausfüllen
+    input.value = document.getElementById('username').textContent;
   } else {
     input.type = 'text';
     input.placeholder = 'Enter new value';
@@ -113,21 +120,67 @@ function changeUserName(field) {
 
 function saveUserName() {
   const newValue = document.getElementById("newUserName").value.trim();
-  const error = document.getElementById("emailError");
+  const error = document.getElementById("inputError");
   const input = document.getElementById("newUserName");
 
-  if (currentField === 'email') {
-    // E-Mail Validierung mit Regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(newValue)) {
-      error.style.display = "block";
-      input.classList.add("invalid");
-      return;
+  // Zurücksetzen der Fehleranzeige
+  error.style.display = "none";
+  input.classList.remove("invalid");
+
+  let isValid = true;
+  const errors = [];
+
+  if (currentField === 'password') {
+    const specialChars = "!@#$%^&*()_+-=[]{}|;:',.<>?/";
+
+    // Längenprüfung
+    if (newValue.length < 8) {
+      errors.push("Mindestens 8 Zeichen");
+    }
+
+    // Großbuchstabenprüfung
+    let hasUpperCase = false;
+    for (const char of newValue) {
+      if (char >= 'A' && char <= 'Z') {
+        hasUpperCase = true;
+        break;
+      }
+    }
+    if (!hasUpperCase) {
+      errors.push("Mindestens ein Großbuchstabe (A-Z)");
+    }
+
+    // Sonderzeichenprüfung
+    let hasSpecialChar = false;
+    for (const char of newValue) {
+      if (specialChars.includes(char)) {
+        hasSpecialChar = true;
+        break;
+      }
+    }
+    if (!hasSpecialChar) {
+      errors.push("Mindestens ein Sonderzeichen (!@#$% etc.)");
+    }
+
+    if (errors.length > 0) {
+      error.textContent = `Passwort-Anforderungen: ${errors.join(', ')}`;
+      isValid = false;
     }
   }
 
+  if (!isValid) {
+    error.style.display = "block";
+    input.classList.add("invalid");
+    return;
+  }
+
   if (newValue !== "") {
-    document.getElementById(currentField).textContent = newValue;
+    if (currentField === 'password') {
+      // Passwort maskiert anzeigen
+      document.getElementById(currentField).textContent = '*'.repeat(newValue.length);
+    } else {
+      document.getElementById(currentField).textContent = newValue;
+    }
   }
   
   closeOverlay();
@@ -135,21 +188,9 @@ function saveUserName() {
 
 function closeOverlay() {
   document.getElementById("usernameOverlay").style.display = "none";
-  // Reset input field and error
   document.getElementById("newUserName").value = "";
-  document.getElementById("emailError").style.display = "none";
+  document.getElementById("inputError").style.display = "none";
   document.getElementById("newUserName").classList.remove("invalid");
-}
-
-function previewProfilePicture(event) {
-  let file = event.target.files[0];
-  if (file) {
-    let reader = new FileReader();
-    reader.onload = function (e) {
-      document.getElementById("profilPic").src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
 }
 
 /* **********************************+ Kontoverwaltung ********************************************** */
