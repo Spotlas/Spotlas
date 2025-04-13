@@ -122,61 +122,83 @@ function saveUserName() {
   const newValue = document.getElementById("newUserName").value.trim();
   const error = document.getElementById("inputError");
   const input = document.getElementById("newUserName");
+  let isValid = true;
+  const errors = [];
 
   // Zurücksetzen der Fehleranzeige
   error.style.display = "none";
   input.classList.remove("invalid");
 
-  let isValid = true;
-  const errors = [];
-
+  // Passwort-Validierung
   if (currentField === 'password') {
     const specialChars = "!@#$%^&*()_+-=[]{}|;:',.<>?/";
+    const passwordErrors = [];
 
-    // Längenprüfung
     if (newValue.length < 8) {
-      errors.push("Mindestens 8 Zeichen");
+      passwordErrors.push("mindestens 8 Zeichen");
     }
 
-    // Großbuchstabenprüfung
-    let hasUpperCase = false;
-    for (const char of newValue) {
-      if (char >= 'A' && char <= 'Z') {
-        hasUpperCase = true;
-        break;
-      }
-    }
-    if (!hasUpperCase) {
-      errors.push("Mindestens ein Großbuchstabe (A-Z)");
+    if (!/[A-Z]/.test(newValue)) {
+      passwordErrors.push("mindestens ein Großbuchstabe");
     }
 
-    // Sonderzeichenprüfung
-    let hasSpecialChar = false;
-    for (const char of newValue) {
-      if (specialChars.includes(char)) {
-        hasSpecialChar = true;
-        break;
-      }
-    }
-    if (!hasSpecialChar) {
-      errors.push("Mindestens ein Sonderzeichen (!@#$% etc.)");
+    if (![...specialChars].some(c => newValue.includes(c))) {
+      passwordErrors.push("mindestens ein Sonderzeichen");
     }
 
-    if (errors.length > 0) {
-      error.textContent = `Passwort-Anforderungen: ${errors.join(', ')}`;
-      isValid = false;
+    if (passwordErrors.length > 0) {
+      errors.push(`Passwort benötigt: ${passwordErrors.join(', ')}`);
     }
   }
 
-  if (!isValid) {
+  // Username-Validierung
+  if (currentField === 'username') {
+    const usernameErrors = [];
+    
+    if (!newValue.startsWith('@')) {
+      usernameErrors.push("muss mit @ beginnen");
+    }
+    
+    if (newValue.length < 2) {
+      usernameErrors.push("mindestens 1 Zeichen nach @");
+    }
+    
+    const allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._";
+    const invalidChars = [...newValue.slice(1)].filter(c => !allowedChars.includes(c));
+    
+    if (invalidChars.length > 0) {
+      usernameErrors.push(`ungültige Zeichen: ${invalidChars.join(', ')}`);
+    }
+
+    if (usernameErrors.length > 0) {
+      errors.push(`Username: ${usernameErrors.join(', ')}`);
+    }
+  }
+
+  // Email-Validierung (einfache Version ohne Regex)
+  if (currentField === 'email') {
+    const emailParts = newValue.split('@');
+    
+    if (emailParts.length !== 2 || 
+        emailParts[0].length === 0 || 
+        emailParts[1].length === 0 || 
+        !emailParts[1].includes('.')) {
+      errors.push("Ungültige E-Mail-Adresse");
+    }
+  }
+
+  if (errors.length > 0) {
+    error.textContent = errors.join('\n');
     error.style.display = "block";
     input.classList.add("invalid");
-    return;
+    isValid = false;
   }
 
+  if (!isValid) return;
+
+  // Werte speichern
   if (newValue !== "") {
     if (currentField === 'password') {
-      // Passwort maskiert anzeigen
       document.getElementById(currentField).textContent = '*'.repeat(newValue.length);
     } else {
       document.getElementById(currentField).textContent = newValue;
