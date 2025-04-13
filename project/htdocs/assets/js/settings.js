@@ -120,91 +120,68 @@ function changeUserName(field) {
 
 function saveUserName() {
   const newValue = document.getElementById("newUserName").value.trim();
-  const error = document.getElementById("inputError");
-  const input = document.getElementById("newUserName");
-  let isValid = true;
-  const errors = [];
+  const errorElement = document.getElementById("inputError");
+  const inputElement = document.getElementById("newUserName");
+  let errors = [];
 
   // Zurücksetzen der Fehleranzeige
-  error.style.display = "none";
-  input.classList.remove("invalid");
+  errorElement.style.display = "none";
+  inputElement.classList.remove("invalid");
 
-  // Passwort-Validierung
-  if (currentField === 'password') {
-    const specialChars = "!@#$%^&*()_+-=[]{}|;:',.<>?/";
-    const passwordErrors = [];
+  switch (currentField) {
+    case 'username':
+      if (!newValue.startsWith('@')) {
+        errors.push("Username muss mit @ beginnen");
+      }
+      if (newValue.length < 2 || newValue.length > 21) {
+        errors.push("1-20 Zeichen nach dem @ erforderlich");
+      }
+      if (/[^a-zA-Z0-9._]/.test(newValue.slice(1))) {
+        errors.push("Nur Buchstaben, Zahlen, . und _ erlaubt");
+      }
+      break;
 
-    if (newValue.length < 8) {
-      passwordErrors.push("mindestens 8 Zeichen");
-    }
+    case 'password':
+      const specialChars = "!@#$%^&*()_+-=[]{}|;:',.<>?/";
+      
+      // GEÄNDERT: Mindestens 8 Zeichen statt genau 8
+      if (newValue.length < 8) {
+        errors.push("Mindestens 8 Zeichen erforderlich");
+      }
+      if (!/[A-Z]/.test(newValue)) {
+        errors.push("Mindestens ein Großbuchstabe (A-Z)");
+      }
+      if (![...specialChars].some(c => newValue.includes(c))) {
+        errors.push("Mindestens ein Sonderzeichen");
+      }
+      break;
 
-    if (!/[A-Z]/.test(newValue)) {
-      passwordErrors.push("mindestens ein Großbuchstabe");
-    }
-
-    if (![...specialChars].some(c => newValue.includes(c))) {
-      passwordErrors.push("mindestens ein Sonderzeichen");
-    }
-
-    if (passwordErrors.length > 0) {
-      errors.push(`Passwort benötigt: ${passwordErrors.join(', ')}`);
-    }
-  }
-
-  // Username-Validierung
-  if (currentField === 'username') {
-    const usernameErrors = [];
-    
-    if (!newValue.startsWith('@')) {
-      usernameErrors.push("muss mit @ beginnen");
-    }
-    
-    if (newValue.length < 2) {
-      usernameErrors.push("mindestens 1 Zeichen nach @");
-    }
-    
-    const allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._";
-    const invalidChars = [...newValue.slice(1)].filter(c => !allowedChars.includes(c));
-    
-    if (invalidChars.length > 0) {
-      usernameErrors.push(`ungültige Zeichen: ${invalidChars.join(', ')}`);
-    }
-
-    if (usernameErrors.length > 0) {
-      errors.push(`Username: ${usernameErrors.join(', ')}`);
-    }
-  }
-
-  // Email-Validierung (einfache Version ohne Regex)
-  if (currentField === 'email') {
-    const emailParts = newValue.split('@');
-    
-    if (emailParts.length !== 2 || 
-        emailParts[0].length === 0 || 
-        emailParts[1].length === 0 || 
-        !emailParts[1].includes('.')) {
-      errors.push("Ungültige E-Mail-Adresse");
-    }
+    case 'email':
+      const [localPart, domainPart] = newValue.split('@');
+      if (!localPart || !domainPart || !domainPart.includes('.')) {
+        errors.push("Ungültiges E-Mail-Format");
+      }
+      break;
   }
 
   if (errors.length > 0) {
-    error.textContent = errors.join('\n');
-    error.style.display = "block";
-    input.classList.add("invalid");
-    isValid = false;
+    errorElement.textContent = errors.join('\n');
+    errorElement.style.display = "block";
+    inputElement.classList.add("invalid");
+    return;
   }
 
-  if (!isValid) return;
-
-  // Werte speichern
   if (newValue !== "") {
+    const targetElement = document.getElementById(currentField);
+    
     if (currentField === 'password') {
-      document.getElementById(currentField).textContent = '*'.repeat(newValue.length);
+      // Immer 8 Sterne anzeigen, egal wie lang das Passwort ist
+      targetElement.textContent = '********'; // 8 Sterne
     } else {
-      document.getElementById(currentField).textContent = newValue;
+      targetElement.textContent = newValue;
     }
   }
-  
+
   closeOverlay();
 }
 
