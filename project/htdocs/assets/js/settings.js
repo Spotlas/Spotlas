@@ -2,10 +2,19 @@
 
 function applyUnderlineEffect(elementId) {
   const element = document.getElementById(elementId);
+  
+  // Entferne alle vorhandenen Underlines im aktuellen Element
+  const existingUnderlines = element.getElementsByClassName("underlineEffect");
+  while(existingUnderlines[0]) {
+    existingUnderlines[0].parentNode.removeChild(existingUnderlines[0]);
+  }
+
+  // Style das Hauptelement
   element.style.position = "relative";
   element.style.display = "inline-block";
   element.style.textDecoration = "none";
 
+  // Erstelle das Underline-Element
   let underline = document.createElement("span");
   underline.style.position = "absolute";
   underline.style.left = "0";
@@ -17,8 +26,10 @@ function applyUnderlineEffect(elementId) {
   underline.style.transition = "transform 0.2s ease-in-out";
   underline.classList.add("underlineEffect");
 
+  // Füge den Underline hinzu
   element.appendChild(underline);
 
+  // Trigger die Animation
   setTimeout(() => {
     underline.style.transform = "scaleX(1)";
   }, 10);
