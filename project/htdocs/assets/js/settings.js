@@ -83,21 +83,61 @@ function showEditProfil() {
 
 let currentField = ""; // Speichert das aktuelle Feld, das geändert wird
 
-function changeUserName(field) {
+/*function changeUserName(field) {
   currentField = field; // Speichert, welches Feld geändert wird
   document.getElementById("usernameOverlay").style.display = "flex"; // Zeigt das Overlay an
+}*/
+
+function changeUserName(field) {
+  currentField = field;
+  const input = document.getElementById("newUserName");
+  const title = document.getElementById("overlayTitle");
+
+  // Setze Input-Typ und Platzhalter dynamisch
+  if (field === 'email') {
+    input.type = 'email';
+    input.placeholder = 'Enter new email';
+    title.textContent = 'Change Email';
+  } else if (field === 'password') {
+    input.type = 'password';
+    input.placeholder = 'Enter new password';
+    title.textContent = 'Change Password';
+  } else {
+    input.type = 'text';
+    input.placeholder = 'Enter new value';
+    title.textContent = 'Change';
+  }
+
+  document.getElementById("usernameOverlay").style.display = "flex";
 }
 
 function closeOverlay() {
   document.getElementById("usernameOverlay").style.display = "none"; // Versteckt das Overlay
 }
 
-function saveUserName() {
+/*function saveUserName() {
   let newValue = document.getElementById("newUserName").value;
   if (newValue.trim() !== "") {
     document.getElementById(currentField).textContent = newValue; // Setzt den neuen Wert an der richtigen Stelle
   }
   closeOverlay(); // Overlay schließen nach dem Speichern
+}*/
+
+function saveUserName() {
+  let newValue = document.getElementById("newUserName").value;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (currentField === 'email' && !emailPattern.test(newValue)) {
+    alert('Please enter a valid email address');
+    return;
+  }
+
+  if (newValue.trim() !== "") {
+    document.getElementById(currentField).textContent = currentField === 'password' 
+      ? '*'.repeat(newValue.length) 
+      : newValue;
+  }
+  closeOverlay();
 }
 
 function previewProfilePicture(event) {

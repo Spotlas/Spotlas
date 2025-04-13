@@ -15,71 +15,94 @@
   <body>
     <header id="homepage_header">
       <div id="homepage_header_spotlas">
-        <a href="../../index.html"><img src="../../assets/images/logo_schwarz.png" width="180" alt=""></a>
+        <a href="../../index.html"
+          ><img src="../../assets/images/logo_schwarz.png" width="180" alt=""
+        /></a>
       </div>
 
       <div id="homepage_header_ImageItems">
-          <div>
-              <a href="../../pages/add_place/add.html"><img src="../../assets/images/icons/add_icon.svg" alt="add" width="40px" height="40px"></a>
+        <div>
+          <a href="../../pages/add_place/add.html"
+            ><img
+              src="../../assets/images/icons/add_icon.svg"
+              alt="add"
+              width="40px"
+              height="40px"
+          /></a>
+        </div>
+        <div>
+          <a href="../../pages/profile/profile.html"
+            ><img
+              src="../../assets/images/icons/profile_icon.svg"
+              alt="profile"
+              width="40px"
+              height="40px"
+          /></a>
+        </div>
+        <div>
+          <img
+            id="toggleImg"
+            onclick="showDropdown()"
+            src="../../assets/images/icons/arrow_icon.svg"
+            alt="options"
+            width="40px"
+            height="40px"
+          />
+          <div style="display: none; z-index: 12" id="dropDown_menu">
+            <a href="../../pages/settings/settings.html">Settings</a>
+            <a href="../../pages/profile/profile.html">Profile</a>
+            <a href="../../pages/helpCenter/helpcenter.html">Help Center</a>
+            <a href="../../pages/login_register/login.html">Login</a>
+            <a href="../../pages/login_register/login.html">Logout</a>
           </div>
-          <div>
-              <a href="../../pages/profile/profile.html"><img src="../../assets/images/icons/profile_icon.svg" alt="profile" width="40px" height="40px"></a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div id="settings">
+        <div id="settings_Menu_parent">
+          <div onclick="backHome()" id="add_info_backButton">
+            <img src="../../assets/images/icons/arrow_icon.svg" alt="" />
+            <p>Back</p>
           </div>
-          <div>
-              <img
-                id="toggleImg"
-                onclick="showDropdown()"
-                src="../../assets/images/icons/arrow_icon.svg"
-                alt="options"
-                width="40px"
-                height="40px"
-              />
-              <div style="display: none; z-index: 12" id="dropDown_menu">
-                <a href="../../pages/settings/settings.html">Settings</a>
-                <a href="../../pages/profile/profile.html">Profile</a>
-                <a href="../../pages/helpCenter/helpcenter.html">Help Center</a>
-                <a href="../../pages/login_register/login.html">Login</a>
-                <a href="../../pages/login_register/login.html">Logout</a>
-              </div>
+
+          <div id="settings_Menu_child">
+            <div id="editp" onclick="showEditProfil()" class="controlers">
+              Edit Profile
             </div>
-      </div>
-  </header>
-
-  <main>
-     <div id="settings">
-      <div id="settings_Menu_parent">
-        <div onclick="backHome()" id="add_info_backButton">
-          <img src="../../assets/images/icons/arrow_icon.svg" alt="">
-          <p>Back</p>
+            <div id="kontov" onclick="showKontoVerwaltung()" class="controlers">
+              Account Management
+            </div>
+          </div>
         </div>
 
-        <div id="settings_Menu_child">
-          <div id="editp" onclick="showEditProfil()" class="controlers">Edit Profile</div>
-          <div id="kontov" onclick="showKontoVerwaltung()" class="controlers">Account Management</div>
+        <div id="settings_edit">
+          <div id="outp"></div>
         </div>
       </div>
 
-      <div id="settings_edit">
-        <div id="outp"></div>
+      <!--<div class="overlay" id="usernameOverlay" style="display: none">
+        <div class="input-box">
+          <h3>Neue Eingabe hier:</h3>
+          <input type="text" id="newUserName" placeholder="Ihre Eingabe" />
+          <br />
+          <button class="buttons" onclick="saveUserName()">Speichern</button>
+          <button class="buttons" onclick="closeOverlay()">Abbrechen</button>
+        </div>
+      </div>-->
+
+      <div id="usernameOverlay">
+        <div class="overlay-content">
+          <h3 id="overlayTitle">Change</h3>
+          <input type="text" 
+                 id="newUserName" 
+                 placeholder="Enter new value"
+                 autocomplete="off">
+          <button onclick="saveUserName()">Save</button>
+          <button onclick="closeOverlay()">Cancel</button>
+        </div>
       </div>
-    </div>
-
-   
-
-    <div class="overlay" id="usernameOverlay" style="display: none;">
-      <div class="input-box">
-        <h3>Neue Eingabe hier:</h3>
-        <input type="text" id="newUserName" placeholder="Ihre Eingabe">
-        <br>
-        <button class="buttons" onclick="saveUserName()">Speichern</button>
-        <button class="buttons" onclick="closeOverlay()">Abbrechen</button>
-      </div>
-      
-    </div>
-  </main>
-  
- 
-
-   
+    </main>
   </body>
 </html>
