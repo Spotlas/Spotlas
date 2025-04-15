@@ -14,31 +14,34 @@ const lat = 47.6965;
 const lng = 13.3458;
 let points = [];
 /*points = [
-    {
-      id: 1,
-      lat: 47.8095,
-      lng: 13.0550,
-      name: "Salzburg Altstadt",
-      image: "./assets/images/testPic/1.png",
-      description: "Die historische Altstadt von Salzburg mit der Festung Hohensalzburg.",
-    },
-    {
-      id: 2,
-      lat: 47.4979,
-      lng: 19.0402,
-      name: "Budapest Zentrum",
-      image: "./assets/images/testPic/2.png",
-      description: "Das Herz von Budapest mit der Kettenbrücke und dem Parlament.",
-    },
-    {
-      id: 3,
-      lat: 48.2082,
-      lng: 16.3738,
-      name: "Wien Innenstadt",
-      image: "./assets/images/testPic/3.png",
-      description: "Kulturelles Zentrum Wiens mit Stephansdom und Museumsquartier.",
-    }
-  ];*/
+  {
+    id: 1,
+    lat: 47.8095,
+    lng: 13.055,
+    name: "Salzburg Altstadt",
+    image: "./assets/images/testPic/1.png",
+    description:
+      "Die historische Altstadt von Salzburg mit der Festung Hohensalzburg.",
+  },
+  {
+    id: 2,
+    lat: 47.4979,
+    lng: 19.0402,
+    name: "Budapest Zentrum",
+    image: "./assets/images/testPic/2.png",
+    description:
+      "Das Herz von Budapest mit der Kettenbrücke und dem Parlament.",
+  },
+  {
+    id: 3,
+    lat: 48.2082,
+    lng: 16.3738,
+    name: "Wien Innenstadt",
+    image: "./assets/images/testPic/3.png",
+    description:
+      "Kulturelles Zentrum Wiens mit Stephansdom und Museumsquartier.",
+  },
+];*/
 
 const map = L.map("map", config).setView([lat, lng], zoom);
 L.tileLayer(
@@ -80,8 +83,21 @@ function addMarkersToMap(points) {
           <img id="img_point" src="${point.image}" alt="${point.name}" style="width:10%; max-height:150px; object-fit:cover;">
           <img id="img_point" src="${point.image}" alt="${point.name}" style="width:10%; max-height:150px; object-fit:cover;">
           
-          <img src="./assets/images/testPic/bewertung.png" alt="${point.name}" style="width:40%; max-height:150px; object-fit:cover; padding-left: 25.4%;">
-          <div id="parent_grid">
+          <div id="rateThisLocation">
+                <div class="ratings">
+                    <input onclick="rate(5)" type="radio" id="stern5" name="rating" value="5">
+                    <label for="stern5">★</label>
+                    <input onclick="rate(4)" type="radio" id="stern4" name="rating" value="4">
+                    <label for="stern4">★</label>
+                    <input onclick="rate(3)" type="radio" id="stern3" name="rating" value="3">
+                    <label for="stern3">★</label>
+                    <input onclick="rate(2)" type="radio" id="stern2" name="rating" value="2">
+                    <label for="stern2">★</label>
+                    <input onclick="rate(1)" type="radio" id="stern1" name="rating" value="1">
+                    <label for="stern1">★</label>
+                </div>
+            </div>          
+            <div id="parent_grid">
             <h3 id="header_point">${point.name}</h3>
             <img src="./assets/images/testPic/sorte.png" alt="${point.name}" style="width:50%; max-height:150px; object-fit:cover; padding-left: 50.4%;">
           </div>
