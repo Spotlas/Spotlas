@@ -75,7 +75,8 @@ function addMarkersToMap(points) {
     marker.on("click", () => {
       selectedMarker = marker;
       openSidebarWithContent(`
-          <img id="img_saveButton" src="./assets/images/testPic/save.png" alt="${point.name}" style="width:8%; max-height:150px; object-fit:cover; padding-bottom: 2%;">
+          <img src="./assets/images/icons/bookmark_unsaved.svg" alt="bookmark_unsaved" style="width:10%; height:auto; display:block;">>
+
           <a href="./pages/fullscreen_startseite/fullscreen.html?id=${point.id}"><img id="img_großButton" src="./assets/images/testPic/grosmachen.png" alt="${point.name}" style="width:8%; max-height:150px; object-fit:cover; padding-left: 80%; padding-bottom: 2%;"></a>
           <img id="img_big" src="${point.image}" alt="${point.name}" style="width:100%; max-height:150px; object-fit:cover;">
           
@@ -99,7 +100,12 @@ function addMarkersToMap(points) {
             </div>          
             <div id="parent_grid">
             <h3 id="header_point">${point.name}</h3>
-            <img src="./assets/images/testPic/sorte.png" alt="${point.name}" style="width:50%; max-height:150px; object-fit:cover; padding-left: 50.4%;">
+            <div class="info_box">
+                <div class="info_box_item">
+                    <div class="info_box_item_icon"><i class="fas fa-tag"></i></div>
+                    <div class="info_box_item_text" id="name_category"></div>
+                </div>
+            </div>
           </div>
           <p id="beschreibung">${point.description}</p>
           <p><strong>|</strong> ${point.lat}, ${point.lng}</p><br>
