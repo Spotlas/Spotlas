@@ -259,6 +259,7 @@ h6 {
   flex-direction: row-reverse;
   justify-content: center;
   margin: 1rem 0;
+  color: #dddddd00;
 }
 
 .ratings input {
@@ -282,14 +283,16 @@ h6 {
 }
 
 #rateThisLocation {
-  background: #f9f9f9;
+  background: #f9f9f900;
   padding: 15px;
   border-radius: 14px;
   text-align: center;
-  margin: 20px 0;
-  border: 1px solid #f0f0f0;
+  margin: 10px 0;
   transition: transform 0.3s;
-  scale: 0.55;
+  scale: 0.65;
+  margin: -10%;
+  margin-left: 55%;
+  margin-top: -21.5%;
   }
 
 #rateThisLocation:hover {
