@@ -176,9 +176,9 @@ p.active::after {
 }
 
 .header {
-  margin-left: -10%;
+  margin-left: 0%;
 }
 
 .like {
-  margin-left: 50%;
+  margin-left: 45%;
 }
