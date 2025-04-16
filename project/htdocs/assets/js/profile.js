@@ -15,37 +15,37 @@ function loadErstellteBilder() {
     <div class="overlay"><h2 class="header">Lake</h2><p class="like">❤</p></div>
   </div>
     <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">Overlay Text</div>
+    <div class="overlay"><h2 class="header">Lake</h2><p class="like">❤</p></div>
   </div>
   <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">Overlay Text</div>
+    <div class="overlay"><h2 class="header">Lake</h2><p class="like">❤</p></div>
   </div>
   <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">Overlay Text</div>
+    <div class="overlay"><h2 class="header">Lake</h2><p class="like">❤</p></div>
   </div>
     <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">Overlay Text</div>
+    <div class="overlay"><h2 class="header">Lake</h2><p class="like">❤</p></div>
   </div>
   <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">Overlay Text</div>
+    <div class="overlay"><h2 class="header">Lake</h2><p class="like">❤</p></div>
   </div>
   <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">Overlay Text</div>
+    <div class="overlay"><h2 class="header">Lake</h2><p class="like">❤</p></div>
   </div>
     <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">Overlay Text</div>
+    <div class="overlay"><h2 class="header">Lake</h2><p class="like">❤</p></div>
   </div>
   <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">Overlay Text</div>
+    <div class="overlay"><h2 class="header">Lake</h2><p class="like">❤</p></div>
   </div>
   <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">Overlay Text</div>
+    <div class="overlay"><h2 class="header">Lake</h2><p class="like">❤</p></div>
   </div>
     <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">Overlay Text</div>
+    <div class="overlay"><h2 class="header">Lake</h2><p class="like">❤</p></div>
   </div>
   <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">Overlay Text</div>
+    <div class="overlay"><h2 class="header">Lake</h2><p class="like">❤</p></div>
   </div>`;
 }
 
