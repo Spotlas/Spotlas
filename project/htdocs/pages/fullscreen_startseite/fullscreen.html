@@ -66,16 +66,24 @@
                 </div>
             </div>
 
-            <div id="comments_section">
-                <h2>Comments</h2>
-                <div id="comments">
-                    <!-- Comments will be loaded dynamically -->
+            <div id="rateThisLocation">
+                <p>Rate this Location</p>
+                <div class="ratings">
+                    <input onclick="rate(5)" type="radio" id="stern5" name="rating" value="5">
+                    <label for="stern5">★</label>
+                    <input onclick="rate(4)" type="radio" id="stern4" name="rating" value="4">
+                    <label for="stern4">★</label>
+                    <input onclick="rate(3)" type="radio" id="stern3" name="rating" value="3">
+                    <label for="stern3">★</label>
+                    <input onclick="rate(2)" type="radio" id="stern2" name="rating" value="2">
+                    <label for="stern2">★</label>
+                    <input onclick="rate(1)" type="radio" id="stern1" name="rating" value="1">
+                    <label for="stern1">★</label>
                 </div>
-                <form id="comment_form">
-                    <textarea id="comment_input" placeholder="Share your thoughts about this place..."></textarea>
-                    <button id="submit" type="submit"><img src="../../assets/images/comments/comments_white.svg" width="35px" alt="Submit"></button>
-                </form>
             </div>
+
+
+            
         </div>
 
         <div id="fullscreen_main_right">
@@ -93,25 +101,11 @@
                         <img id="bookmarkIcon" src="../../assets/images/icons/bookmark_unsaved.svg" width="35px" alt="Bookmark">
                     </div>
                 </div>
+                
 
                 <div id="description_spot"></div>
 
-                <div id="rateThisLocation">
-                    <p>Rate this Location</p>
-                    <div class="ratings">
-                        <input onclick="rate(5)" type="radio" id="stern5" name="rating" value="5">
-                        <label for="stern5">★</label>
-                        <input onclick="rate(4)" type="radio" id="stern4" name="rating" value="4">
-                        <label for="stern4">★</label>
-                        <input onclick="rate(3)" type="radio" id="stern3" name="rating" value="3">
-                        <label for="stern3">★</label>
-                        <input onclick="rate(2)" type="radio" id="stern2" name="rating" value="2">
-                        <label for="stern2">★</label>
-                        <input onclick="rate(1)" type="radio" id="stern1" name="rating" value="1">
-                        <label for="stern1">★</label>
-                    </div>
-                </div>
-
+                
                 <div id="allInfoBox">
                     <!-- Name and Category -->
                     <div class="info_box">
@@ -169,6 +163,8 @@
                         </div>
                     </div>
                 </div>
+
+                
             </div>
             
             <div id="user_data">
@@ -179,6 +175,17 @@
                     <div id="user_data_img"></div>
                     <div id="user_data_name"></div>
                 </div>
+            </div>
+
+            <div id="comments_section">
+                <h2>Comments</h2>
+                <div id="comments">
+                    <!-- Comments will be loaded dynamically -->
+                </div>
+                <form id="comment_form">
+                    <textarea id="comment_input" placeholder="Share your thoughts about this place..."></textarea>
+                    <button id="submit" type="submit"><img src="../../assets/images/comments/comments_white.svg" width="35px" alt="Submit"></button>
+                </form>
             </div>
         </div>
     </main>
