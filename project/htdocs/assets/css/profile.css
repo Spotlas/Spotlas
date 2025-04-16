@@ -153,8 +153,32 @@ p.active::after {
   justify-content: center;
   margin-left: 15%;
   border-radius: 65px;
+  transition: all 0.3s ease; /* Sanfter Übergang für den Hover-Effekt */
 }
 
-.overlay {
-  
+.image-wrapper .overlay::before {
+  content: ""; /* Standardmäßig kein Inhalt */
+}
+
+.image-wrapper .overlay:hover {
+  background-color: rgba(255, 255, 255, 0.547); /* Weißer Hintergrund beim Hovern */
+  color: black; /* Schwarzer Text beim Hovern */
+}
+
+.image-wrapper .overlay:hover::before {
+  content: "bearbeiten"; /* Zeigt "bearbeiten" beim Hovern an */
+  font-weight: bold; /* Macht den Text fett */
+}
+
+.image-wrapper .overlay:hover .header,
+.image-wrapper .overlay:hover .like {
+  display: none; /* Versteckt Header und Like beim Hovern */
+}
+
+.header {
+  margin-left: -10%;
+}
+
+.like {
+  margin-left: 50%;
 }
