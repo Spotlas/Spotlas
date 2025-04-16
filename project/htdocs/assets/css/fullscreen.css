@@ -1,6 +1,6 @@
 body {
   background-color: var(--primary-bg-color);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: var(--text-color);
   line-height: 1.6;
 }
@@ -16,8 +16,7 @@ body {
   background: transparent;
 }
 
-#fullscreen_main_left,
-#fullscreen_main_right {
+#fullscreen_main_left, #fullscreen_main_right {
   height: auto;
   padding: 0;
   background-color: transparent;
@@ -76,37 +75,35 @@ body {
 }
 
 /* Back Button - Clean Design */
-#add_info_backButton {
+#add_info_backButton{
   display: flex;
   margin: 1.3vw 92vw 0 1.3vw;
 
   transition: all ease-in-out 200ms;
 }
 
-#add_info_backButton:hover {
+#add_info_backButton:hover{
   cursor: pointer;
   transform: translateY(-3px);
 }
 
-#add_info_backButton img {
+#add_info_backButton img{
   width: 40px;
   transform: rotate(90deg);
 }
-#add_info_backButton a {
+#add_info_backButton a{
   text-decoration: none;
   color: var(--black-color);
 }
 
 /* Comments Section - Modern Design */
 #comments_section {
-  max-width: 200%;
-  margin-top: 60px;
+  max-width: 100%;
+  margin-top: 30px;
   background: #fff;
   padding: 25px;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-  margin-left: -67% !important;
-
 }
 
 #comments_section h2 {
@@ -119,7 +116,7 @@ body {
 }
 
 #comments_section h2::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   bottom: 0;
@@ -344,7 +341,7 @@ textarea:focus {
 }
 
 .info_box_item::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -436,52 +433,47 @@ textarea:focus {
   color: var(--text-color);
 }
 
-#mainImg {
-  width: 100%;
-  height: 28.5vh !important;
-}
-
 /* Responsive Design */
 @media (max-width: 992px) {
   #fullscreen_main {
-    grid-template-columns: 1fr;
+      grid-template-columns: 1fr;
   }
-
+  
   #fullscreen_main_left {
-    border-right: none;
-    padding-right: 0;
+      border-right: none;
+      padding-right: 0;
   }
-
+  
   #fullscreen_main_right {
-    padding-left: 0;
+      padding-left: 0;
   }
 
   #allInfoBox {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 }
 
 @media (max-width: 768px) {
   #allInfoBox {
-    grid-template-columns: 1fr;
+      grid-template-columns: 1fr;
   }
-
+  
   .flex_box {
-    flex-direction: column;
-    align-items: flex-start;
+      flex-direction: column;
+      align-items: flex-start;
   }
 
   #generalInfos_spot {
-    padding: 20px;
+      padding: 20px;
   }
 }
 
 @media (max-width: 480px) {
   #allInfoBox {
-    grid-template-columns: 1fr;
+      grid-template-columns: 1fr;
   }
-
+  
   #mainImg img {
-    height: 30vh;
+      height: 30vh;
   }
 }
