@@ -1,11 +1,14 @@
-/* **********************************+ General ********************************************** */
+/* **********************************+ General ********************************************** */ 
 body{
     margin: 0;
     padding: 0;
-   font-family: var(--font-family);
-   scroll-behavior: smooth;
-   overflow-x: hidden;
-   background-color: var(--primary-bg-color);
+    font-family: var(--font-family);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    background-color: var(--primary-bg-color);
 }
 
 h1, h2, h3, h4, h5, h6{
@@ -17,17 +20,15 @@ h1, h2, h3, h4, h5, h6{
 
 #main{
     display: grid;
-    grid-template-columns: 20% 80%;
+    grid-template-columns: minmax(200px, 20%) 1fr;
     gap: 1vw;
     padding: 1vw;
-
-    height: 100vh;
+    flex: 1;
 }
 
 #add_info_backButton{
     display: flex;
     margin: 1.3vw 92vw 0 1.3vw;
-
     transition: all ease-in-out 200ms;
 }
 
@@ -53,13 +54,14 @@ h1, h2, h3, h4, h5, h6{
 }
 
 .progress-container {
-    width: 3vw;
+    width: 100%;
     height: 30vh;
+    max-height: 200px;
+    min-height: 150px;
     border: 2px solid #ccc;
     border-radius: 5px;
     position: relative;
     min-width: 3vw;
-
     margin: 0 0 0 1vw;
 }
 
@@ -87,10 +89,7 @@ h1, h2, h3, h4, h5, h6{
 #add_info_progress_text p {
     font-size: 18px;
     width: 3vw;
-    
-
     text-align: center;
-     
     align-items: center;
     justify-content: center;
 }
@@ -99,7 +98,6 @@ h1, h2, h3, h4, h5, h6{
 #add_section2{
     display: grid;
     grid-template-rows: 90% 10%;
-
     max-height: 68vh;
 }
 
@@ -107,51 +105,32 @@ h1, h2, h3, h4, h5, h6{
 #add_buttons_bC{
     display: flex;
     justify-content: flex-end;
-
     grid-row: 2;
-
 }
 
 #add_buttons_bC button{
-    /* padding: var(--padding-xxs) var(--padding-l); */
     padding: 0.5vw 1vw;
     margin-right: 1vw;
     border-radius: 8px;
     background-color: var(--accent-color);
     color: var(--white-color);
-
     border: none;
     font-size: var(--font-size-s);
 }
 
 /* Input fields */
-.add_name_description{
+.add_name_description, .add_content{
     display: flex;
     flex-direction: column;
     gap: 5vw;
 }
 
-.add_content{
-    display: flex;
-    flex-direction: column;
-    gap: 5vw;
-}
-
-.add_name_description div{
+.add_name_description div,
+.add_content div {
     display: flex;
     flex-direction: column;
     gap: 1vw;
     max-width: 15vw;
-
-    max-height: 10vh;
-}
-
-.add_content div{
-    display: flex;
-    flex-direction: column;
-    gap: 1vw;
-    max-width: 15vw;
-
     max-height: 10vh;
 }
 
@@ -160,83 +139,66 @@ h1, h2, h3, h4, h5, h6{
     max-height: 11vh;
 }
 
-.add_name_description div input, textarea{
-    
+.add_name_description div input,
+textarea,
+.add_content div input {
     padding: 0.8vw 1.2vw;
     border: none;
     border-radius: 8px;
     box-shadow: 2px 2px 10px -6px rgba(0,0,0,0.74);
 }
 
-.add_content div input, textarea{
-    
-    padding: 0.5vw 1vw;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 2px 2px 10px -6px rgba(0,0,0,0.74);
-}
-
-.add_name_description div input:focus, textarea:focus{
+.add_name_description div input:focus,
+textarea:focus,
+.add_content div input:focus {
     outline: none;
 }
 
-.add_content div input:focus, textarea:focus{
-    outline: none;
-}
-
-#add_content_slide1{
+#add_content_slide1,
+#add_content_slide2 {
     display: grid;
     grid-template-columns: 40% 60%;
-    grid-template-rows: auto auto;
     gap: 2vw;
     margin-top: 2.3vw;
 }
 
-#add_content_slide2{
-    display: grid;
-    grid-template-columns: 40% 60%;
-    gap: 1vw;
-    margin-top: 2.3vw;
-}
-
-#comments_checkbox{
+#comments_checkbox {
     display: flex;
     align-items: left;
     gap: 1vw;
-
     margin-top: 2vw;
 }
 
 #comments_checkbox input {
-    appearance: none; /* Standard Checkbox-Design entfernen */
-    width: 40px; /* Breite der Checkbox */
-    height: 20px; /* Höhe der Checkbox */
-    background-color: #ccc; /* Hintergrundfarbe */
-    border-radius: 10px; /* Abgerundete Ecken */
-    position: relative; /* Für das absolute Positionieren des Kreises */
-    cursor: pointer; /* Zeiger beim Überfahren */
-    transition: background-color 0.3s; /* Hintergrundwechsel-Animation */
-    margin-left: 10px; /* Abstand zwischen Label und Checkbox */
+    appearance: none;
+    width: 40px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 10px;
 }
 
 #comments_checkbox input:checked {
-    background-color: black; /* Hintergrundfarbe, wenn angekreuzt */
+    background-color: black;
 }
 
 #comments_checkbox input::before {
     content: "";
     position: absolute;
-    width: calc(40px * 0.4); /* Dynamische Breite des Kreises */
-    height: calc(20px * 0.8); /* Dynamische Höhe des Kreises */
-    background: white; /* Hintergrundfarbe des Kreises */
-    border-radius: 50%; /* Kreisform */
-    top: calc(20px * 0.1); /* Dynamische Positionierung */
-    left: calc(40px * 0.05); /* Dynamische Positionierung */
-    transition: transform 0.3s; /* Bewegung des Kreises */
+    width: calc(40px * 0.4);
+    height: calc(20px * 0.8);
+    background: white;
+    border-radius: 50%;
+    top: calc(20px * 0.1);
+    left: calc(40px * 0.05);
+    transition: transform 0.3s;
 }
 
 #comments_checkbox input:checked::before {
-    transform: translateX(calc(40px * 0.5)); /* Dynamische Bewegung des Kreises bei Aktivierung */
+    transform: translateX(calc(40px * 0.5));
 }
 
 #opening_hours_div {
@@ -244,12 +206,6 @@ h1, h2, h3, h4, h5, h6{
 }
 
 /* ********************************************* File Add *************************************/
-
-
-#fileUpload{
-    
-}
-
 .upload-container {
     width: 100%;
     max-width: 500px;
@@ -264,12 +220,14 @@ h1, h2, h3, h4, h5, h6{
 .upload-container:hover {
     background-color: #f1f1f1;
 }
+
 .image-preview {
     display: flex;
     flex-wrap: nowrap;
     margin-top: 10px;
     gap: 10px;
     justify-content: flex-start;
+    position: relative;
 }
 
 .image-preview img {
@@ -283,6 +241,7 @@ h1, h2, h3, h4, h5, h6{
 input[type="file"] {
     display: none;
 }
+
 .image-preview .delete-icon {
     position: absolute;
     top: 5px;
@@ -300,17 +259,12 @@ input[type="file"] {
     font-size: 14px;
 }
 
-.image-preview {
-    position: relative;
-}
-
 #imageContainer{
     display: flex;
     gap: 1vw;
 }
 
 /* ********************************************** category********************************************** */
-
 #category{
     z-index: 20;
     padding: 0.5vw 1vw;
@@ -321,7 +275,6 @@ input[type="file"] {
 }
 
 /* ************************************************* Finish ******************************************* */
-
 span{
     font-size: var(--font-size-s);
     color: var(--grey-font-color);
@@ -334,7 +287,7 @@ span{
 }
 
 #confirm_infos{
-    margin: 0 10vw 0 10vw;
+    margin: 0 10vw;
     display: grid;
     grid-template-columns: 50% 50%;
     gap: 5vw;
@@ -345,12 +298,10 @@ span{
     display: flex;
     flex-direction: column;
     gap: 1vw;
-
     background-color: var(--white-color);
     padding: 1vw;
     border-radius: var(--border-radius-m);
     color: var(--black-color);
-
     box-shadow: 2px 2px 10px -6px rgba(0,0,0,0.74);
 }
 
@@ -363,31 +314,133 @@ span{
     text-align: center;
 }
 
-#confirmButton{
+#confirmButton, #cancelButton {
     padding: 0.5vw 1vw;
     margin-right: 1vw;
     border-radius: 8px;
-    background-color: var(--bg-color-greenButton);
-    color: green;
-
     border: none;
     font-size: var(--font-size-s);
     transition: all ease-in-out 200ms;
 }
 
-#cancelButton{
-    padding: 0.5vw 1vw;
-    margin-right: 1vw;
-    border-radius: 8px;
+#confirmButton {
+    background-color: var(--bg-color-greenButton);
+    color: green;
+}
+
+#cancelButton {
     background-color: var(--bg-color-redButton);
     color: red;
-
-    border: none;
-    font-size: var(--font-size-s);
-    transition: all ease-in-out 200ms;
 }
 
 #finish_buttons button:hover{
     cursor: pointer;
     transform: translateY(-5px);
 }
+
+
+/* **************************************** Responsive **************************************** */
+@media screen and (max-width: 1024px) {
+    #main {
+        grid-template-columns: 1fr;
+        padding: 2vw;
+        height: auto;
+    }
+
+    #add_info_backButton {
+        margin: 1vw auto;
+        justify-content: center;
+    }
+
+    #add_info_progress {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 auto;
+    }
+
+    #add_section2 {
+        grid-template-rows: auto auto;
+        max-height: none;
+    }
+
+    #add_content_slide1,
+    #add_content_slide2 {
+        grid-template-columns: 1fr;
+    }
+
+    .add_name_description div,
+    .add_content div {
+        max-width: 100%;
+    }
+
+    #confirm_infos {
+        grid-template-columns: 1fr;
+        margin: 2vw;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .add_name_description div input,
+    .add_content div input,
+    textarea,
+    #category {
+        font-size: 14px;
+        padding: 3vw;
+    }
+
+    #add_buttons_bC {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    #progress-bar,
+    .progress-container {
+        width: 80%;
+        height: 20px;
+    }
+
+    #add_info_progress_text p {
+        font-size: 16px;
+        width: auto;
+    }
+
+    .image-preview img {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+
+.form-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    align-content: start;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Responsive Anpassungen */
+@media (max-width: 768px) {
+    #main {
+      grid-template-columns: 1fr;
+    }
+    
+    .progress-container {
+      height: 20px;
+      width: 100%;
+      max-height: none;
+    }
+    
+    #add_info_progress {
+      order: -1;
+      margin-bottom: 1rem;
+    }
+  }
