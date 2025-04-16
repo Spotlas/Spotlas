@@ -116,10 +116,20 @@ h6 {
 
 #img_big {
   border-radius: 10px;
+  width: 100%;
+  max-height: 150px;
+  object-fit: cover;
+  margin-top: 10px; /* Platz für die oberen Icons */
 }
 
 #img_großButton {
+  position: absolute;
+  right: var(--padding-m);
+  top: var(--padding-m);
+  width: 8%;
+  height: auto;
   transition: all ease-in-out 200ms;
+  z-index: 1;
 }
 
 #img_großButton:hover {
@@ -128,7 +138,13 @@ h6 {
 }
 
 #img_saveButton {
+  position: absolute;
+  left: var(--padding-m);
+  top: var(--padding-m);
+  width: 10%;
+  height: auto;
   transition: all ease-in-out 200ms;
+  z-index: 1;
 }
 
 #img_saveButton:hover {
@@ -144,6 +160,11 @@ h6 {
 #img_point:hover {
   cursor: pointer;
   transform: translateY(-3px);
+  
+}
+
+#buttons {
+  margin-bottom: 10%;
 }
 
 #button_comments {
@@ -162,8 +183,10 @@ h6 {
 }
 
 #parent_grid {
-  display: grid;
-  grid-template-columns: 50% 50%;
+  display: flex;
+  align-items: center; /* Zentriert die Elemente vertikal */
+  justify-content: space-between; /* Verteilt den Platz zwischen den Elementen */
+  gap: 10px; /* Abstand zwischen den Elementen */
 }
 
 /* ***************************************** Filter ************************************ */
@@ -246,66 +269,10 @@ h6 {
   color: var(--black-color);
 }
 
-/* Star Ratings */
 #spot_rating {
-  font-size: 1.2rem;
-  color: gold;
-  display: flex;
-  align-items: center;
+  margin-left: 70%;
+  margin-top: -8%;
 }
-
-.ratings {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: center;
-  margin: 1rem 0;
-  color: #dddddd00;
-}
-
-.ratings input {
-  display: none;
-}
-
-.ratings label {
-  font-size: 1.8rem;
-  cursor: pointer;
-  color: #ddd;
-  transition: color 0.3s, transform 0.2s;
-  margin: 0 2px;
-  display: inline-block;
-}
-
-.ratings input:checked ~ label,
-.ratings label:hover,
-.ratings label:hover ~ label {
-  color: gold;
-  transform: scale(1.05);
-}
-
-#rateThisLocation {
-  background: #f9f9f900;
-  padding: 15px;
-  border-radius: 14px;
-  text-align: center;
-  margin: 10px 0;
-  transition: transform 0.3s;
-  scale: 0.65;
-  margin: -10%;
-  margin-left: 55%;
-  margin-top: -21.5%;
-  }
-
-#rateThisLocation:hover {
-  transform: translateY(-3px);
-}
-
-#rateThisLocation p {
-  font-weight: 500;
-  margin-bottom: 10px;
-  color: var(--text-color);
-}
-
-
 
 .info_box {
   display: flex;
@@ -327,7 +294,7 @@ h6 {
 }
 
 .info_box_item::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -377,4 +344,29 @@ h6 {
 
 .info_box_item_text a:hover {
   text-decoration: underline;
+}
+
+#parent_grid {
+  display: grid;
+  grid-template-columns: 1fr auto; /* Teilt den Platz zwischen header_point und info_box auf */
+  align-items: center; /* Zentriert die Elemente vertikal */
+  gap: 10px; /* Abstand zwischen den Elementen */
+}
+
+#header_point {
+  grid-column: 1; /* Platziert den header_point in der ersten Spalte */
+  margin: 0; /* Entfernt Standard-Margins */
+}
+
+.info_box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Optional: Anpassungen für die info_box-Inhalte */
+.info_box_item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
