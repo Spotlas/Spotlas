@@ -390,3 +390,50 @@ span{
     cursor: pointer;
     transform: translateY(-5px);
 }
+
+#add_form_Slide1 > #add_content{
+    display: grid;
+    grid-template-columns: 40% 60%;
+    gap: 20vw;
+    margin-top: 2.3vw;
+}
+
+#fileUpload.drag-drop {
+    border: 2px dashed #ccc;
+    border-radius: 14px;
+    padding: 1.2rem;
+    text-align: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    background-color: #f9f9f9;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  #fileUpload.drag-drop.dragover {
+    background-color: #e0e0e0;
+    border-color: #888;
+  }
+  
+  #uploadLabel {
+    display: block;
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 1rem;
+    cursor: pointer;
+  }
+  
+  #fileUpload button {
+    background-color: #292929;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+  }
+  
+  #fileUpload button:hover {
+    background-color: #444;
+  }
+  

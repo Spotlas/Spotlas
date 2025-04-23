@@ -166,6 +166,44 @@ function loadImagesFromSessionStorage() {
 // Funktion zum Aktualisieren des Fortschritts
 function updateProgress(action) {
   if (action === "more" && progress < 100) {
+    // Validate required fields before proceeding
+    if (slide === 1) {
+      // Reset any previous styling
+      document.querySelectorAll('input').forEach(input => {
+        input.style.boxShadow = "2px 2px 10px -6px rgba(0,0,0,0.74)";
+      });
+      
+      let isValid = true;
+      
+      // Check required fields
+      const name = document.getElementById("name");
+      const latitude = document.getElementById("latitude");
+      const longitude = document.getElementById("longitude");
+      const pics = document.getElementById("fileInput");
+      
+      if (!name.value.trim()) {
+        name.style.boxShadow = "0 0 5px 2px rgba(255,0,0,0.5)";
+        isValid = false;
+      }
+      
+      if (!latitude.value.trim()) {
+        latitude.style.boxShadow = "0 0 5px 2px rgba(255,0,0,0.5)";
+        isValid = false;
+      }
+      
+      if (!longitude.value.trim()) {
+        longitude.style.boxShadow = "0 0 5px 2px rgba(255,0,0,0.5)";
+        isValid = false;
+      }
+      
+      
+      
+      if (!isValid) {
+        alert("Please fill out all required fields highlighted in red!");
+        return;
+      }
+    }
+    
     progress += step;
     slide = 2;
   } else if (action === "back" && progress > 0) {
@@ -369,6 +407,7 @@ async function saveLocation() {
   console.log("saveLocation() wurde aufgerufen");
   console.log("Place Name:", sessionStorage.getItem("name"));
 console.log("Place Description:", sessionStorage.getItem("Description"));
+console.log("Place Category:", sessionStorage.getItem("Category"));
 
 
   // Setze die Werte zuerst in den HTML-Elementen
@@ -399,31 +438,40 @@ console.log("Place Description:", sessionStorage.getItem("Description"));
   )}" target="_blank">${sessionStorage.getItem("Website")}</a>`;
   document.getElementById("placeSpecialFeatures").innerHTML =
     sessionStorage.getItem("SpecialFeatures");
+    let categoryName = sessionStorage.getItem("Category");
 
-    let categoryID = getCategoryId(sessionStorage.getItem("Category"));
+    
 
-  // Erstelle das newLocation-Objekt
-  const newLocation = {
-    name: sessionStorage.getItem("name"),
-    description: sessionStorage.getItem("Description"),
-    category_id: categoryID,
-    latitude: sessionStorage.getItem("latitude"),
-    longitude: sessionStorage.getItem("longitude"),
-    address: sessionStorage.getItem("Address"),
-    price_range: sessionStorage.getItem("Price"),
-    opening_hours: sessionStorage.getItem("OpeningHours"),
-    season: sessionStorage.getItem("Season"),
-    accessibility: sessionStorage.getItem("Accessibility"),
-    website_url: sessionStorage.getItem("Website"),
-    special_features: sessionStorage.getItem("SpecialFeatures"),
-    created_by: 1,
-    status_id: 1, // optional
-  };
+    const categoryId = await getCategoryId(categoryName); // Warte auf die ID
+    if (!categoryId) {
+      console.error("Category not found!");
+      return;
+    }
 
-  console.log("New location:", newLocation);
+    console.log("Category ID:", categoryId);
 
-  // Warte auf den Upload und leite dann weiter
-  uploadNewLocation(newLocation);
+    // Erstelle das newLocation-Objekt
+    const newLocation = {
+      name: sessionStorage.getItem("name"),
+      description: sessionStorage.getItem("Description"),
+      category_id: categoryId,
+      latitude: sessionStorage.getItem("latitude"),
+      longitude: sessionStorage.getItem("longitude"),
+      address: sessionStorage.getItem("Address"),
+      price_range: sessionStorage.getItem("Price"),
+      opening_hours: sessionStorage.getItem("OpeningHours"),
+      season: sessionStorage.getItem("Season"),
+      accessibility: sessionStorage.getItem("Accessibility"),
+      website_url: sessionStorage.getItem("Website"),
+      special_features: sessionStorage.getItem("SpecialFeatures"),
+      created_by: 1,
+      status_id: 1, // optional
+    };
+
+    console.log("New location:", newLocation);
+
+    await uploadNewLocation(newLocation); // Jetzt ist categoryId definiert
+    
 }
 
 function uploadNewLocation(locationData) {
@@ -440,6 +488,14 @@ function uploadNewLocation(locationData) {
       try {
           const data = JSON.parse(text); // Versuche, den Text als JSON zu parsen
           console.log('New location uploaded:', data);
+          if (data.code === 200) {
+              console.log('Location uploaded successfully:', data.message);
+              alert('Location uploaded successfully!');
+              window.location.href = "../../index.html"; // Redirect to home page
+          } else {
+              console.error('Upload failed:', data.message);
+              alert('Upload failed: ' + data.message);
+          }
       } catch (e) {
           console.error('Failed to parse JSON:', e);
       }
@@ -453,18 +509,65 @@ function clickComments() {
   return comments.checked;
 } 
 
-// Kategorie-ID anhand des Namens abrufen
-function getCategoryId(categoryName) {
-  fetch(`getCategoryId.php?name=${encodeURIComponent(categoryName)}`)
-      .then(response => response.json())
-      .then(data => {
-          if (data.code === 200) {
-              console.log(`Die ID der Kategorie "${categoryName}" ist: ${data.category_id}`);
-              return data.category_id;
-          } else {
-              console.error(`Fehler: ${data.message}`);
-          }
-      })
-      .catch(error => console.error('Fehler beim Abrufen der Kategorie-ID:', error));
+async function getCategoryId(categoryName) {
+  try {
+    const response = await fetch(`../../api/getCategory.php?name=${encodeURIComponent(categoryName)}`);
+    const data = await response.json();
+
+    if (data.code === 200) {
+      console.log(`Die ID der Kategorie "${categoryName}" ist: ${data.category_id}`);
+      return data.category_id;
+    } else {
+      console.error(`Fehler: ${data.message}`);
+      return null;
+    }
+  } catch (error) {
+    console.error('Fehler beim Abrufen der Kategorie-ID:', error);
+    return null;
+  }
 }
 
+function handleSubmit(event) {
+  event.preventDefault(); // verhindert normales Absenden
+  const form = event.target;
+
+  if (form.checkValidity()) {
+      updateProgress('more');
+  } else {
+      form.reportValidity(); // zeigt automatisch HTML5-Fehler an
+  }
+}
+
+const dropArea = document.getElementById("fileUpload");
+const fileInput = document.getElementById("fileToUpload");
+const label = document.getElementById("uploadLabel");
+
+// Drag-Events verhindern Default-Verhalten
+["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
+  dropArea.addEventListener(eventName, e => e.preventDefault());
+  dropArea.addEventListener(eventName, e => e.stopPropagation());
+});
+
+// Visuelles Feedback
+["dragenter", "dragover"].forEach(eventName => {
+  dropArea.addEventListener(eventName, () => dropArea.classList.add("dragover"));
+});
+["dragleave", "drop"].forEach(eventName => {
+  dropArea.addEventListener(eventName, () => dropArea.classList.remove("dragover"));
+});
+
+// Datei einfügen per Drag & Drop
+dropArea.addEventListener("drop", e => {
+  const files = e.dataTransfer.files;
+  if (files.length) {
+    fileInput.files = files; // Datei dem Input zuweisen
+    label.innerHTML = `📁 Datei ausgewählt: <strong>${files[0].name}</strong>`;
+  }
+});
+
+// Datei-Auswahl aktualisieren, wenn über normalen Input gewählt
+fileInput.addEventListener("change", () => {
+  if (fileInput.files.length > 0) {
+    label.innerHTML = `📁 Datei ausgewählt: <strong>${fileInput.files[0].name}</strong>`;
+  }
+});
