@@ -11,41 +11,101 @@ loadErstellteBilder();
 
 function loadErstellteBilder() {
   document.getElementById("bilder").innerHTML = `
-  <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay"><h2 class="header">Lake</h2><p class="like">3 ❤</p></div>
+  <div class="image-wrapper">
+    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">
+      <h2 class="header">Lake</h2>
+      <p class="like">3 ❤</p>
+      <a href="../add_place/add.html?id=1" class="edit-link">Bearbeiten</a>
+    </div>
   </div>
-    <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay"><h2 class="header">Lake</h2><p class="like">23 ❤</p></div>
+  <div class="image-wrapper">
+    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">
+      <h2 class="header">Lake</h2>
+      <p class="like">23 ❤</p>
+      <a href="../edit_place/edit.html?id=2" class="edit-link">Bearbeiten</a>
+    </div>
   </div>
-  <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay"><h2 class="header">Lake</h2><p class="like">4 ❤</p></div>
+  <div class="image-wrapper">
+    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">
+      <h2 class="header">Lake</h2>
+      <p class="like">4 ❤</p>
+      <a href="../edit_place/edit.html?id=3" class="edit-link">Bearbeiten</a>
+    </div>
   </div>
-  <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay"><h2 class="header">Lake</h2><p class="like">1 ❤</p></div>
+  <div class="image-wrapper">
+    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">
+      <h2 class="header">Lake</h2>
+      <p class="like">1 ❤</p>
+      <a href="../edit_place/edit.html?id=4" class="edit-link">Bearbeiten</a>
+    </div>
   </div>
-    <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay"><h2 class="header">Lake</h2><p class="like">456 ❤</p></div>
+  <div class="image-wrapper">
+    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">
+      <h2 class="header">Lake</h2>
+      <p class="like">456 ❤</p>
+      <a href="../edit_place/edit.html?id=5" class="edit-link">Bearbeiten</a>
+    </div>
   </div>
-  <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay"><h2 class="header">Lake</h2><p class="like">3 ❤</p></div>
+  <div class="image-wrapper">
+    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">
+      <h2 class="header">Lake</h2>
+      <p class="like">3 ❤</p>
+      <a href="../edit_place/edit.html?id=6" class="edit-link">Bearbeiten</a>
+    </div>
   </div>
-  <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay"><h2 class="header">Lake</h2><p class="like">4 ❤</p></div>
+  <div class="image-wrapper">
+    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">
+      <h2 class="header">Lake</h2>
+      <p class="like">4 ❤</p>
+      <a href="../edit_place/edit.html?id=7" class="edit-link">Bearbeiten</a>
+    </div>
   </div>
-    <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay"><h2 class="header">Lake</h2><p class="like">4 ❤</p></div>
+  <div class="image-wrapper">
+    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">
+      <h2 class="header">Lake</h2>
+      <p class="like">4 ❤</p>
+      <a href="../edit_place/edit.html?id=8" class="edit-link">Bearbeiten</a>
+    </div>
   </div>
-  <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay"><h2 class="header">Lake</h2><p class="like">5 ❤</p></div>
+  <div class="image-wrapper">
+    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">
+      <h2 class="header">Lake</h2>
+      <p class="like">5 ❤</p>
+      <a href="../edit_place/edit.html?id=9" class="edit-link">Bearbeiten</a>
+    </div>
   </div>
-  <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay"><h2 class="header">Lake</h2><p class="like">6 ❤</p></div>
+  <div class="image-wrapper">
+    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">
+      <h2 class="header">Lake</h2>
+      <p class="like">6 ❤</p>
+      <a href="../edit_place/edit.html?id=10" class="edit-link">Bearbeiten</a>
+    </div>
   </div>
-    <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay"><h2 class="header">Lake</h2><p class="like">1 ❤</p></div>
+  <div class="image-wrapper">
+    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">
+      <h2 class="header">Lake</h2>
+      <p class="like">1 ❤</p>
+      <a href="../edit_place/edit.html?id=11" class="edit-link">Bearbeiten</a>
+    </div>
   </div>
-  <div class="image-wrapper"><img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay"><h2 class="header">Lake</h2><p class="like">0 ❤</p></div>
+  <div class="image-wrapper">
+    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
+    <div class="overlay">
+      <h2 class="header">Lake</h2>
+      <p class="like">0 ❤</p>
+      <a href="../edit_place/edit.html?id=12" class="edit-link">Bearbeiten</a>
+    </div>
   </div>`;
 }
 
@@ -89,3 +149,4 @@ document.addEventListener("DOMContentLoaded", () => {
     loadErstellte(erstelltSwitch); // ← jetzt wird es korrekt aufgerufen
   }
 });
+
