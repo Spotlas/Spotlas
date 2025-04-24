@@ -118,6 +118,24 @@ if (isset($_GET['action']) && isset($_GET['id']) && is_numeric($_GET['id'])) {
             $response['data'] = array("message" => "Error: " . $conn->error);
         }
     }
+
+    else if ($action == 'comment' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $user_id      = intval($data['user_id']);
+        $comment_text = $conn->real_escape_string($data['comment_text']);
+
+        $sqlInsert = "
+            INSERT INTO Comments (location_id, user_id, comment_text)
+            VALUES ($id, $user_id, '$comment_text')
+        ";
+        if ($conn->query($sqlInsert) === TRUE) {
+            $response['code'] = 200;
+            $response['data'] = ["message" => "Comment added successfully"];
+        } else {
+            $response['code'] = 500;
+            $response['data'] = ["message" => "Error inserting comment: " . $conn->error];
+        }
+    }
     
 }
 

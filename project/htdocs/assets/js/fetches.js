@@ -162,6 +162,29 @@ function removeFavoriteLocation(id, userId) {
     .catch(error => console.error('Error removing favorite location:', error));
 }
 
+// Fügt einen neuen Kommentar für eine Location hinzu
+function postComment(locationId, userId, commentText) {
+    const payload = {
+        user_id: userId,
+        comment_text: commentText
+    };
+
+    fetch(`./api/location.php?action=comment&id=${locationId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.code === 200) {
+            console.log('Comment response:', data.data.message);
+        } else {
+            console.error('Error posting comment:', data.data?.message || data.message);
+        }
+    })
+    .catch(error => console.error('Fetch error:', error));
+}
+
 
 // Erstellen eines neuen Nutzers
 function createUser(fullName, username, password, profilePicture, phoneNumber, description) {
@@ -188,6 +211,38 @@ function createUser(fullName, username, password, profilePicture, phoneNumber, d
   .catch(error => console.error('Error creating user:', error));
 }
 
+// Holt alle Profilinfos eines Nutzers anhand des Benutzernamens
+function fetchUserByUsername(username) {
+    fetch(`./api/profile.php?username=${encodeURIComponent(username)}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.code === 200 && data.profile) {
+                console.log(`Profil von ${username}:`, data.profile);
+                console.log(`Erstellte Locations:`, data.locations);
+            } else {
+                console.error('Fehler beim Abrufen des Profils:', data.message || 'User nicht gefunden');
+            }
+        })
+        .catch(error => console.error('Error fetching user by username:', error));
+}
+
+// Löscht den User-Account mit der gegebenen userId
+function deleteUserAccount(userId) {
+    fetch(`./api/profile.php?action=delete&userId=${userId}`, {
+        method: 'POST'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.code === 200) {
+            console.log(data.message);
+            // z.B. weiterleiten: window.location = '/goodbye.html';
+        } else {
+            console.error('Error deleting account:', data.message);
+        }
+    })
+    .catch(error => console.error('Fetch error:', error));
+}
+
 // Kategorie-ID anhand des Namens abrufen
 function getCategoryId(categoryName) {
     fetch(`getCategoryId.php?name=${encodeURIComponent(categoryName)}`)
@@ -200,4 +255,18 @@ function getCategoryId(categoryName) {
             }
         })
         .catch(error => console.error('Fehler beim Abrufen der Kategorie-ID:', error));
+}
+
+// Kategorie-Name anhand der ID abrufen
+function fetchCategoryNameById(categoryId) {
+    fetch(`./api/getCategory.php?id=${categoryId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.code === 200) {
+                console.log(`Der Name der Kategorie mit ID ${categoryId} ist: ${data.name}`);
+            } else {
+                console.error(`Fehler: ${data.message}`);
+            }
+        })
+        .catch(error => console.error('Error fetching category name:', error));
 }
