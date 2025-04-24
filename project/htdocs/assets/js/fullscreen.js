@@ -88,7 +88,7 @@ function fetchLocationDetails(id) {
             document.querySelector('#price_range').innerHTML = "Price Range: " + (location.price_range || 'Keine Angabe');
             document.querySelector('#season').innerHTML = "Season: " + (location.season || 'Keine Saisonangabe');
             document.querySelector('#special_features').innerHTML = location.special_features || 'Keine besonderen Merkmale';
-            document.querySelector('#category_spot_name').innerHTML = location.category_id
+            fetchCategoryNameById(location.category_id); // Kategorie-Name abrufen
             
 
             // Kommentare anzeigen
@@ -213,3 +213,42 @@ function removeFavoriteLocation(id, userId) {
     .catch(error => console.error('Error removing favorite location:', error));
 }
 
+// Kategorie-Name anhand der ID abrufen
+function fetchCategoryNameById(categoryId) {
+    fetch(`../../api/getCategory.php?id=${encodeURIComponent(categoryId)}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.code === 200) {
+                console.log(`Der Name der Kategorie mit ID ${categoryId} ist: ${data.name}`);
+                document.querySelector('#category_spot_name').innerHTML = data.name;
+                let icon = chooseIcon(categoryId);
+                document.querySelector('#category_spot_icon').innerHTML = `<img src="${icon}" alt="${data.name}" width="40px" class="category-icon">`;
+            } else {
+                console.error(`Fehler: ${data.message}`);
+            }
+        })
+        .catch(error => console.error('Error fetching category name:', error));
+}
+
+function chooseIcon(CategoryID) {
+    let icon = "";
+    switch (CategoryID) {
+        case 1:
+            icon = "../../assets/images/icons/filter/Restaurants.svg";
+            break;
+        case 2:
+            icon = "../../assets/images/icons/filter/Sehenswürdigkeiten.svg";
+            break;
+        case 3:
+            icon = "../../assets/images/icons/filter/Natur.svg";
+            break;
+        case 4:
+            icon = "../../assets/images/icons/filter/Museen.svg";
+            break;
+        case 5:
+            icon = "../../assets/images/icons/filter/Hotels.svg";
+            break;
+    }
+    return icon;
+    
+}

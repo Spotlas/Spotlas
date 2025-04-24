@@ -264,6 +264,7 @@ function fetchCategoryNameById(categoryId) {
         .then(data => {
             if (data.code === 200) {
                 console.log(`Der Name der Kategorie mit ID ${categoryId} ist: ${data.name}`);
+                return data.name; // Rückgabe des Kategorie-Namens
             } else {
                 console.error(`Fehler: ${data.message}`);
             }
