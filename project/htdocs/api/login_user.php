@@ -6,7 +6,6 @@ ob_start();
 
 require './mariaDB.php';
 
-
 // Set headers
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
@@ -24,38 +23,54 @@ $response = ["code" => 400, "message" => "Invalid request"];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
-    
-    if (isset($data["username"]) && isset($data["password"])) {
-        $username = $conn->real_escape_string(trim($data["username"]));
-        
-        // Get user data
-        $stmt = $conn->prepare("SELECT id, username, password_hash, full_name FROM Users WHERE username = ?");
+
+    if (!empty($data["username"]) && !empty($data["password"])) {
+        // Trim inputs
+        $username = trim($data["username"]);
+        $password = trim($data["password"]);
+
+        // Prepare and execute SELECT
+        $stmt = $conn->prepare("
+            SELECT id, username, password_hash, full_name 
+            FROM Users 
+            WHERE username = ?
+            LIMIT 1
+        ");
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $result = $stmt->get_result();
-        
-        if ($result->num_rows === 1) {
+
+        if ($result && $result->num_rows === 1) {
             $user = $result->fetch_assoc();
-            
+
             // Verify password
-            if (password_verify(trim($data["password"]), $user["password_hash"])) {
-                $response["code"] = 200;
-                $response["message"] = "Login successful";
-                $response["user_id"] = $user["id"];
-                $response["username"] = $user["username"];
-                $response["full_name"] = $user["full_name"];
+            if (password_verify($password, $user["password_hash"])) {
+                $response = [
+                    "code"      => 200,
+                    "message"   => "Login successful",
+                    "user_id"   => $user["id"],
+                    "username"  => $user["username"],
+                    "full_name" => $user["full_name"]
+                ];
             } else {
-                $response["code"] = 401;
-                $response["message"] = "Invalid username or password";
+                $response = [
+                    "code"    => 401,
+                    "message" => "Invalid username or password"
+                ];
             }
         } else {
-            $response["code"] = 401;
-            $response["message"] = "Invalid username or password";
+            $response = [
+                "code"    => 401,
+                "message" => "Invalid username or password"
+            ];
         }
-        
+
         $stmt->close();
     } else {
-        $response["message"] = "Username and password are required";
+        $response = [
+            "code"    => 400,
+            "message" => "Username and password are required"
+        ];
     }
 }
 

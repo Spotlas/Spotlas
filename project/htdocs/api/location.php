@@ -3,140 +3,138 @@ require './mariaDB.php';
 
 header('Content-Type: application/json');
 
-$response = array(
-    "code" => 404,
-    "data" => null
-);
+$response = ["code" => 404, "data" => null];
 
-if (isset($_GET['action']) && isset($_GET['id']) && is_numeric($_GET['id'])) {
+if (isset($_GET['action'], $_GET['id']) && is_numeric($_GET['id'])) {
     $action = $_GET['action'];
-    $id = intval($_GET['id']);
-    
-    // Detaillierte Location-Infos abrufen
-    if ($action == 'details' && $_SERVER['REQUEST_METHOD'] == 'GET') {
-        $sqlLocation = "SELECT * FROM Locations WHERE id = $id";
-        $resultLocation = $conn->query($sqlLocation);
-        if ($resultLocation && $resultLocation->num_rows > 0) {
-            $location = $resultLocation->fetch_assoc();
-            
-            // Kommentare zur Location abrufen
+    $id     = intval($_GET['id']);
+
+    if ($action === 'details' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+        // Location
+        $stmtLoc = $conn->prepare("SELECT * FROM Locations WHERE id = ?");
+        $stmtLoc->bind_param("i", $id);
+        $stmtLoc->execute();
+        $resLoc = $stmtLoc->get_result();
+        if ($resLoc->num_rows > 0) {
+            $location = $resLoc->fetch_assoc();
+
+            // Kommentare
             $comments = [];
-            $sqlComments = "SELECT * FROM Comments WHERE location_id = $id";
-            $resultComments = $conn->query($sqlComments);
-            if ($resultComments && $resultComments->num_rows > 0) {
-                while ($row = $resultComments->fetch_assoc()) {
-                    $comments[] = $row;
-                }
+            $stmtCom = $conn->prepare("SELECT * FROM Comments WHERE location_id = ?");
+            $stmtCom->bind_param("i", $id);
+            $stmtCom->execute();
+            $resCom = $stmtCom->get_result();
+            while ($row = $resCom->fetch_assoc()) {
+                $comments[] = $row;
             }
-            
-            // Bilder zur Location abrufen
+            $stmtCom->close();
+
+            // Bilder
             $images = [];
-            $sqlImages = "SELECT * FROM Images WHERE location_id = $id";
-            $resultImages = $conn->query($sqlImages);
-            if ($resultImages && $resultImages->num_rows > 0) {
-                while ($row = $resultImages->fetch_assoc()) {
-                    $images[] = $row;
-                }
+            $stmtImg = $conn->prepare("SELECT * FROM Images WHERE location_id = ?");
+            $stmtImg->bind_param("i", $id);
+            $stmtImg->execute();
+            $resImg = $stmtImg->get_result();
+            while ($row = $resImg->fetch_assoc()) {
+                $images[] = $row;
             }
+            $stmtImg->close();
 
-            // Durchschnittliches Rating berechnen
+            // Durchschnitts-Rating
             $averageRating = null;
-            $sqlAverageRating = "SELECT AVG(rating) AS avg_rating FROM Ratings WHERE location_id = $id";
-            $resultAverageRating = $conn->query($sqlAverageRating);
-            if ($resultAverageRating && $resultAverageRating->num_rows > 0) {
-                $averageRatingRow = $resultAverageRating->fetch_assoc();
-                $averageRating = floatval($averageRatingRow['avg_rating']);
+            $stmtAvg = $conn->prepare("SELECT AVG(rating) AS avg_rating FROM Ratings WHERE location_id = ?");
+            $stmtAvg->bind_param("i", $id);
+            $stmtAvg->execute();
+            $resAvg = $stmtAvg->get_result();
+            if ($row = $resAvg->fetch_assoc()) {
+                $averageRating = floatval($row['avg_rating']);
             }
-            
+            $stmtAvg->close();
+
             $response['code'] = 200;
-            $response['data'] = array(
-                "location" => $location,
-                "comments" => $comments,
-                "images" => $images,
+            $response['data'] = [
+                "location"       => $location,
+                "comments"       => $comments,
+                "images"         => $images,
                 "average_rating" => $averageRating
-            );
+            ];
         }
+        $stmtLoc->close();
     }
-    // Bewertung hinzufügen oder aktualisieren
-    else if ($action == 'rate' && $_SERVER['REQUEST_METHOD'] == 'POST') {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $user_id = intval($data['user_id']);
-        $rating  = intval($data['rating']);
+    elseif ($action === 'rate' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+        $d       = json_decode(file_get_contents('php://input'), true);
+        $user_id = intval($d['user_id'] ?? 0);
+        $rating  = intval($d['rating']  ?? 0);
 
-        // Prüfen, ob der Nutzer bereits eine Bewertung für diese Location abgegeben hat
-        $sqlCheck = "SELECT * FROM Ratings WHERE location_id = $id AND user_id = $user_id";
-        $resultCheck = $conn->query($sqlCheck);
+        // Check existing
+        $stmtChk = $conn->prepare("SELECT id FROM Ratings WHERE location_id = ? AND user_id = ?");
+        $stmtChk->bind_param("ii", $id, $user_id);
+        $stmtChk->execute();
+        $resChk = $stmtChk->get_result();
 
-        if ($resultCheck && $resultCheck->num_rows > 0) {
-            // Falls es bereits eine Bewertung gibt, update
-            $sqlUpdate = "UPDATE Ratings SET rating = $rating WHERE location_id = $id AND user_id = $user_id";
-            if ($conn->query($sqlUpdate) === TRUE) {
-                $response['code'] = 200;
-                $response['data'] = array("message" => "Rating updated successfully");
+        if ($resChk->num_rows > 0) {
+            // Update
+            $stmtUpd = $conn->prepare("UPDATE Ratings SET rating = ? WHERE location_id = ? AND user_id = ?");
+            $stmtUpd->bind_param("iii", $rating, $id, $user_id);
+            if ($stmtUpd->execute()) {
+                $response = ["code" => 200, "data" => ["message" => "Rating updated successfully"]];
             } else {
-                $response['code'] = 500;
-                $response['data'] = array("message" => "Error updating rating: " . $conn->error);
+                $response = ["code" => 500, "data" => ["message" => "Error updating rating: " . $conn->error]];
             }
+            $stmtUpd->close();
         } else {
-            // Falls keine Bewertung existiert, insert
-            $sqlInsert = "INSERT INTO Ratings (location_id, user_id, rating) VALUES ($id, $user_id, $rating)";
-            if ($conn->query($sqlInsert) === TRUE) {
-                $response['code'] = 200;
-                $response['data'] = array("message" => "Rating added successfully");
+            // Insert
+            $stmtIns = $conn->prepare("INSERT INTO Ratings (location_id, user_id, rating) VALUES (?, ?, ?)");
+            $stmtIns->bind_param("iii", $id, $user_id, $rating);
+            if ($stmtIns->execute()) {
+                $response = ["code" => 200, "data" => ["message" => "Rating added successfully"]];
             } else {
-                $response['code'] = 500;
-                $response['data'] = array("message" => "Error inserting rating: " . $conn->error);
+                $response = ["code" => 500, "data" => ["message" => "Error inserting rating: " . $conn->error]];
             }
+            $stmtIns->close();
         }
-}
-
-    // Location als Favorit markieren
-    else if ($action == 'favorite' && $_SERVER['REQUEST_METHOD'] == 'POST') {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $user_id = intval($data['user_id']);
-        $sqlFav = "INSERT INTO Favorites (location_id, user_id) VALUES ($id, $user_id)";
-        if ($conn->query($sqlFav) === TRUE) {
-            $response['code'] = 200;
-            $response['data'] = array("message" => "Location added to favorites");
-        } else {
-            $response['code'] = 500;
-            $response['data'] = array("message" => "Error: " . $conn->error);
-        }
+        $stmtChk->close();
     }
+    elseif ($action === 'favorite' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+        $d       = json_decode(file_get_contents('php://input'), true);
+        $user_id = intval($d['user_id'] ?? 0);
 
-    // Location von Favoriten entfernen
-    else if ($action == 'remove_favorite' && $_SERVER['REQUEST_METHOD'] == 'POST') {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $user_id = intval($data['user_id']);
-        
-        $sqlRemoveFav = "DELETE FROM Favorites WHERE location_id = $id AND user_id = $user_id";
-        if ($conn->query($sqlRemoveFav) === TRUE) {
-            $response['code'] = 200;
-            $response['data'] = array("message" => "Location removed from favorites");
+        $stmtFav = $conn->prepare("INSERT INTO Favorites (location_id, user_id) VALUES (?, ?)");
+        $stmtFav->bind_param("ii", $id, $user_id);
+        if ($stmtFav->execute()) {
+            $response = ["code" => 200, "data" => ["message" => "Location added to favorites"]];
         } else {
-            $response['code'] = 500;
-            $response['data'] = array("message" => "Error: " . $conn->error);
+            $response = ["code" => 500, "data" => ["message" => "Error: " . $conn->error]];
         }
+        $stmtFav->close();
     }
+    elseif ($action === 'remove_favorite' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+        $d       = json_decode(file_get_contents('php://input'), true);
+        $user_id = intval($d['user_id'] ?? 0);
 
-    else if ($action == 'comment' && $_SERVER['REQUEST_METHOD'] == 'POST') {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $user_id      = intval($data['user_id']);
-        $comment_text = $conn->real_escape_string($data['comment_text']);
-
-        $sqlInsert = "
-            INSERT INTO Comments (location_id, user_id, comment_text)
-            VALUES ($id, $user_id, '$comment_text')
-        ";
-        if ($conn->query($sqlInsert) === TRUE) {
-            $response['code'] = 200;
-            $response['data'] = ["message" => "Comment added successfully"];
+        $stmtRem = $conn->prepare("DELETE FROM Favorites WHERE location_id = ? AND user_id = ?");
+        $stmtRem->bind_param("ii", $id, $user_id);
+        if ($stmtRem->execute()) {
+            $response = ["code" => 200, "data" => ["message" => "Location removed from favorites"]];
         } else {
-            $response['code'] = 500;
-            $response['data'] = ["message" => "Error inserting comment: " . $conn->error];
+            $response = ["code" => 500, "data" => ["message" => "Error: " . $conn->error]];
         }
+        $stmtRem->close();
     }
-    
+    elseif ($action === 'comment' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+        $d           = json_decode(file_get_contents('php://input'), true);
+        $user_id     = intval($d['user_id'] ?? 0);
+        $comment_txt = $d['comment_text'] ?? '';
+
+        $stmtC = $conn->prepare("INSERT INTO Comments (location_id, user_id, comment_text) VALUES (?, ?, ?)");
+        $stmtC->bind_param("iis", $id, $user_id, $comment_txt);
+        if ($stmtC->execute()) {
+            $response = ["code" => 200, "data" => ["message" => "Comment added successfully"]];
+        } else {
+            $response = ["code" => 500, "data" => ["message" => "Error inserting comment: " . $conn->error]];
+        }
+        $stmtC->close();
+    }
 }
 
 echo json_encode($response);

@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Sanitize input data
         $location_id = intval($data["location_id"]);
         $user_id = intval($data["user_id"]);
-        $comment_text = $conn->real_escape_string($data["comment_text"]);
+        $comment_text = $data["comment_text"];
         $status_id = isset($data["status_id"]) ? intval($data["status_id"]) : 1; // Default status: active
         
         // Verify that the location exists
