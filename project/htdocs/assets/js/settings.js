@@ -270,6 +270,39 @@ function showKontoVerwaltung() {
                     <option value="moldova">Moldova</option>
                     <option value="romania">Romania</option>
                     <option value="bulgaria">Bulgaria</option>
+                      <option value="italy">Italy</option>
+                     <option value="spain">Spain</option>
+                     <option value="portugal">Portugal</option>
+                     <option value="sweden">Sweden</option>
+                     <option value="norway">Norway</option>
+                     <option value="denmark">Denmark</option>
+                     <option value="netherlands">Netherlands</option>
+                     <option value="belgium">Belgium</option>
+                     <option value="luxembourg">Luxembourg</option>
+                     <option value="poland">Poland</option>
+                     <option value="czech_republic">Czech Republic</option>
+                     <option value="hungary">Hungary</option>
+                     <option value="slovakia">Slovakia</option>
+                     <option value="slovenia">Slovenia</option>
+                     <option value="croatia">Croatia</option>
+                     <option value="bosnia">Bosnia</option>
+                     <option value="serbia">Serbia</option>
+                     <option value="montenegro">Montenegro</option>
+                     <option value="albania">Albania</option>
+                     <option value="north_macedonia">North Macedonia</option>
+                     <option value="greece">Greece</option>
+                     <option value="turkey">Turkey</option>
+                     <option value="cyprus">Cyprus</option>
+                     <option value="malta">Malta</option>
+                     <option value="iceland">Iceland</option>
+                     <option value="ireland">Ireland</option>
+                     <option value="united_kingdom">United Kingdom</option>
+                     <option value="finland">Finland</option>
+                     <option value="estonia">Estonia</option>
+                     <option value="latvia">Latvia</option>
+                     <option value="lithuania">Lithuania</option>
+                     <option value="belarus">Belarus</option>
+                     <option value="ukraine">Ukraine</option>
                   </select>
               </div>
               <br>
