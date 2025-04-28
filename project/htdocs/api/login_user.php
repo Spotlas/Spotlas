@@ -4,6 +4,9 @@ error_reporting(0);
 ini_set('display_errors', 0);
 ob_start();
 
+// Start session
+session_start();
+
 require './mariaDB.php';
 
 // Set headers
@@ -45,6 +48,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Verify password
             if (password_verify($password, $user["password_hash"])) {
+                // Store user data in session
+                $_SESSION['user_id'] = $user["id"];
+                $_SESSION['username'] = $user["username"];
+                $_SESSION['full_name'] = $user["full_name"];
+                
+                // Update last login time
+                $update = $conn->prepare("UPDATE Users SET last_login = NOW() WHERE id = ?");
+                $update->bind_param("i", $user["id"]);
+                $update->execute();
+                $update->close();
+                
                 $response = [
                     "code"      => 200,
                     "message"   => "Login successful",

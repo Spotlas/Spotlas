@@ -406,9 +406,16 @@ function goToAdd() {
 async function saveLocation() {
   console.log("saveLocation() wurde aufgerufen");
   console.log("Place Name:", sessionStorage.getItem("name"));
-console.log("Place Description:", sessionStorage.getItem("Description"));
-console.log("Place Category:", sessionStorage.getItem("Category"));
+  console.log("Place Description:", sessionStorage.getItem("Description"));
+  console.log("Place Category:", sessionStorage.getItem("Category"));
 
+  // Check if user is logged in
+  const userId = await getCurrentUserId();
+  if (!userId) {
+    alert("You must be logged in to add a location.");
+    window.location.href = "../../pages/login_register/login.html?redirect=" + encodeURIComponent(window.location.href);
+    return;
+  }
 
   // Setze die Werte zuerst in den HTML-Elementen
   document.getElementById("placeName").innerHTML =
@@ -440,8 +447,6 @@ console.log("Place Category:", sessionStorage.getItem("Category"));
     sessionStorage.getItem("SpecialFeatures");
     let categoryName = sessionStorage.getItem("Category");
 
-    
-
     const categoryId = await getCategoryId(categoryName); // Warte auf die ID
     if (!categoryId) {
       console.error("Category not found!");
@@ -464,14 +469,13 @@ console.log("Place Category:", sessionStorage.getItem("Category"));
       accessibility: sessionStorage.getItem("Accessibility"),
       website_url: sessionStorage.getItem("Website"),
       special_features: sessionStorage.getItem("SpecialFeatures"),
-      created_by: 1,
+      created_by: userId, // Use the current user ID from PHP session
       status_id: 1, // optional
     };
 
     console.log("New location:", newLocation);
 
-    await uploadNewLocation(newLocation); // Jetzt ist categoryId definiert
-    
+    await uploadNewLocation(newLocation);
 }
 
 function uploadNewLocation(locationData) {
@@ -570,4 +574,15 @@ fileInput.addEventListener("change", () => {
   if (fileInput.files.length > 0) {
     label.innerHTML = `📁 Datei ausgewählt: <strong>${fileInput.files[0].name}</strong>`;
   }
+});
+
+// On page load, check if user is logged in
+document.addEventListener('DOMContentLoaded', async function() {
+    // Redirect if not logged in
+    if (!await requireLogin()) {
+        return; // The requireLogin function will handle the redirect
+    }
+    
+    // Continue with page initialization
+    // ...existing initialization code...
 });

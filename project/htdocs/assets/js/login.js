@@ -90,9 +90,15 @@ function login(event) {
     })
     .then(data => {
         if (data.code === 200) {
+            // PHP session is now set on the server
             showMessage('login-message', 'Login successful! Redirecting...', 'success');
+            
+            // Check if there's a redirect parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const redirectUrl = urlParams.get('redirect');
+            
             setTimeout(() => {
-                window.location.href = '../../index.html';
+                window.location.href = redirectUrl || '../../index.html';
             }, 1000);
         } else {
             showMessage('login-message', data.message, 'error');
@@ -191,6 +197,13 @@ function registerPage2(event) {
     .then(response => response.json())
     .then(data => {
         if (data.code === 200) {
+            // Store user data after successful registration
+            storeUserData({
+                id: registeredUserId,
+                username: data.username,
+                fullName: `${firstname} ${lastname}`
+            });
+            
             showMessage('register2-message', 'Registration completed successfully! Redirecting...', 'success');
             setTimeout(() => {
                 window.location.href = '../../index.html';
@@ -207,6 +220,16 @@ function registerPage2(event) {
         button.classList.remove('loading');
         button.disabled = false;
     });
+}
+
+// User session management functions
+function storeUserData(userData) {
+    localStorage.setItem('spotlas_user', JSON.stringify(userData));
+}
+
+function logoutUser() {
+    localStorage.removeItem('spotlas_user');
+    window.location.href = '../../pages/login_register/login.html';
 }
 
 // Add event listeners when DOM is loaded

@@ -28,17 +28,39 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Geladene ID:", pointId);
         fetchLocationDetails(pointId);
     }
-  });
+});
 
-  function writeAComment(event) {
+function writeAComment(event) {
     event.preventDefault();
     
     const params = new URLSearchParams(window.location.search);
     const pointId = params.get("id");
-    const userId = 3 // TODO: Get user ID from session
-    const commentText = document.querySelector('#comment_input').value;
+    
+    // Use the synchronous version first to avoid the immediate error
+    let userId = getCurrentUserIdSync();
+    
+    // Then try the async version and handle properly
+    getCurrentUserId().then(id => {
+        if (id) {
+            userId = id;
+            submitComment(pointId, userId);
+        } else {
+            alert("You must be logged in to comment.");
+            window.location.href = `../../pages/login_register/login.html?redirect=${encodeURIComponent(window.location.href)}`;
+        }
+    }).catch(error => {
+        console.error("Error getting user ID:", error);
+    });
+}
 
-    const payload = { user_id: userId, comment_text: commentText };
+// Helper function to actually submit the comment
+function submitComment(pointId, userId) {
+    const commentText = document.querySelector('#comment_input').value;
+    
+    if (!commentText.trim()) {
+        alert("Please enter a comment");
+        return;
+    }
 
     fetch(`../../api/add_comment.php`, {
         method: 'POST',
@@ -51,18 +73,18 @@ document.addEventListener("DOMContentLoaded", () => {
             location_id: pointId
         })
     })    
-        .then(response => response.json())
-        .then(data => {
-            console.log('Comment response:', data);
-            if (data.code === 201) {
-                document.querySelector('#comment_input').value = ""; // Clear the input field
-                fetchLocationDetails(pointId); // Refresh comments
-            } else {
-                console.error('Error:', data.message);
-            }
-        })
-        .catch(error => console.error('Error writing comment:', error));
-  }
+    .then(response => response.json())
+    .then(data => {
+        console.log('Comment response:', data);
+        if (data.code === 201) {
+            document.querySelector('#comment_input').value = ""; // Clear the input field
+            fetchLocationDetails(pointId); // Refresh comments
+        } else {
+            console.error('Error:', data.message);
+        }
+    })
+    .catch(error => console.error('Error writing comment:', error));
+}
 
 // Holt detaillierte Informationen zu einer Location inkl. Kommentare und Bilder
 function fetchLocationDetails(id) {
@@ -108,7 +130,16 @@ function fetchLocationDetails(id) {
 function rate(rating) {
     const params = new URLSearchParams(window.location.search);
     const pointId = params.get("id");
-    const userId = 3 // TODO: Get user ID from session
+    
+    // Fallback mechanism if getCurrentUserIdSync is not defined
+    let userId;
+    if (typeof getCurrentUserIdSync === 'function') {
+        userId = getCurrentUserIdSync();
+    } else {
+        userId = 1; // Default fallback
+        console.warn("Session management not initialized, using default user ID");
+    }
+    
     rateLocation(pointId, userId, rating);  
     
     // Update rating display
@@ -159,10 +190,18 @@ function rateLocation(id, userId, rating) {
         const bookmarkIcon = document.getElementById("bookmarkIcon");
         if (bookmarkIcon) {
             bookmarkIcon.addEventListener("click", function () {
+                // Fallback mechanism if getCurrentUserIdSync is not defined
+                let userId;
+                if (typeof getCurrentUserIdSync === 'function') {
+                    userId = getCurrentUserIdSync();
+                } else {
+                    userId = 1; // Default fallback
+                    console.warn("Session management not initialized, using default user ID");
+                }
+                
                 isSaved = !isSaved;
                 const params = new URLSearchParams(window.location.search);
                 const pointId = params.get("id");
-                const userId = 3;
     
                 if (isSaved) {
                     this.src = "../../assets/images/icons/bookmark-fill.svg";
