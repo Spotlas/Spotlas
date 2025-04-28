@@ -269,9 +269,24 @@ h6 {
   color: var(--black-color);
 }
 
-#spot_rating {
-  margin-left: 70%;
-  margin-top: -8%;
+#spot_infos{
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+  margin-top: 2vw;
+  margin-bottom: 2vw
+}
+
+#spot_category{
+  padding: 4px 10px;
+  background: var(--accent-color);
+  border-radius: 20px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  transition: opacity 0.3s;
 }
 
 .info_box {

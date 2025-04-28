@@ -99,10 +99,14 @@ function addMarkersToMap(points) {
         <img id="img_point" src="${point.image}" alt="${point.name}" style="width:10%; max-height:150px; object-fit:cover;">
         <img id="img_point" src="${point.image}" alt="${point.name}" style="width:10%; max-height:150px; object-fit:cover;">
         
-        <img src="./assets/images/testPic/bewertung.png" alt="${point.name}" style="width:40%; max-height:150px; object-fit:cover; padding-left: 25.4%;">
-        <div id="parent_grid" >
+        <div id="spot_infos">
+        <div id="spot_category"></div>
+        <div id="spot_rating"></div>
+        </div>
+
+        <div id="parent_grid">
         <h3 id="header_point">${point.name}</h3>
-        <img src="./assets/images/testPic/sorte.png" alt="${point.name}" style="width:50%; max-height:150px; object-fit:cover; padding-left: 50.4%;">
+        
         </div>
         <p id="beschreibung">${point.description}</p>
         <p><strong>|</strong> ${point.lat}, ${point.lng} </p>
@@ -110,54 +114,14 @@ function addMarkersToMap(points) {
       
         <a id="button_comments_link" href="./pages/fullscreen_startseite/fullscreen.html?id=${point.id}"><div id="button_comments"><p>show Comments</p></div></a>
       `);
+
+      fetchLocationDetails(point.id); // Beispielaufruf für die erste Location
     });
   });
-
+  
   listMarkers(points);
 }
 
-function addMarkersToMap(points) {
-  markersLayer.clearLayers(); // Lösche alte Marker
-  points.forEach((point) => {
-    const customIcon = L.icon({
-      iconUrl: "../../assets/images/icons/marker2.png",
-      iconSize: [32, 32],
-      iconAnchor: [16, 32],
-      popupAnchor: [0, -32],
-    });
-
-    const marker = L.marker([point.lat, point.lng], { icon: customIcon }).addTo(
-      markersLayer
-    );
-    marker.markerId = point.id;
-
-    marker.on("click", () => {
-      selectedMarker = marker;
-      openSidebarWithContent(`
-        <img id="img_saveButton" src="./assets/images/testPic/save.png" alt="${point.name}" style="width:8%; max-height:150px; object-fit:cover; padding-bottom: 2%;">
-        <a href="./pages/fullscreen_startseite/fullscreen.html?id=${point.id}"><img id="img_großButton" src="./assets/images/testPic/grosmachen.png" alt="${point.name}" style="width:8%; max-height:150px; object-fit:cover; padding-left: 80%; padding-bottom: 2%;"></a>
-        <img id="img_big" src="${point.image}" alt="${point.name}" style="width:100%; max-height:150px; object-fit:cover;">
-        
-        <img id="img_point" src="${point.image}" alt="${point.name}" style="width:10%; max-height:150px; object-fit:cover;">
-        <img id="img_point" src="${point.image}" alt="${point.name}" style="width:10%; max-height:150px; object-fit:cover;">
-        <img id="img_point" src="${point.image}" alt="${point.name}" style="width:10%; max-height:150px; object-fit:cover;">
-        
-        <img src="./assets/images/testPic/bewertung.png" alt="${point.name}" style="width:40%; max-height:150px; object-fit:cover; padding-left: 25.4%;">
-        <div id="parent_grid" >
-        <h3 id="header_point">${point.name}</h3>
-        <img src="./assets/images/testPic/sorte.png" alt="${point.name}" style="width:50%; max-height:150px; object-fit:cover; padding-left: 50.4%;">
-        </div>
-        <p id="beschreibung">${point.description}</p>
-        <p><strong>|</strong> ${point.lat}, ${point.lng} </p>
-        <br>
-      
-        <a id="button_comments_link" href="./pages/fullscreen_startseite/fullscreen.html?id=${point.id}"><div id="button_comments"><p>show Comments</p></div></a>
-      `);
-    });
-  });
-
-  listMarkers(points);
-}
 
 function listMarkers(points) {
   if (selectedMarker) return; // Zeige nur die Namen, wenn kein Marker aktiv ist
@@ -315,4 +279,68 @@ let markersLayer = L.featureGroup().addTo(map); // Layer für Marker
 
 function clearMarkers() {
   markersLayer.clearLayers();
+}
+
+function generateStars(rating) {
+  console.log("Rating:", rating); // Debugging-Ausgabe  
+  let fullStars = Math.floor(rating); // Ganze Sterne
+  let halfStar = rating % 1 >= 0.5 ? 1 : 0; // Halber Stern falls >= 0.5
+  let emptyStars = 5 - fullStars - halfStar; // Leere Sterne berechnen
+  
+  let starHTML = "";
+
+  for (let i = 0; i < fullStars; i++) {
+      starHTML += '<i class="fa fa-star"></i>';
+  }
+  if (halfStar) {
+      starHTML += '<i class="fa fa-star-half-alt"></i>';
+  }
+  for (let i = 0; i < emptyStars; i++) {
+      starHTML += '<i class="fa fa-star" style="color: lightgray;"></i>';
+  }
+
+  document.getElementById("spot_rating").innerHTML = starHTML;
+}
+
+async function generateCategory(categoryId) {
+  console.log("Category ID:", categoryId); // Debugging-Ausgabe
+  try {
+    let cName = await fetchCategoryNameById(categoryId);
+    console.log("Category Name:", cName); // Debugging-Ausgabe
+    document.getElementById("spot_category").innerHTML = cName;
+  } catch (error) {
+    console.error("Error getting category name:", error);
+    document.getElementById("spot_category").innerHTML = "Unknown Category";
+  }
+}
+
+// Holt detaillierte Informationen zu einer Location inkl. Kommentare und Bilder
+function fetchLocationDetails(id) {
+  fetch(`./api/location.php?action=details&id=${id}`)
+      .then(response => response.json())
+      .then(data => {
+          console.log('Location details:', data);
+          generateStars(data.data.average_rating); // Beispiel für die Bewertung, hier müsste die richtige Bewertung übergeben werden
+          generateCategory(data.data.location.category_id); // Beispiel für die Kategorie, hier müsste die richtige Kategorie-ID übergeben werden
+      })
+      .catch(error => console.error('Error fetching location details:', error));
+}
+
+// Kategorie-Name anhand der ID abrufen
+function fetchCategoryNameById(categoryId) {
+  return fetch(`./api/getCategory.php?id=${categoryId}`)
+      .then(response => response.json())
+      .then(data => {
+          if (data.code === 200) {
+              console.log(`Der Name der Kategorie mit ID ${categoryId} ist: ${data.name}`);
+              return data.name; // Rückgabe des Kategorie-Namens
+          } else {
+              console.error(`Fehler: ${data.message}`);
+              return "Unknown Category";
+          }
+      })
+      .catch(error => {
+          console.error('Error fetching category name:', error);
+          return "Error Loading Category";
+      });
 }
