@@ -29,34 +29,22 @@
     color: var(--text-secondary);
 }
 
-.photo-preview {
+.photo-display {
     width: 100%;
-    height: 250px;
+    height: 300px;
     margin-bottom: 1.5rem;
-    background-color: var(--background-secondary);
     border-radius: var(--border-radius);
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
     overflow: hidden;
-    position: relative;
+    background-color: var(--background-secondary);
 }
 
-.photo-placeholder {
-    color: var(--text-secondary);
-    text-align: center;
-}
-
-.photo-placeholder span {
-    display: block;
-    font-size: 0.9rem;
-}
-
-.uploaded-photo {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+.current-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .edit-form {
