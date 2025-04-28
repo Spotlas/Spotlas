@@ -35,13 +35,30 @@ function applyUnderlineEffect(elementId) {
   }, 10);
 }
 
-document.addEventListener("DOMContentLoaded", showEditProfil);
+// Check login status on page load
+document.addEventListener("DOMContentLoaded", async function() {
+  // Check if user is logged in
+  if (!await requireLogin()) {
+    return; // The requireLogin function will handle the redirect
+  }
+  
+  showEditProfil();
+});
 
 /* **********************************+ Profil bearbeiten ********************************************** */
 
-function showEditProfil() {
+async function showEditProfil() {
   document.getElementById("kontov").querySelector(".underlineEffect")?.remove();
   applyUnderlineEffect("editp");
+
+  // Get current user data from PHP session
+  const user = await getCurrentUser();
+  if (!user) return; // Safety check
+  
+  const fullNameParts = user.full_name ? user.full_name.split(' ') : ['', ''];
+  const firstName = fullNameParts[0] || '';
+  const lastName = fullNameParts.slice(1).join(' ') || '';
+  
   document.getElementById("outp").innerHTML = `
         <div id="profilBearbeiten">
             <label style="font-size: 30px;" for="profilbild">Edit Profile</label> 
@@ -62,12 +79,12 @@ function showEditProfil() {
             <div id="names">
                 <div id="input_vorname"> 
                   <label for="vorname">First Name</label>
-                  <input type="text" name="Vorname" id="vorname" placeholder="First name e.g. Emma">
+                  <input type="text" name="Vorname" id="vorname" placeholder="First name e.g. Emma" value="${firstName}">
                 </div>
 
                 <div id="input_nachname">
                   <label for="nachname">Last Name</label>
-                  <input type="text" name="Nachname" id="nachname" placeholder="Last name e.g. Mustermann">
+                  <input type="text" name="Nachname" id="nachname" placeholder="Last name e.g. Mustermann" value="${lastName}">
                 </div>
               </div>
             </div>
@@ -75,12 +92,12 @@ function showEditProfil() {
             <div>
                 <br><br>
                 <label style="font-size: 20px;" for="benutzername">Username</label>
-                <p id="username">@viktoria.explorer69</p>
+                <p id="username">@${user.username}</p>
                 <button class="buttons" onclick="changeUserName('username')">Change</button>
             </div>
 
             <div>
-               
+                <br><br>
                 <label style="font-size: 20px;" for="benutzername">Short Info</label>
                 <p style="font-size: 13px; color: grey;" id="info">I am passionately creative and love to share inspiration! On my Pinterest, you'll find everything from DIY projects to interior ideas, fashion, and life hacks. I'm always on the lookout for new ideas and excited to share my discoveries with others. Let my pins inspire you!</p>
                 <button class="buttons" onclick="changeUserName('info')">Change</button>
@@ -90,10 +107,7 @@ function showEditProfil() {
     `;
 }
 
-//showEditProfil();
-
 let currentField = ""; // Speichert das aktuelle Feld, das geändert wird
-
 
 function changeUserName(field) {
   currentField = field;
@@ -175,19 +189,17 @@ function saveUserName() {
       break;
   }
 
-  if (errors.length > 0) {
-    errorElement.textContent = errors.join('\n');
-    errorElement.style.display = "block";
-    inputElement.classList.add("invalid");
-    return;
-  }
-
-  if (newValue !== "") {
+  if (errors.length === 0) {
     const targetElement = document.getElementById(currentField);
     
     if (currentField === 'password') {
       // Immer 8 Sterne anzeigen, egal wie lang das Passwort ist
       targetElement.textContent = '********'; // 8 Sterne
+    } else if (currentField === 'username') {
+      targetElement.textContent = newValue;
+      
+      // Update the stored username in localStorage
+      updateUserData({ username: newValue.replace('@', '') });
     } else {
       targetElement.textContent = newValue;
     }
@@ -213,6 +225,9 @@ function showKontoVerwaltung() {
 
   let password = "1234password";
   let maskedPassword = "*".repeat(password.length);
+  
+  // Get current user data
+  const user = getCurrentUser();
 
   document.getElementById("outp").innerHTML = `
     <div id="profilBearbeiten">
@@ -252,39 +267,6 @@ function showKontoVerwaltung() {
                     <option value="switzerland">Switzerland</option>
                     <option value="france">France</option>
                     <option value="usa">USA</option>
-                    <option value="italy">Italy</option>
-                    <option value="spain">Spain</option>
-                    <option value="portugal">Portugal</option>
-                    <option value="sweden">Sweden</option>
-                    <option value="norway">Norway</option>
-                    <option value="denmark">Denmark</option>
-                    <option value="netherlands">Netherlands</option>
-                    <option value="belgium">Belgium</option>
-                    <option value="luxembourg">Luxembourg</option>
-                    <option value="poland">Poland</option>
-                    <option value="czech_republic">Czech Republic</option>
-                    <option value="hungary">Hungary</option>
-                    <option value="slovakia">Slovakia</option>
-                    <option value="slovenia">Slovenia</option>
-                    <option value="croatia">Croatia</option>
-                    <option value="bosnia">Bosnia</option>
-                    <option value="serbia">Serbia</option>
-                    <option value="montenegro">Montenegro</option>
-                    <option value="albania">Albania</option>
-                    <option value="north_macedonia">North Macedonia</option>
-                    <option value="greece">Greece</option>
-                    <option value="turkey">Turkey</option>
-                    <option value="cyprus">Cyprus</option>
-                    <option value="malta">Malta</option>
-                    <option value="iceland">Iceland</option>
-                    <option value="ireland">Ireland</option>
-                    <option value="united_kingdom">United Kingdom</option>
-                    <option value="finland">Finland</option>
-                    <option value="estonia">Estonia</option>
-                    <option value="latvia">Latvia</option>
-                    <option value="lithuania">Lithuania</option>
-                    <option value="belarus">Belarus</option>
-                    <option value="ukraine">Ukraine</option>
                     <option value="moldova">Moldova</option>
                     <option value="romania">Romania</option>
                     <option value="bulgaria">Bulgaria</option>
@@ -292,11 +274,34 @@ function showKontoVerwaltung() {
               </div>
               <br>
               <div>
-                <a class="buttons" href="../../pages/login_register/login.html">Delete Account</a>
+                <button class="buttons" onclick="confirmDeleteAccount()">Delete Account</button>
+                <button class="buttons" onclick="logoutUser()">Logout</button>
               </div>
           </div>
     `;
 }
 
-
-// <button class="buttons" onclick="changeUserName('land')">Ändern</button>
+async function confirmDeleteAccount() {
+  if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+    const userId = await getCurrentUserId();
+    if (userId) {
+      fetch(`../../api/profile.php?action=delete&userId=${userId}`, {
+        method: 'POST'
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.code === 200) {
+          alert('Your account has been successfully deleted.');
+          // Logout using the PHP session method
+          logoutUser();
+        } else {
+          alert('Error deleting account: ' + data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while trying to delete your account.');
+      });
+    }
+  }
+}

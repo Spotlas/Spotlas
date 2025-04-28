@@ -4,6 +4,9 @@ error_reporting(0);
 ini_set('display_errors', 0);
 ob_start();
 
+// Start session
+session_start();
+
 require './mariaDB.php';
 
 // Set headers
@@ -70,10 +73,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 );
 
                 if ($stmtIns->execute()) {
+                    $userId = $stmtIns->insert_id;
+                    
                     $response = [
                         "code"         => 200,
                         "message"      => "User created successfully, please complete your profile",
-                        "user_id"      => $stmtIns->insert_id,
+                        "user_id"      => $userId,
                         "temp_username"=> $temp_username
                     ];
                 } else {
@@ -133,6 +138,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             );
 
             if ($stmtUpd->execute()) {
+                // Set session after profile completion
+                $_SESSION['user_id'] = $user_id;
+                $_SESSION['username'] = $username;
+                $_SESSION['full_name'] = $full_name;
+                
                 $response = [
                     "code"     => 200,
                     "message"  => "User profile updated successfully",
