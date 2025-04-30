@@ -1,3 +1,10 @@
+body {
+    background-color: var(--primary-bg-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+  }
+
 /* Edit Pictures Page Styles */
 .edit-pictures-container {
     max-width: 600px;
