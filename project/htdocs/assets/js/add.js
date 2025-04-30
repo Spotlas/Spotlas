@@ -349,6 +349,7 @@ function resizeImage(imageBase64, maxSize = 500) {
 
 function loadFinishedSide() {
   document.getElementById("main2_finish").style.display = "grid";
+  document.querySelector('body').style.overflowY = "auto";
   document.getElementById("main").style.display = "none";
 
   loadAll();
