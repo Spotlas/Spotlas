@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Pictures</title>
+    <title>Edit Pictures - Krimmler Wasserfälle</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -24,62 +24,110 @@
     <script src="../../assets/js/edit_pictures.js" defer></script>
   </head>
   <body>
+    <header id="homepage_header">
+      <div id="homepage_header_spotlas">
+          <a href="../../index.html"><img src="../../assets/images/logo_schwarz.png" width="180" alt="Spotlas Logo"></a>
+      </div>
+
+      <div id="homepage_header_ImageItems">
+          <div>
+              <a href="../../pages/add_place/add.html" title="Add New Location"><img src="../../assets/images/icons/add_icon.svg" alt="add" width="40px" height="40px"></a>
+          </div>
+          <div>
+              <a href="../../pages/profile/profile.html" title="My Profile"><img src="../../assets/images/icons/profile_icon.svg" alt="profile" width="40px" height="40px"></a>
+          </div>
+          <div>
+              <img
+                id="toggleImg"
+                onclick="showDropdown()"
+                src="../../assets/images/icons/arrow_icon.svg"
+                alt="options"
+                width="40px"
+                height="40px"
+              />
+              <div style="display: none; z-index: 12" id="dropDown_menu">
+                <a href="../settings/settings.html">Settings</a>
+                <a href="../profile/profile.html">Profile</a>
+                <a href="../helpCenter/helpcenter.html">Help Center</a>
+                <a href="../login_register/login.html">Login</a>
+                <a href="../login_register/login.html">Logout</a>
+              </div>
+            </div>
+      </div>
+  </header>
     <div class="edit-pictures-container">
-    
-      <div class="edit-content">
-        <div class="photo-display">
-          <img
-            src="../../assets/images/testPic/2.png"
-            alt="Current photo"
-            class="current-photo"
-          />
-        </div>
-
-        <div class="edit-form">
-          <div class="form-group">
-            <label for="season">Season:</label>
-            <input type="text" id="season" placeholder="e.g. Spring" />
-          </div>
-
-          <div class="form-group">
-            <label for="price-range">Price Range:</label>
-            <input type="text" id="price-range" placeholder="e.g. 10-20€" />
-          </div>
-
-          <div class="form-group">
-            <label for="accessibility">Accessibility:</label>
-            <input
-              type="text"
-              id="accessibility"
-              placeholder="e.g. Wheelchair accessible"
+      <div class="edit-header">
+        <input type="text" id="location-title" value="Krimmler Wasserfälle" class="location-title-input">
+      </div>
+      
+      <div class="edit-content-wrapper">
+        <div class="photo-section">
+          <div class="photo-display">
+            <img
+              src="../../assets/images/testPic/2.png"
+              alt="Krimmler Wasserfälle"
+              class="current-photo"
             />
           </div>
 
-          <div class="form-group">
-            <label for="website">Website URL:</label>
-            <input
-              type="text"
-              id="website"
-              placeholder="e.g. www.cafeiniondon.com"
-            />
+          <!-- Thumbnail previews -->
+          <div class="thumbnail-container">
+            <div class="thumbnail active" data-img="2.png">
+              <img src="../../assets/images/testPic/2.png" alt="Thumbnail 1">
+            </div>
+            <div class="thumbnail" data-img="2.png">
+              <img src="../../assets/images/testPic/2.png" alt="Thumbnail 2">
+            </div>
+            <div class="thumbnail" data-img="2.png">
+              <img src="../../assets/images/testPic/2.png" alt="Thumbnail 3">
+            </div>
           </div>
-
-          <div class="form-group">
-            <label for="features">Special Features:</label>
-            <input type="text" id="features" placeholder="e.g. Live Music" />
-          </div>
-
-          <div class="form-group">
-            <label for="hours">Opening Hours:</label>
-            <input type="text" id="hours" placeholder="e.g. 9:00 - 18:00" />
-          </div>
-
-          
         </div>
 
-        <div class="action-buttons">
-          <button class="btn btn-back" onclick="backToProfile()">Back</button>
-          <button class="btn btn-primary">Finish</button>
+        <div class="form-section">
+          <div class="edit-form">
+            <div class="form-row">
+              <div class="form-group season-group">
+                <label for="season">Season:</label>
+                <input type="text" id="season" value="Mai bis Oktober" class="editable-field" />
+              </div>
+              
+              <div class="form-group price-group">
+                <label for="price-range">Price Range:</label>
+                <input type="text" id="price-range" value="€" class="editable-field" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="website">Website URL:</label>
+              <input
+                type="text"
+                id="website"
+                value="https://www.wasserfaelle-krimml.at"
+                class="editable-field"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="hours">Opening Hours:</label>
+              <input type="text" id="hours" value="08:00 - 18:00" class="editable-field" />
+            </div>
+
+            <div class="form-group">
+              <label for="features">Special Features:</label>
+              <input type="text" id="features" value="Wanderwege" class="editable-field" />
+            </div>
+            
+            <div class="form-group">
+              <label for="address">Address:</label>
+              <input type="text" id="address" value="Krimml, 5743 Salzburg" class="editable-field" />
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="btn btn-back" onclick="backToProfile()">Back</button>
+            <button class="btn btn-primary">Save Changes</button>
+          </div>
         </div>
       </div>
     </div>

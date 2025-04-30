@@ -1,19 +1,34 @@
 // Back to profile function
 function backToProfile() {
-    window.location.href = '../profile/profile.html'; // Zurück zur Profilseite
+    window.location.href = '../profile/profile.html';
 }
 
 // Initialize event listeners
 document.addEventListener('DOMContentLoaded', () => {
-    // Hier können Sie später Bearbeitungsfunktionen hinzufügen
-    console.log('Edit pictures page loaded');
+    // Thumbnail click handler
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    const mainPhoto = document.querySelector('.current-photo');
     
-    // Beispiel: Formular-Daten speichern
-    const formInputs = document.querySelectorAll('.edit-form input, .edit-form textarea');
+    thumbnails.forEach(thumb => {
+        thumb.addEventListener('click', () => {
+            // Remove active class from all thumbnails
+            thumbnails.forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked thumbnail
+            thumb.classList.add('active');
+            
+            // Update main photo (even though it's the same image in this case)
+            const imgSrc = thumb.getAttribute('data-img');
+            mainPhoto.src = `../../assets/images/testPic/${imgSrc}`;
+        });
+    });
+    
+    // Form change handler
+    const formInputs = document.querySelectorAll('.edit-form input');
     formInputs.forEach(input => {
         input.addEventListener('change', (e) => {
             console.log(`${e.target.id} updated to: ${e.target.value}`);
-            // Hier könnten Sie die Änderungen speichern
+            // Here you would save the changes
         });
     });
 });
