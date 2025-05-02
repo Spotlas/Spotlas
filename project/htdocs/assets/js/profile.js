@@ -20,9 +20,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   
   // Event Listener für die Tabs
-  document.getElementById('switches_erstellt').addEventListener('click', () => switchView('created'));
-  document.getElementById('switches_favoriten').addEventListener('click', () => switchView('favorites'));
-  
+document.getElementById('switches_erstellt').addEventListener('click', () => {
+  switchView('created');
+  loadCreatedImages();
+});
+
+document.getElementById('switches_favoriten').addEventListener('click', () => {
+  switchView('favorites');
+  loadFavoriteImages();
+});
   // Standardansicht laden
   switchView('created');
 });
@@ -47,10 +53,12 @@ function switchView(viewType) {
 }
 
 function updateActiveTab() {
-  document.querySelectorAll('.switch p').forEach(tab => {
+  // Entferne 'active' Klasse von allen Tabs
+  document.querySelectorAll('.switches').forEach(tab => {
     tab.classList.remove('active');
   });
   
+  // Füge 'active' Klasse zum aktuellen Tab hinzu
   const activeTab = currentView === 'created' 
     ? document.getElementById('switches_erstellt')
     : document.getElementById('switches_favoriten');
