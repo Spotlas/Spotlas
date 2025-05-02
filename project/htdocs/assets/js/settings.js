@@ -54,10 +54,19 @@ async function showEditProfil() {
   // Get current user data from PHP session
   const user = await getCurrentUser();
   if (!user) return; // Safety check
+  const userId = await getCurrentUserId();
+  if (!userId) return; // Safety check
+  const userData = await getUserData(userId);
+  if (!userData) return; // Safety check
   
   const fullNameParts = user.full_name ? user.full_name.split(' ') : ['', ''];
   const firstName = fullNameParts[0] || '';
   const lastName = fullNameParts.slice(1).join(' ') || '';
+
+  console.log(user); // Debugging
+  console.log(userData); // Debugging
+  console.log(userData); // Debugging
+  
   
   document.getElementById("outp").innerHTML = `
         <div id="profilBearbeiten">
@@ -69,7 +78,7 @@ async function showEditProfil() {
             <div>
                 <label style="font-size: 20px;" for="profilbild">Profile Picture</label><br><br>
                 <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="previewProfilePicture(event)">
-                <img id="profilPic" src="../../assets/images/profilPicture_test.png" alt="Profile Picture" 
+                <img id="profilPic" src="${user.getProfilePicture}" alt="Profile Picture" 
                      width="100" height="100" style="cursor: pointer; border-radius: 50%;" 
                      onclick="document.getElementById('fileInput').click();"/>
             </div>
@@ -99,7 +108,7 @@ async function showEditProfil() {
             <div>
                 <br><br>
                 <label style="font-size: 20px;" for="benutzername">Short Info</label>
-                <p style="font-size: 13px; color: grey;" id="info">I am passionately creative and love to share inspiration! On my Pinterest, you'll find everything from DIY projects to interior ideas, fashion, and life hacks. I'm always on the lookout for new ideas and excited to share my discoveries with others. Let my pins inspire you!</p>
+                <p style="font-size: 13px; color: grey;" id="info">${user.getShortInfo}</p>
                 <button class="buttons" onclick="changeUserName('info')">Change</button>
             </div>
             
@@ -236,7 +245,7 @@ function showKontoVerwaltung() {
               <div> 
                   <br><br>
                   <label style="font-size: 20px;" for="email">Email</label>
-                  <p id="email">viki.v@gmail.com</p>
+                  <p id="email">${user.get}</p>
                   <button class="buttons" onclick="changeUserName('email')">Change</button>
                   <br><br>
                   <label style="font-size: 20px;" for="password">Password</label>

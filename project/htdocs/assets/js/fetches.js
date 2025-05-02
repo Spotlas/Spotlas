@@ -66,7 +66,7 @@ function fetchCommentsForLocation(locationId) {
 
 // Holt das Profilbild eines Nutzers (über die userId)
 function fetchProfilePicture(userId) {
-  fetch(`./api/home.php?profile_picture=${userId}`)
+  fetch(`../../api/home.php?profile_picture=${userId}`)
       .then(response => response.json())
       .then(data => {
           console.log('Profile picture:', data);

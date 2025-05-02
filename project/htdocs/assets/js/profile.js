@@ -1,153 +1,138 @@
-function backHome() {
-  window.location.href = "../../index.html"; // Zurück zur Startseite
-}
+// Globale Variablen
+let currentUserId = null;
+let currentView = 'created'; // 'created' oder 'favorites'
+const baseURL = 'http://localhost//'; // Basis-URL für API-Anfragen
 
-function showLine(clickedPTag) {
-  document.querySelectorAll("p").forEach((p) => p.classList.remove("active"));
-  clickedPTag.classList.add("active");
-}
-
-loadErstellteBilder();
-
-function loadErstellteBilder() {
-  document.getElementById("bilder").innerHTML = `
-  <div class="image-wrapper">
-    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">
-      <h2 class="header">Lake</h2>
-      <p class="like">3 ❤</p>
-      <a href="../edit_pictures/edit_pictures.html?id=1" class="edit-link">Bearbeiten</a>
-    </div>
-  </div>
-  <div class="image-wrapper">
-    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">
-      <h2 class="header">Lake</h2>
-      <p class="like">23 ❤</p>
-      <a href="../edit_pictures/edit_pictures.html?id=2" class="edit-link">Bearbeiten</a>
-    </div>
-  </div>
-  <div class="image-wrapper">
-    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">
-      <h2 class="header">Lake</h2>
-      <p class="like">4 ❤</p>
-      <a href="../edit_pictures/edit_pictures.html?id=3" class="edit-link">Bearbeiten</a>
-    </div>
-  </div>
-  <div class="image-wrapper">
-    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">
-      <h2 class="header">Lake</h2>
-      <p class="like">1 ❤</p>
-      <a href="../edit_pictures/edit_pictures.html?id=4" class="edit-link">Bearbeiten</a>
-    </div>
-  </div>
-  <div class="image-wrapper">
-    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">
-      <h2 class="header">Lake</h2>
-      <p class="like">456 ❤</p>
-      <a href="../edit_pictures/edit_pictures.html?id=5" class="edit-link">Bearbeiten</a>
-    </div>
-  </div>
-  <div class="image-wrapper">
-    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">
-      <h2 class="header">Lake</h2>
-      <p class="like">3 ❤</p>
-      <a href="../edit_pictures/edit_pictures.html?id=6" class="edit-link">Bearbeiten</a>
-    </div>
-  </div>
-  <div class="image-wrapper">
-    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">
-      <h2 class="header">Lake</h2>
-      <p class="like">4 ❤</p>
-      <a href="../edit_pictures/edit_pictures.html?id=7" class="edit-link">Bearbeiten</a>
-    </div>
-  </div>
-  <div class="image-wrapper">
-    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">
-      <h2 class="header">Lake</h2>
-      <p class="like">4 ❤</p>
-      <a href="../edit_pictures/edit_pictures.html?id=8" class="edit-link">Bearbeiten</a>
-    </div>
-  </div>
-  <div class="image-wrapper">
-    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">
-      <h2 class="header">Lake</h2>
-      <p class="like">5 ❤</p>
-      <a href="../edit_pictures/edit_pictures.html?id=9" class="edit-link">Bearbeiten</a>
-    </div>
-  </div>
-  <div class="image-wrapper">
-    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">
-      <h2 class="header">Lake</h2>
-      <p class="like">6 ❤</p>
-      <a href="../edit_pictures/edit_pictures.html?id=10" class="edit-link">Bearbeiten</a>
-    </div>
-  </div>
-  <div class="image-wrapper">
-    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">
-      <h2 class="header">Lake</h2>
-      <p class="like">1 ❤</p>
-      <a href="../edit_pictures/edit_pictures.html?id=11" class="edit-link">Bearbeiten</a>
-    </div>
-  </div>
-  <div class="image-wrapper">
-    <img class="images" src="../../assets/images/testPic/1.png" alt="test" />
-    <div class="overlay">
-      <h2 class="header">Lake</h2>
-      <p class="like">0 ❤</p>
-      <a href="../edit_pictures/edit_pictures.html?id=12" class="edit-link">Bearbeiten</a>
-    </div>
-  </div>`;
-}
-
-
-function loadErstellte(clickedPTag) {
-  showLine(clickedPTag);
-  loadErstellteBilder();
-}
-
-function loadFavouriten(clickedPTag) {
-  showLine(clickedPTag);
-  document.getElementById("bilder").innerHTML = `
-    <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
-    </div>
-      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
-      </div>
-      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
-    </div>
-      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
-      </div>
-      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
-    </div>
-      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
-      </div>
-      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
-    </div>
-      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
-      </div>
-      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
-    </div>
-      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
-      </div>
-      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
-    </div>
-      <div class="image-wrapper"><img class="images_fav" src="../../assets/images/testPic/2.png" alt="test" />
-      </div>`;
-}
-
+// Initialisierung beim Laden der Seite
 document.addEventListener("DOMContentLoaded", () => {
-  const erstelltSwitch = document.getElementById("switches_erstellt");
-  if (erstelltSwitch) {
-    loadErstellte(erstelltSwitch); // ← jetzt wird es korrekt aufgerufen
-  }
+  // User-ID aus der URL oder Session holen
+  currentUserId = getCurrentUserId();
+  
+  // Event Listener für die Tabs
+  document.getElementById('switches_erstellt').addEventListener('click', () => switchView('created'));
+  document.getElementById('switches_favoriten').addEventListener('click', () => switchView('favorites'));
+  
+  // Standardansicht laden
+  switchView('created');
 });
 
+// Funktionen
+function getCurrentUserId() {
+  // Hier die Logik zur Ermittlung der aktuellen User-ID
+  // Beispiel: Aus der URL holen oder aus dem Session Storage
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get('userId') || 1; // Fallback auf 1 für Demo
+}
+
+function switchView(viewType) {
+  currentView = viewType;
+  updateActiveTab();
+  
+  if (viewType === 'created') {
+    loadCreatedImages();
+  } else {
+    loadFavoriteImages();
+  }
+}
+
+function updateActiveTab() {
+  document.querySelectorAll('.switch p').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  
+  const activeTab = currentView === 'created' 
+    ? document.getElementById('switches_erstellt')
+    : document.getElementById('switches_favoriten');
+  
+  activeTab.classList.add('active');
+}
+
+async function loadCreatedImages() {
+  try {
+    const response = await fetch(`../../api/profile.php?userId=${currentUserId}`);
+    const data = await response.json();
+    
+    if (!data.locations || data.locations.length === 0) {
+      showNoContentMessage('Du hast noch keine Bilder erstellt');
+      return;
+    }
+    
+    renderImages(data.locations, true);
+  } catch (error) {
+    console.error('Fehler beim Laden der erstellten Bilder:', error);
+    showErrorMessage('Fehler beim Laden der Bilder');
+  }
+}
+
+async function loadFavoriteImages() {
+  try {
+    const response = await fetch(`./api/profile.php?userId=${currentUserId}&action=favorites`);
+    const data = await response.json();
+    
+    if (!data.favorites || data.favorites.length === 0) {
+      showNoContentMessage('Du hast noch keine Favoriten gespeichert');
+      return;
+    }
+    
+    renderImages(data.favorites, false);
+  } catch (error) {
+    console.error('Fehler beim Laden der Favoriten:', error);
+    showErrorMessage('Fehler beim Laden der Favoriten');
+  }
+}
+
+function renderImages(images, showEditLink) {
+  const container = document.getElementById('bilder');
+  container.innerHTML = '';
+  
+  images.forEach(image => {
+    const imageWrapper = document.createElement('div');
+    imageWrapper.className = 'image-wrapper';
+    
+    const img = document.createElement('img');
+    img.className = showEditLink ? 'images' : 'images_fav';
+    img.src = image.image_url || '../../assets/images/default.jpg';
+    img.alt = image.title || 'Bild';
+    
+    imageWrapper.appendChild(img);
+    
+    if (showEditLink) {
+      const overlay = document.createElement('div');
+      overlay.className = 'overlay';
+      
+      const header = document.createElement('h2');
+      header.className = 'header';
+      header.textContent = image.title || 'Unbekannt';
+      
+      const likes = document.createElement('p');
+      likes.className = 'like';
+      likes.textContent = `${image.likes || 0} ❤`;
+      
+      const editLink = document.createElement('a');
+      editLink.className = 'edit-link';
+      editLink.href = `../edit_pictures/edit_pictures.html?id=${image.id}`;
+      editLink.textContent = 'Bearbeiten';
+      
+      overlay.appendChild(header);
+      overlay.appendChild(likes);
+      overlay.appendChild(editLink);
+      imageWrapper.appendChild(overlay);
+    }
+    
+    container.appendChild(imageWrapper);
+  });
+}
+
+function showNoContentMessage(message) {
+  const container = document.getElementById('bilder');
+  container.innerHTML = `<p class="no-content-message">${message}</p>`;
+}
+
+function showErrorMessage(message) {
+  const container = document.getElementById('bilder');
+  container.innerHTML = `<p class="error-message">${message}</p>`;
+}
+
+function backHome() {
+  window.location.href = "../../index.html";
+}
