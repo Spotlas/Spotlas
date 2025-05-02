@@ -54,18 +54,12 @@ async function showEditProfil() {
   // Get current user data from PHP session
   const user = await getCurrentUser();
   if (!user) return; // Safety check
-  const userId = await getCurrentUserId();
-  if (!userId) return; // Safety check
-  const userData = await getUserData(userId);
-  if (!userData) return; // Safety check
   
   const fullNameParts = user.full_name ? user.full_name.split(' ') : ['', ''];
   const firstName = fullNameParts[0] || '';
   const lastName = fullNameParts.slice(1).join(' ') || '';
 
   console.log(user); // Debugging
-  console.log(userData); // Debugging
-  console.log(userData); // Debugging
   
   
   document.getElementById("outp").innerHTML = `
@@ -78,7 +72,7 @@ async function showEditProfil() {
             <div>
                 <label style="font-size: 20px;" for="profilbild">Profile Picture</label><br><br>
                 <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="previewProfilePicture(event)">
-                <img id="profilPic" src="${user.getProfilePicture}" alt="Profile Picture" 
+                <img id="profilPic" src="../../assets/images/${user.profile_picture_url}" alt="Profile Picture" 
                      width="100" height="100" style="cursor: pointer; border-radius: 50%;" 
                      onclick="document.getElementById('fileInput').click();"/>
             </div>
@@ -108,7 +102,7 @@ async function showEditProfil() {
             <div>
                 <br><br>
                 <label style="font-size: 20px;" for="benutzername">Short Info</label>
-                <p style="font-size: 13px; color: grey;" id="info">${user.getShortInfo}</p>
+                <p style="font-size: 13px; color: grey;" id="info">${user.description}</p>
                 <button class="buttons" onclick="changeUserName('info')">Change</button>
             </div>
             
@@ -228,7 +222,7 @@ function closeOverlay() {
 
 showKontoVerwaltung();
 
-function showKontoVerwaltung() {
+async function showKontoVerwaltung() {
   document.getElementById("editp").querySelector(".underlineEffect")?.remove();
   applyUnderlineEffect("kontov");
 
@@ -236,7 +230,7 @@ function showKontoVerwaltung() {
   let maskedPassword = "*".repeat(password.length);
   
   // Get current user data
-  const user = getCurrentUser();
+  const user = await getCurrentUser();
 
   document.getElementById("outp").innerHTML = `
     <div id="profilBearbeiten">
@@ -245,7 +239,7 @@ function showKontoVerwaltung() {
               <div> 
                   <br><br>
                   <label style="font-size: 20px;" for="email">Email</label>
-                  <p id="email">${user.get}</p>
+                  <p id="email">${user.email}</p>
                   <button class="buttons" onclick="changeUserName('email')">Change</button>
                   <br><br>
                   <label style="font-size: 20px;" for="password">Password</label>

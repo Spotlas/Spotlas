@@ -51,9 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Store user data in session
                 $_SESSION['user_id'] = $user["id"];
                 $_SESSION['username'] = $user["username"];
+                $_SESSION['email'] = $user["email"];
                 $_SESSION['full_name'] = $user["full_name"];
                 $_SESSION['creation_date'] = $user["creation_date"];
                 $_SESSION['profile_picture_url'] = $user["profile_picture_url"] ?? null;
+                $_SESSION['description'] = $user["description"] ?? null;
 
                 // Update last login time
                 $update = $conn->prepare("UPDATE Users SET last_login = NOW() WHERE id = ?");

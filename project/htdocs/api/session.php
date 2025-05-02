@@ -20,6 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     'full_name' => $_SESSION['full_name'],
                     'creation_date' => $_SESSION['creation_date'],
                     'profile_picture_url' => $_SESSION['profile_picture_url'],
+                    'email' => $_SESSION['email'],
+                    'description' => $_SESSION['description'] ?? '',
+                    'gende' => $_SESSION['password_hash'] ?? ''
                 ]
             ]);
         } else {
