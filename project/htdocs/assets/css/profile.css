@@ -43,7 +43,14 @@ h6 {
 
 /*  */
 #profilPic {
-  border-radius: 50%;
+  border-radius: 50%; /* Macht das Bild rund */
+  width: 150px; /* Feste Breite für das Bild */
+  height: 150px; /* Feste Höhe für das Bild */
+  object-fit: cover; /* Schneidet das Bild so zu, dass es den Container füllt */
+  object-position: center; /* Zentriert das Bild im Container */
+  display: block; /* Stellt sicher, dass das Bild als Block-Element behandelt wird */
+  margin: 0 auto; /* Zentriert das Bild horizontal */
+  margin-right: 80%;
 }
 
 #profile_grandparent {
