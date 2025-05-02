@@ -18,7 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     'id' => $_SESSION['user_id'],
                     'username' => $_SESSION['username'],
                     'full_name' => $_SESSION['full_name'],
-                    'creation_date' => $_SESSION['creation_date']
+                    'creation_date' => $_SESSION['creation_date'],
+                    'profile_picture_url' => $_SESSION['profile_picture_url'],
                 ]
             ]);
         } else {

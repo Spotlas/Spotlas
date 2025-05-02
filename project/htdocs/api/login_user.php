@@ -53,13 +53,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['username'] = $user["username"];
                 $_SESSION['full_name'] = $user["full_name"];
                 $_SESSION['creation_date'] = $user["creation_date"];
+                $_SESSION['profile_picture_url'] = $user["profile_picture_url"] ?? null;
 
                 // Update last login time
                 $update = $conn->prepare("UPDATE Users SET last_login = NOW() WHERE id = ?");
                 $update->bind_param("i", $user["id"]);
                 $update->execute();
                 $update->close();
-                
+
                 $response = [
                     "code"      => 200,
                     "message"   => "Login successful",
@@ -95,4 +96,3 @@ ob_end_clean();
 // Send JSON response
 echo json_encode($response);
 exit;
-?>

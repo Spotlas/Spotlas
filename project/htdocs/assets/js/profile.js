@@ -11,9 +11,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   const user = await getCurrentUser();
   if (!user) return; // Safety check
 
+  
   document.getElementById('full_name').textContent = user.full_name;
   document.getElementById('username').textContent = user.username;
   document.getElementById('info_mini').textContent = "Beigetreten am " + user.creation_date;
+  document.getElementById('profilPic').src = '../../assets/images/' + user.profile_picture_url || '../../assets/images/default.jpg';
 
 
   
