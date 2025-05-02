@@ -4,9 +4,14 @@ let currentView = 'created'; // 'created' oder 'favorites'
 const baseURL = 'http://localhost//'; // Basis-URL für API-Anfragen
 
 // Initialisierung beim Laden der Seite
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   // User-ID aus der URL oder Session holen
   currentUserId = getCurrentUserId();
+
+  const user = await getCurrentUser();
+  if (!user) return; // Safety check
+
+  document.getElementById('user_name').textContent = user.username
   
   // Event Listener für die Tabs
   document.getElementById('switches_erstellt').addEventListener('click', () => switchView('created'));
@@ -49,7 +54,7 @@ function updateActiveTab() {
 
 async function loadCreatedImages() {
   try {
-    const response = await fetch(`../../api/profile.php?userId=${currentUserId}`);
+    const response = await fetch(`/api/profile.php?userId=${currentUserId}`);
     const data = await response.json();
     
     if (!data.locations || data.locations.length === 0) {
@@ -135,4 +140,27 @@ function showErrorMessage(message) {
 
 function backHome() {
   window.location.href = "../../index.html";
+}
+
+async function getCurrentUser(forceRefresh = false) {
+  if (currentUserCache && !forceRefresh) {
+      return currentUserCache;
+  }
+  
+  try {
+      const response = await fetch('../../api/session.php?action=get_user');
+      const data = await response.json();
+      
+      if (data.code === 200 && data.logged_in) {
+          currentUserCache = data.user;
+          currentUserId = data.user.id;
+          return data.user;
+      } else {
+          currentUserCache = null;
+          return null;
+      }
+  } catch (error) {
+      console.error('Error fetching session data:', error);
+      return null;
+  }
 }
