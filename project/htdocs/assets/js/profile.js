@@ -11,7 +11,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   const user = await getCurrentUser();
   if (!user) return; // Safety check
 
-  document.getElementById('user_name').textContent = user.username
+  document.getElementById('full_name').textContent = user.full_name;
+  document.getElementById('username').textContent = user.username;
+  document.getElementById('info_mini').textContent = "Beigetreten am " + user.creation_date;
+
+
   
   // Event Listener für die Tabs
   document.getElementById('switches_erstellt').addEventListener('click', () => switchView('created'));
@@ -141,6 +145,9 @@ function showErrorMessage(message) {
 function backHome() {
   window.location.href = "../../index.html";
 }
+
+let currentUserCache = null;
+
 
 async function getCurrentUser(forceRefresh = false) {
   if (currentUserCache && !forceRefresh) {

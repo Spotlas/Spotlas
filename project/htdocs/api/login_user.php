@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Prepare and execute SELECT
         $stmt = $conn->prepare("
-            SELECT id, username, password_hash, full_name 
+            SELECT *
             FROM Users 
             WHERE username = ?
             LIMIT 1
@@ -52,7 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_id'] = $user["id"];
                 $_SESSION['username'] = $user["username"];
                 $_SESSION['full_name'] = $user["full_name"];
-                
+                $_SESSION['creation_date'] = $user["creation_date"];
+
                 // Update last login time
                 $update = $conn->prepare("UPDATE Users SET last_login = NOW() WHERE id = ?");
                 $update->bind_param("i", $user["id"]);
