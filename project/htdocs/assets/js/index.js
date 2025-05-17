@@ -89,31 +89,48 @@ function addMarkersToMap(points) {
     marker.on("click", () => {
       selectedMarker = marker;
       openSidebarWithContent(`
-        <img id="img_saveButton" src="./assets/images/testPic/save.png" alt="${point.name}" style="width:8%; max-height:150px; object-fit:cover; padding-bottom: 2%;">
-        <a href="./pages/fullscreen_startseite/fullscreen.html?id=${point.id}"><img id="img_großButton" src="./assets/images/testPic/grosmachen.png" alt="${point.name}" style="width:8%; max-height:150px; object-fit:cover; padding-left: 80%; padding-bottom: 2%;"></a>
-        <img id="img_big" src="${point.image}" alt="${point.name}" style="width:100%; max-height:150px; object-fit:cover;">
-        
-        <img id="img_point" src="${point.image}" alt="${point.name}" style="width:10%; max-height:150px; object-fit:cover;">
-        <img id="img_point" src="${point.image}" alt="${point.name}" style="width:10%; max-height:150px; object-fit:cover;">
-        <img id="img_point" src="${point.image}" alt="${point.name}" style="width:10%; max-height:150px; object-fit:cover;">
-        
-        <div id="spot_infos">
-        <div id="spot_category"></div>
-        <div id="spot_rating"></div>
+        <div class="location-card">
+          <!-- Save and fullscreen buttons -->
+          <div class="action-buttons">
+            <img id="img_saveButton" src="./assets/images/icons/bookmark-fill.svg" alt="Save" class="action-button">
+            <a href="./pages/fullscreen_startseite/fullscreen.html?id=${point.id}" class="fullscreen-link">
+              <img id="img_großButton" src="./assets/images/testPic/grosmachen.png" alt="Fullscreen" class="action-button">
+            </a>
+          </div>
+          
+          <!-- Main image with placeholder fallback -->
+          <div class="main-image-container">
+            <img id="img_big" src="${point.image || './assets/images/placeholder.jpg'}" alt="${point.name}" class="main-image">
+          </div>
+          
+          <!-- Category and rating info -->
+          <div id="spot_infos">
+            <div id="spot_category"></div>
+            <div id="spot_rating"></div>
+          </div>
+          
+          <!-- Location title -->
+          <h3 id="header_point">${point.name}</h3>
+          
+          <!-- Description -->
+          <p id="beschreibung">${point.description}</p>
+          
+          <!-- Coordinates -->
+          <div class="coordinates">
+            <i class="fa fa-map-marker-alt"></i>
+            <span>${point.lat}, ${point.lng}</span>
+          </div>
+          
+          <!-- Comments button -->
+          <a id="button_comments_link" href="./pages/fullscreen_startseite/fullscreen.html?id=${point.id}">
+            <div id="button_comments">
+              <p>show Comments</p>
+            </div>
+          </a>
         </div>
-
-        <div id="parent_grid">
-        <h3 id="header_point">${point.name}</h3>
-        
-        </div>
-        <p id="beschreibung">${point.description}</p>
-        <p><strong>|</strong> ${point.lat}, ${point.lng} </p>
-        <br>
-      
-        <a id="button_comments_link" href="./pages/fullscreen_startseite/fullscreen.html?id=${point.id}"><div id="button_comments"><p>show Comments</p></div></a>
       `);
 
-      fetchLocationDetails(point.id); // Beispielaufruf für die erste Location
+      fetchLocationDetails(point.id);
     });
   });
   
