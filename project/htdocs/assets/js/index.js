@@ -140,21 +140,35 @@ function addMarkersToMap(points) {
           const locationId = this.getAttribute("data-location-id");
           const isSaved = this.getAttribute("data-is-saved") === "true";
           
-          // Get user ID using session management
-          const userId = getCurrentUserIdSync();
-          console.log("User ID for saving:", userId);
-          
-          if (!isSaved) {
-            // Save the location
-            this.src = "./assets/images/icons/bookmark-fill.svg";
-            this.setAttribute("data-is-saved", "true");
-            favoriteLocation(locationId, userId);
-          } else {
-            // Unsave the location
-            this.src = "./assets/images/icons/bookmark_unsaved.svg";
-            this.setAttribute("data-is-saved", "false");
-            removeFavoriteLocation(locationId, userId);
-          }
+          // Get user ID from session - this will be null if not logged in
+          getCurrentUserId().then(userId => {
+            if (!userId) {
+              // User is not logged in, redirect to login page
+              const currentUrl = encodeURIComponent(window.location.href);
+              window.location.href = `./pages/login_register/login.html?redirect=${currentUrl}`;
+              return;
+            }
+            
+            // User is logged in, proceed with saving/unsaving
+            console.log("User ID for saving:", userId);
+            
+            if (!isSaved) {
+              // Save the location
+              this.src = "./assets/images/icons/bookmark-fill.svg";
+              this.setAttribute("data-is-saved", "true");
+              favoriteLocation(locationId, userId);
+            } else {
+              // Unsave the location
+              this.src = "./assets/images/icons/bookmark_unsaved.svg";
+              this.setAttribute("data-is-saved", "false");
+              removeFavoriteLocation(locationId, userId);
+            }
+          }).catch(error => {
+            console.error("Error getting user ID:", error);
+            // Redirect to login if there's an error
+            const currentUrl = encodeURIComponent(window.location.href);
+            window.location.href = `./pages/login_register/login.html?redirect=${currentUrl}`;
+          });
         });
       }
     });
@@ -455,7 +469,7 @@ function favoriteLocation(id, userId) {
 function removeFavoriteLocation(id, userId) {
   const payload = { user_id: userId };
   console.log(`Removing favorite for location ${id} by user ${userId}`);
-  
+
   fetch(`./api/location.php?action=remove_favorite&id=${id}`, {
     method: 'POST',
     headers: {
@@ -463,22 +477,22 @@ function removeFavoriteLocation(id, userId) {
     },
     body: JSON.stringify(payload)
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('Remove favorite response:', data);
-  })
-  .catch(error => {
-    console.error('Error removing favorite location:', error);
-    // Reset UI on error
-    const saveButton = document.getElementById("img_saveButton");
-    if (saveButton) {
-      saveButton.src = "./assets/images/icons/bookmark-fill.svg";
-      saveButton.setAttribute("data-is-saved", "true");
-    }
-  });
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Remove favorite response:', data);
+    })
+    .catch(error => {
+      console.error('Error removing favorite location:', error);
+      // UI zurücksetzen, falls etwas schiefgeht
+      const saveButton = document.getElementById('img_saveButton');
+      if (saveButton) {
+        saveButton.src = './assets/images/icons/bookmark-fill.svg';
+        saveButton.setAttribute('data-is-saved', 'true');
+      }
+    });
 }
