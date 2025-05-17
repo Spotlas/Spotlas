@@ -10,6 +10,9 @@ if (isset($_GET['action'], $_GET['id']) && is_numeric($_GET['id'])) {
     $id     = intval($_GET['id']);
 
     if ($action === 'details' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+        // Get user ID if provided
+        $user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : null;
+        
         // Location
         $stmtLoc = $conn->prepare("SELECT * FROM Locations WHERE id = ?");
         $stmtLoc->bind_param("i", $id);
@@ -51,12 +54,24 @@ if (isset($_GET['action'], $_GET['id']) && is_numeric($_GET['id'])) {
             }
             $stmtAvg->close();
 
+            // Check if location is favorited by user
+            $is_favorite = false;
+            if ($user_id !== null) {
+                $stmtFav = $conn->prepare("SELECT id FROM Favorites WHERE location_id = ? AND user_id = ?");
+                $stmtFav->bind_param("ii", $id, $user_id);
+                $stmtFav->execute();
+                $resFav = $stmtFav->get_result();
+                $is_favorite = $resFav->num_rows > 0;
+                $stmtFav->close();
+            }
+
             $response['code'] = 200;
             $response['data'] = [
                 "location"       => $location,
                 "comments"       => $comments,
                 "images"         => $images,
-                "average_rating" => $averageRating
+                "average_rating" => $averageRating,
+                "is_favorite"    => $is_favorite
             ];
         }
         $stmtLoc->close();

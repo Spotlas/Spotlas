@@ -88,14 +88,26 @@ function submitComment(pointId, userId) {
 
 // Holt detaillierte Informationen zu einer Location inkl. Kommentare und Bilder
 function fetchLocationDetails(id) {
-    fetch(`../../api/location.php?action=details&id=${id}`)
-        .then(response => response.json())
+    // Get user ID to check favorite status
+    const userId = getCurrentUserIdSync();
+    
+    fetch(`../../api/location.php?action=details&id=${id}&user_id=${userId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
             console.log('Location details:', data);
 
             const location = data.data.location;
             const rating = data.data.average_rating;
             const comments = data.data.comments;
+            
+            // Update favorite status and icon
+            isSaved = data.data.is_favorite || false;
+            updateBookmarkIcon();
 
             // Füge Bewertungen hinzu
             generateStars(rating);
@@ -123,9 +135,15 @@ function fetchLocationDetails(id) {
         .catch(error => console.error('Error fetching location details:', error));
 }
 
-/* document.addEventListener('DOMContentLoaded', () => {
-    fetchLocationDetails(2);
-}); */
+// Helper function to update bookmark icon based on isSaved state
+function updateBookmarkIcon() {
+    const bookmarkIcon = document.getElementById("bookmarkIcon");
+    if (bookmarkIcon) {
+        bookmarkIcon.src = isSaved 
+            ? "../../assets/images/icons/bookmark-fill.svg" 
+            : "../../assets/images/icons/bookmark_unsaved.svg";
+    }
+}
 
 function rate(rating) {
     const params = new URLSearchParams(window.location.search);
@@ -200,14 +218,14 @@ function rateLocation(id, userId, rating) {
                 }
                 
                 isSaved = !isSaved;
+                updateBookmarkIcon(); // Update icon immediately for better UX
+                
                 const params = new URLSearchParams(window.location.search);
                 const pointId = params.get("id");
     
                 if (isSaved) {
-                    this.src = "../../assets/images/icons/bookmark-fill.svg";
                     favoriteLocation(pointId, userId);
                 } else {
-                    this.src = "../../assets/images/icons/bookmark_unsaved.svg";
                     removeFavoriteLocation(pointId, userId);
                 }
             });

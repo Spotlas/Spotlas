@@ -92,7 +92,7 @@ function addMarkersToMap(points) {
         <div class="location-card">
           <!-- Save and fullscreen buttons -->
           <div class="action-buttons">
-            <img id="img_saveButton" src="./assets/images/icons/bookmark-fill.svg" alt="Save" class="action-button">
+            <img id="img_saveButton" src="./assets/images/icons/bookmark_unsaved.svg" alt="Save" class="action-button" data-location-id="${point.id}" data-is-saved="false">
             <a href="./pages/fullscreen_startseite/fullscreen.html?id=${point.id}" class="fullscreen-link">
               <img id="img_großButton" src="./assets/images/testPic/grosmachen.png" alt="Fullscreen" class="action-button">
             </a>
@@ -131,6 +131,32 @@ function addMarkersToMap(points) {
       `);
 
       fetchLocationDetails(point.id);
+      
+      // Add click event listener to the save button
+      const saveButton = document.getElementById("img_saveButton");
+      if (saveButton) {
+        saveButton.addEventListener("click", function() {
+          // Get the location ID
+          const locationId = this.getAttribute("data-location-id");
+          const isSaved = this.getAttribute("data-is-saved") === "true";
+          
+          // Get user ID using session management
+          const userId = getCurrentUserIdSync();
+          console.log("User ID for saving:", userId);
+          
+          if (!isSaved) {
+            // Save the location
+            this.src = "./assets/images/icons/bookmark-fill.svg";
+            this.setAttribute("data-is-saved", "true");
+            favoriteLocation(locationId, userId);
+          } else {
+            // Unsave the location
+            this.src = "./assets/images/icons/bookmark_unsaved.svg";
+            this.setAttribute("data-is-saved", "false");
+            removeFavoriteLocation(locationId, userId);
+          }
+        });
+      }
     });
   });
   
@@ -344,14 +370,34 @@ async function generateCategory(categoryId) {
 
 // Holt detaillierte Informationen zu einer Location inkl. Kommentare und Bilder
 function fetchLocationDetails(id) {
-  fetch(`./api/location.php?action=details&id=${id}`)
-      .then(response => response.json())
+  const userId = getCurrentUserIdSync();
+  fetch(`./api/location.php?action=details&id=${id}&user_id=${userId}`)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+      })
       .then(data => {
           console.log('Location details:', data);
-          generateStars(data.data.average_rating); // Beispiel für die Bewertung, hier müsste die richtige Bewertung übergeben werden
-          generateCategory(data.data.location.category_id); // Beispiel für die Kategorie, hier müsste die richtige Kategorie-ID übergeben werden
+          generateStars(data.data.average_rating);
+          generateCategory(data.data.location.category_id);
+          
+          // Check if location is in user's favorites
+          const saveButton = document.getElementById("img_saveButton");
+          if (saveButton) {
+              if (data.data.is_favorite) {
+                  saveButton.src = "./assets/images/icons/bookmark-fill.svg";
+                  saveButton.setAttribute("data-is-saved", "true");
+              } else {
+                  saveButton.src = "./assets/images/icons/bookmark_unsaved.svg";
+                  saveButton.setAttribute("data-is-saved", "false");
+              }
+          }
       })
-      .catch(error => console.error('Error fetching location details:', error));
+      .catch(error => {
+          console.error('Error fetching location details:', error);
+      });
 }
 
 // Kategorie-Name anhand der ID abrufen
@@ -371,4 +417,68 @@ function fetchCategoryNameById(categoryId) {
           console.error('Error fetching category name:', error);
           return "Error Loading Category";
       });
+}
+
+// Markiert eine Location als Favorit
+function favoriteLocation(id, userId) {
+  const payload = { user_id: userId };
+  console.log(`Adding favorite for location ${id} by user ${userId}`);
+  
+  fetch(`./api/location.php?action=favorite&id=${id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('Favorite response:', data);
+  })
+  .catch(error => {
+    console.error('Error favoriting location:', error);
+    // Reset UI on error
+    const saveButton = document.getElementById("img_saveButton");
+    if (saveButton) {
+      saveButton.src = "./assets/images/icons/bookmark_unsaved.svg";
+      saveButton.setAttribute("data-is-saved", "false");
+    }
+  });
+}
+
+// Entfernt eine Location aus den Favoriten
+function removeFavoriteLocation(id, userId) {
+  const payload = { user_id: userId };
+  console.log(`Removing favorite for location ${id} by user ${userId}`);
+  
+  fetch(`./api/location.php?action=remove_favorite&id=${id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('Remove favorite response:', data);
+  })
+  .catch(error => {
+    console.error('Error removing favorite location:', error);
+    // Reset UI on error
+    const saveButton = document.getElementById("img_saveButton");
+    if (saveButton) {
+      saveButton.src = "./assets/images/icons/bookmark-fill.svg";
+      saveButton.setAttribute("data-is-saved", "true");
+    }
+  });
 }
