@@ -71,8 +71,6 @@ function openSidebarWithContent(content) {
 }
 
 function addMarkersToMap(points) {
-  const fg = L.featureGroup().addTo(map);
-
   points.forEach((point) => {
     const customIcon = L.icon({
       iconUrl: "../../assets/images/icons/marker2.png", // Pfad zum eigenen Marker-Bild
@@ -82,7 +80,7 @@ function addMarkersToMap(points) {
     });
 
     const marker = L.marker([point.lat, point.lng], { icon: customIcon }).addTo(
-      fg
+      markersLayer
     );
 
     // Füge die id als benutzerdefiniertes Attribut hinzu
@@ -121,7 +119,6 @@ function addMarkersToMap(points) {
   
   listMarkers(points);
 }
-
 
 function listMarkers(points) {
   if (selectedMarker) return; // Zeige nur die Namen, wenn kein Marker aktiv ist
@@ -253,7 +250,8 @@ function getCategoryId(categoryName) {
 function printToMap(data) {
   sidebar.innerHTML = "";
   clearMarkers();
-  let points = [];
+  
+  // Update the global points array instead of creating a local one
   points = data.locations
     .map((location) => {
       // Überprüfen, ob die notwendigen Felder vorhanden sind
@@ -271,14 +269,27 @@ function printToMap(data) {
     })
     .filter((location) => location !== null); // Entferne null-Werte
 
+  console.log("Filtered points:", points); // Debug output
+  
+  // Remove old markers and create a new feature group
+  map.removeLayer(markersLayer);
+  markersLayer = L.featureGroup().addTo(map);
+  
   addMarkersToMap(points);
-  listMarkers(points);
 }
 
 let markersLayer = L.featureGroup().addTo(map); // Layer für Marker
 
 function clearMarkers() {
-  markersLayer.clearLayers();
+  map.eachLayer(function(layer) {
+    if(layer instanceof L.Marker) {
+      map.removeLayer(layer);
+    }
+  });
+  
+  // Reset the markers layer
+  map.removeLayer(markersLayer);
+  markersLayer = L.featureGroup().addTo(map);
 }
 
 function generateStars(rating) {
