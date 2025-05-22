@@ -271,3 +271,68 @@ function fetchCategoryNameById(categoryId) {
         })
         .catch(error => console.error('Error fetching category name:', error));
 }
+
+// Ruft alle Bilder einer Location ab
+function fetchImagesByLocationId(locationId) {
+    return fetch(`./api/images.php?location_id=${locationId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.code === 200) {
+                console.log('Bilder für Location:', data.images);
+                return data.images;
+            } else {
+                console.error('Fehler beim Abrufen der Bilder:', data.message);
+                return [];
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching images by location ID:', error);
+            return [];
+        });
+}
+
+// Ruft ein einzelnes Bild anhand der ID ab
+function fetchImageById(imageId) {
+    return fetch(`./api/images.php?image_id=${imageId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.code === 200) {
+                console.log('Bild Details:', data.image);
+                return data.image;
+            } else {
+                console.error('Fehler beim Abrufen des Bildes:', data.message);
+                return null;
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching image by ID:', error);
+            return null;
+        });
+}
+
+// Lädt ein Bild für eine Location hoch
+function uploadImageForLocation(formData) {
+    // formData sollte ein FormData-Objekt sein, das mindestens enthält:
+    // - uploadFile: die Datei
+    // - location_id: ID der Location
+    // - description: Beschreibung des Bildes (optional)
+    
+    return fetch('./api/fileupload.php', {
+        method: 'POST',
+        body: formData // FormData sendet automatisch multipart/form-data
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.uploaded) {
+            console.log('Bild erfolgreich hochgeladen:', data);
+            return data;
+        } else {
+            console.error('Fehler beim Hochladen des Bildes:', data.message);
+            throw new Error(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error uploading image:', error);
+        throw error;
+    });
+}
