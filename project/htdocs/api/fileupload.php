@@ -10,65 +10,115 @@ $answer = [
   "message"  => "Upload fehlgeschlagen"
 ];
 
-// 1) Login & Parameter prüfen
-if (!isset($_SESSION['loggedin'], $_SESSION['user_id']) || $_SESSION['loggedin'] !== true) {
-  $answer['message'] = "Nicht eingeloggt.";
-  echo json_encode($answer);
-  exit;
-}
-if (empty($_POST['brick_set_id']) || !isset($_FILES['fileToUpload'])) {
-  $answer['message'] = "Keine Set-ID oder Datei.";
-  echo json_encode($answer);
-  exit;
+// Configuration
+$targetDir = "uploads/";
+$allowedTypes = ["image/jpeg", "image/jpg", "image/png", "application/pdf"];
+$maxFileSize = 5 * 1024 * 1024; // 5MB
+
+// Create uploads directory if it doesn't exist
+if (!file_exists($targetDir)) {
+    mkdir($targetDir, 0777, true);
 }
 
-$brickSetId = intval($_POST['brick_set_id']);
-
-// 2) Ownership prüfen
-$stmt = $conn->prepare("SELECT id FROM brick_sets WHERE id = ? AND user_id = ?");
-$stmt->bind_param("ii", $brickSetId, $_SESSION['user_id']);
-$stmt->execute();
-$stmt->store_result();
-if ($stmt->num_rows === 0) {
-  echo json_encode(["code"=>403,"message"=>"Kein Zugriff auf dieses Set.","uploaded"=>false]);
-  exit;
-}
-$stmt->close();
-
-// 3) Datei validieren & verschieben
-$uploaddir = __DIR__ . '/uploads/';
-@mkdir($uploaddir,0755,true);
-
-$file = $_FILES['fileToUpload'];
-$ext  = strtolower(pathinfo($file['name'],PATHINFO_EXTENSION));
-$allowed = ['jpg','jpeg','png','gif'];
-if (!in_array($ext,$allowed) || $file['error']!==UPLOAD_ERR_OK || $file['size']>8*1024*1024) {
-  $answer['message']="Ungültige Datei.";
-  echo json_encode($answer);
-  exit;
-}
-
-$filename   = uniqid('img_').'.'.$ext;
-$targetFile = $uploaddir.$filename;
-
-if (!move_uploaded_file($file['tmp_name'],$targetFile)) {
-  $answer['message']="Speichern fehlgeschlagen.";
-  echo json_encode($answer);
-  exit;
-}
-
-// 4) In DB eintragen
-$stmt = $conn->prepare("
-  INSERT INTO images (brick_set_id, image_path, uploaded_at)
-  VALUES (?, ?, NOW())
-");
-$stmt->bind_param("is", $brickSetId, $filename);
-if ($stmt->execute()) {
-  $answer = ["code"=>200,"uploaded"=>true,"message"=>"Bild hochgeladen"];
+// Process upload if a form was submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["uploadFile"])) {
+    $file = $_FILES["uploadFile"];
+    
+    // Check for upload errors
+    if ($file["error"] !== UPLOAD_ERR_OK) {
+        $errorMessages = [
+            UPLOAD_ERR_INI_SIZE => "The uploaded file exceeds the upload_max_filesize directive in php.ini",
+            UPLOAD_ERR_FORM_SIZE => "The uploaded file exceeds the MAX_FILE_SIZE directive in the HTML form",
+            UPLOAD_ERR_PARTIAL => "The uploaded file was only partially uploaded",
+            UPLOAD_ERR_NO_FILE => "No file was uploaded",
+            UPLOAD_ERR_NO_TMP_DIR => "Missing a temporary folder",
+            UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk",
+            UPLOAD_ERR_EXTENSION => "A PHP extension stopped the file upload"
+        ];
+        
+        $errorMessage = isset($errorMessages[$file["error"]]) 
+            ? $errorMessages[$file["error"]] 
+            : "Unknown upload error";
+            
+        $answer["message"] = $errorMessage;
+        die(json_encode($answer));
+    }
+    
+    // Validate file size
+    if ($file["size"] > $maxFileSize) {
+        $answer["message"] = "File is too large. Maximum file size is " . ($maxFileSize / 1024 / 1024) . "MB";
+        die(json_encode($answer));
+    }
+    
+    // Validate file type
+    if (!in_array($file["type"], $allowedTypes)) {
+        $answer["message"] = "Invalid file type. Allowed types: " . implode(", ", $allowedTypes);
+        die(json_encode($answer));
+    }
+    
+    // Generate a safe, unique filename
+    $filename = basename($file["name"]);
+    $fileExtension = pathinfo($filename, PATHINFO_EXTENSION);
+    $uniqueName = uniqid() . "." . $fileExtension;
+    $targetFile = $targetDir . $uniqueName;
+    
+    // Save the file
+    if (move_uploaded_file($file["tmp_name"], $targetFile)) {
+        // Get parameters for database insertion
+        $locationId = isset($_POST['location_id']) ? $_POST['location_id'] : null;
+        $description = isset($_POST['description']) ? $_POST['description'] : '';
+        $statusId = isset($_POST['status_id']) ? $_POST['status_id'] : 1; // Default status_id if not provided
+        
+        // Validate required fields
+        if (!$locationId) {
+            $answer["message"] = "Location ID is required";
+            // Delete the uploaded file if database insertion fails
+            if (file_exists($targetFile)) {
+                unlink($targetFile);
+            }
+            die(json_encode($answer));
+        }
+        
+        try {
+            // Insert image record into database
+            $stmt = $mysql->prepare("INSERT INTO images (location_id, image_url, description, creation_date, status_id) VALUES (?, ?, ?, NOW(), ?)");
+            $imageUrl = $targetFile; // Store the path to the image
+            
+            $stmt->bind_param("issi", $locationId, $imageUrl, $description, $statusId);
+            
+            if ($stmt->execute()) {
+                $imageId = $mysql->insert_id;
+                
+                $answer = [
+                    "code"     => 200,
+                    "uploaded" => true,
+                    "message"  => "Bild erfolgreich hochgeladen",
+                    "image_id" => $imageId,
+                    "filename" => $uniqueName,
+                    "path"     => $targetFile
+                ];
+            } else {
+                // Delete the uploaded file if database insertion fails
+                if (file_exists($targetFile)) {
+                    unlink($targetFile);
+                }
+                $answer["message"] = "Fehler bei der Speicherung in der Datenbank: " . $stmt->error;
+            }
+            
+            $stmt->close();
+        } catch (Exception $e) {
+            // Delete the uploaded file if database insertion fails
+            if (file_exists($targetFile)) {
+                unlink($targetFile);
+            }
+            $answer["message"] = "Datenbankfehler: " . $e->getMessage();
+        }
+    } else {
+        $answer["message"] = "Fehler beim Speichern der Datei";
+    }
 } else {
-  unlink($targetFile);
-  $answer = ["code"=>500,"uploaded"=>false,"message"=>"DB-Fehler"];
+    $answer["message"] = "Keine Datei übermittelt";
 }
-$stmt->close();
 
 echo json_encode($answer);
+?>
