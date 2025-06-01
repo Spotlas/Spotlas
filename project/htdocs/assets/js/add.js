@@ -169,41 +169,39 @@ function updateProgress(action) {
     // Validate required fields before proceeding
     if (slide === 1) {
       // Reset any previous styling
-      document.querySelectorAll('input').forEach(input => {
+      document.querySelectorAll("input").forEach((input) => {
         input.style.boxShadow = "2px 2px 10px -6px rgba(0,0,0,0.74)";
       });
-      
+
       let isValid = true;
-      
+
       // Check required fields
       const name = document.getElementById("name");
       const latitude = document.getElementById("latitude");
       const longitude = document.getElementById("longitude");
       const pics = document.getElementById("fileInput");
-      
+
       if (!name.value.trim()) {
         name.style.boxShadow = "0 0 5px 2px rgba(255,0,0,0.5)";
         isValid = false;
       }
-      
+
       if (!latitude.value.trim()) {
         latitude.style.boxShadow = "0 0 5px 2px rgba(255,0,0,0.5)";
         isValid = false;
       }
-      
+
       if (!longitude.value.trim()) {
         longitude.style.boxShadow = "0 0 5px 2px rgba(255,0,0,0.5)";
         isValid = false;
       }
-      
-      
-      
+
       if (!isValid) {
         alert("Please fill out all required fields highlighted in red!");
         return;
       }
     }
-    
+
     progress += step;
     slide = 2;
   } else if (action === "back" && progress > 0) {
@@ -349,7 +347,7 @@ function resizeImage(imageBase64, maxSize = 500) {
 
 function loadFinishedSide() {
   document.getElementById("main2_finish").style.display = "grid";
-  document.querySelector('body').style.overflowY = "auto";
+  document.querySelector("body").style.overflowY = "auto";
   document.getElementById("main").style.display = "none";
 
   loadAll();
@@ -405,129 +403,123 @@ function goToAdd() {
 }
 
 async function saveLocation() {
-  console.log("saveLocation() wurde aufgerufen");
-  console.log("Place Name:", sessionStorage.getItem("name"));
-  console.log("Place Description:", sessionStorage.getItem("Description"));
-  console.log("Place Category:", sessionStorage.getItem("Category"));
+  // ...sammle alle Felder wie bisher...
+  const name = sessionStorage.getItem("name");
+  const latitude = sessionStorage.getItem("latitude");
+  const longitude = sessionStorage.getItem("longitude");
+  const address = sessionStorage.getItem("Address");
+  const description = sessionStorage.getItem("Description");
+  const category = sessionStorage.getItem("Category");
+  const opening_hours = sessionStorage.getItem("OpeningHours");
+  const season = sessionStorage.getItem("Season");
+  const price_range = sessionStorage.getItem("Price");
+  const accessibility = sessionStorage.getItem("Accessibility");
+  const website_url = sessionStorage.getItem("Website");
+  const special_features = sessionStorage.getItem("SpecialFeatures");
+  const comments = sessionStorage.getItem("Comments");
+  const created_by = await getCurrentUserId();
 
-  // Check if user is logged in
-  const userId = await getCurrentUserId();
-  if (!userId) {
-    alert("You must be logged in to add a location.");
-    window.location.href = "../../pages/login_register/login.html?redirect=" + encodeURIComponent(window.location.href);
+  // Bild holen
+  const fileInput = document.getElementById("fileToUpload");
+  const file = fileInput.files[0];
+
+  if (!file) {
+    alert("Bitte wähle ein Bild aus!");
     return;
   }
 
-  // Setze die Werte zuerst in den HTML-Elementen
-  document.getElementById("placeName").innerHTML =
-    sessionStorage.getItem("name");
-  document.getElementById("placeDescription").innerHTML =
-    sessionStorage.getItem("Description");
-  document.getElementById("placeCategory").innerHTML =
-    sessionStorage.getItem("Category");
-  document.getElementById("latitude2").innerHTML =
-    sessionStorage.getItem("latitude");
-  document.getElementById("longitude2").innerHTML =
-    sessionStorage.getItem("longitude");
-  document.getElementById("placeAddress").innerHTML =
-    sessionStorage.getItem("Address");
-  document.getElementById("placePriceRange").innerHTML =
-    sessionStorage.getItem("Price");
-  document.getElementById("placeOpeningHours").innerHTML =
-    sessionStorage.getItem("OpeningHours");
-  document.getElementById("placeSeason").innerHTML =
-    sessionStorage.getItem("Season");
-  document.getElementById("placeAccessibility").innerHTML =
-    sessionStorage.getItem("Accessibility");
-  document.getElementById(
-    "placeWebsiteUrl"
-  ).innerHTML = `<a href="https://${sessionStorage.getItem(
-    "Website"
-  )}" target="_blank">${sessionStorage.getItem("Website")}</a>`;
-  document.getElementById("placeSpecialFeatures").innerHTML =
-    sessionStorage.getItem("SpecialFeatures");
-    let categoryName = sessionStorage.getItem("Category");
+  // FormData für multipart/form-data
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("latitude", latitude);
+  formData.append("longitude", longitude);
+  formData.append("address", address);
+  formData.append("description", description);
+  formData.append("category", category);
+  formData.append("opening_hours", opening_hours);
+  formData.append("season", season);
+  formData.append("price_range", price_range);
+  formData.append("accessibility", accessibility);
+  formData.append("website_url", website_url);
+  formData.append("special_features", special_features);
+  formData.append("comments", comments);
+  formData.append("created_by", created_by);
+  formData.append("fileToUpload", file);
 
-    const categoryId = await getCategoryId(categoryName); // Warte auf die ID
-    if (!categoryId) {
-      console.error("Category not found!");
-      return;
-    }
+  // Sende an das Backend
+  fetch("./add.php", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.text())
+    //.then((response) => response.json())
 
-    console.log("Category ID:", categoryId);
-
-    // Erstelle das newLocation-Objekt
-    const newLocation = {
-      name: sessionStorage.getItem("name"),
-      description: sessionStorage.getItem("Description"),
-      category_id: categoryId,
-      latitude: sessionStorage.getItem("latitude"),
-      longitude: sessionStorage.getItem("longitude"),
-      address: sessionStorage.getItem("Address"),
-      price_range: sessionStorage.getItem("Price"),
-      opening_hours: sessionStorage.getItem("OpeningHours"),
-      season: sessionStorage.getItem("Season"),
-      accessibility: sessionStorage.getItem("Accessibility"),
-      website_url: sessionStorage.getItem("Website"),
-      special_features: sessionStorage.getItem("SpecialFeatures"),
-      created_by: userId, // Use the current user ID from PHP session
-      status_id: 1, // optional
-    };
-
-    console.log("New location:", newLocation);
-
-    await uploadNewLocation(newLocation);
+    .then((data) => {
+      if (data.code === 200) {
+        alert("Ort und Bild erfolgreich gespeichert!");
+        window.location.href = "../../index.html";
+      } else {
+        alert("Fehler beim Hochladen: " + data.message);
+      }
+    })
+    .catch((error) => {
+      alert("Fehler beim Hochladen: " + error);
+    });
 }
 
 function uploadNewLocation(locationData) {
-  fetch('../../api/upload.php', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(locationData)
+  fetch("../../api/upload.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(locationData),
   })
-  .then(response => response.text()) // Zuerst den Rohtext der Antwort lesen
-  .then(text => {
-      console.log('Server response:', text); // Logge den Rohtext
+    .then((response) => response.text()) // Zuerst den Rohtext der Antwort lesen
+    .then((text) => {
+      console.log("Server response:", text); // Logge den Rohtext
       try {
-          const data = JSON.parse(text); // Versuche, den Text als JSON zu parsen
-          console.log('New location uploaded:', data);
-          if (data.code === 200) {
-              console.log('Location uploaded successfully:', data.message);
-              alert('Location uploaded successfully!');
-              window.location.href = "../../index.html"; // Redirect to home page
-          } else {
-              console.error('Upload failed:', data.message);
-              alert('Upload failed: ' + data.message);
-          }
+        const data = JSON.parse(text); // Versuche, den Text als JSON zu parsen
+        console.log("New location uploaded:", data);
+        if (data.code === 200) {
+          console.log("Location uploaded successfully:", data.message);
+          alert("Location uploaded successfully!");
+          window.location.href = "../../index.html"; // Redirect to home page
+        } else {
+          console.error("Upload failed:", data.message);
+          alert("Upload failed: " + data.message);
+        }
       } catch (e) {
-          console.error('Failed to parse JSON:', e);
+        console.error("Failed to parse JSON:", e);
       }
-  })
-  .catch(error => console.error('Error uploading new location:', error));
+    })
+    .catch((error) => console.error("Error uploading new location:", error));
 }
 
 function clickComments() {
   const comments = document.getElementById("comments_input_checkbox");
   console.log(comments.checked);
   return comments.checked;
-} 
+}
 
 async function getCategoryId(categoryName) {
   try {
-    const response = await fetch(`../../api/getCategory.php?name=${encodeURIComponent(categoryName)}`);
+    const response = await fetch(
+      `../../api/getCategory.php?name=${encodeURIComponent(categoryName)}`
+    );
     const data = await response.json();
 
     if (data.code === 200) {
-      console.log(`Die ID der Kategorie "${categoryName}" ist: ${data.category_id}`);
+      console.log(
+        `Die ID der Kategorie "${categoryName}" ist: ${data.category_id}`
+      );
       return data.category_id;
     } else {
       console.error(`Fehler: ${data.message}`);
       return null;
     }
   } catch (error) {
-    console.error('Fehler beim Abrufen der Kategorie-ID:', error);
+    console.error("Fehler beim Abrufen der Kategorie-ID:", error);
     return null;
   }
 }
@@ -537,9 +529,9 @@ function handleSubmit(event) {
   const form = event.target;
 
   if (form.checkValidity()) {
-      updateProgress('more');
+    updateProgress("more");
   } else {
-      form.reportValidity(); // zeigt automatisch HTML5-Fehler an
+    form.reportValidity(); // zeigt automatisch HTML5-Fehler an
   }
 }
 
@@ -548,21 +540,25 @@ const fileInput = document.getElementById("fileToUpload");
 const label = document.getElementById("uploadLabel");
 
 // Drag-Events verhindern Default-Verhalten
-["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
-  dropArea.addEventListener(eventName, e => e.preventDefault());
-  dropArea.addEventListener(eventName, e => e.stopPropagation());
+["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
+  dropArea.addEventListener(eventName, (e) => e.preventDefault());
+  dropArea.addEventListener(eventName, (e) => e.stopPropagation());
 });
 
 // Visuelles Feedback
-["dragenter", "dragover"].forEach(eventName => {
-  dropArea.addEventListener(eventName, () => dropArea.classList.add("dragover"));
+["dragenter", "dragover"].forEach((eventName) => {
+  dropArea.addEventListener(eventName, () =>
+    dropArea.classList.add("dragover")
+  );
 });
-["dragleave", "drop"].forEach(eventName => {
-  dropArea.addEventListener(eventName, () => dropArea.classList.remove("dragover"));
+["dragleave", "drop"].forEach((eventName) => {
+  dropArea.addEventListener(eventName, () =>
+    dropArea.classList.remove("dragover")
+  );
 });
 
 // Datei einfügen per Drag & Drop
-dropArea.addEventListener("drop", e => {
+dropArea.addEventListener("drop", (e) => {
   const files = e.dataTransfer.files;
   if (files.length) {
     fileInput.files = files; // Datei dem Input zuweisen
@@ -578,12 +574,12 @@ fileInput.addEventListener("change", () => {
 });
 
 // On page load, check if user is logged in
-document.addEventListener('DOMContentLoaded', async function() {
-    // Redirect if not logged in
-    if (!await requireLogin()) {
-        return; // The requireLogin function will handle the redirect
-    }
-    
-    // Continue with page initialization
-    // ...existing initialization code...
+document.addEventListener("DOMContentLoaded", async function () {
+  // Redirect if not logged in
+  if (!(await requireLogin())) {
+    return; // The requireLogin function will handle the redirect
+  }
+
+  // Continue with page initialization
+  // ...existing initialization code...
 });

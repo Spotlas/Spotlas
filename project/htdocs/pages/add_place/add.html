@@ -114,14 +114,12 @@
 
                 <div  class="add_name_description">
                     <div id="fileUpload" class="drag-drop">
-                        <form id="uploadForm" action="./fileupload.php" method="POST" enctype="multipart/form-data">
-                          <label for="fileToUpload" id="uploadLabel">
+                        <label for="fileToUpload" id="uploadLabel">
                             <span>📁 Bild auswählen oder hierher ziehen</span>
-                          </label>
-                          <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*" required hidden>
-                          <button type="submit" name="submit">Hochladen</button>
-                        </form>
-                      </div>
+                        </label>
+                        <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*" required>
+                        <div id="imagePreview"></div>
+                    </div>
                       
 
                     
