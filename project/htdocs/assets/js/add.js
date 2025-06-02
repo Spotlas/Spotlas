@@ -39,8 +39,8 @@ if (progress / 50 === 2) {
 }
 
 window.onload = function () {
-  const fileInput = document.getElementById("fileInput");
-  const dropArea = document.getElementById("drop-area");
+  const fileInput = document.getElementById("fileToUpload"); // Korrigierte ID
+  const dropArea = document.getElementById("fileUpload"); // Korrigierte ID
   const imagePreview = document.getElementById("imagePreview");
 
   if (!dropArea) {
@@ -48,6 +48,7 @@ window.onload = function () {
     return;
   }
 
+  // Klick auf Drop-Area öffnet File-Dialog
   dropArea.addEventListener("click", () => fileInput.click());
 
   dropArea.addEventListener("dragover", (e) => {
@@ -62,66 +63,61 @@ window.onload = function () {
   dropArea.addEventListener("drop", (e) => {
     e.preventDefault();
     dropArea.style.backgroundColor = "#f9f9f9";
-    handleFiles(e.dataTransfer);
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      fileInput.files = files;
+      handleFiles(files);
+    }
   });
 
-  fileInput.addEventListener("change", (e) => handleFiles(e.target));
+  fileInput.addEventListener("change", (e) => handleFiles(e.target.files));
 
-  function handleFiles(event) {
-    const files = event.files || event.target.files;
-    const uploadedImages =
-      JSON.parse(sessionStorage.getItem("uploadedImages")) || []; // Lade bestehende Bilder
+  function handleFiles(files) {
+    if (!files || files.length === 0) return;
+    
+    const uploadedImages = [];
+    const file = files[0]; // Nur das erste Bild verwenden
+    
+    if (file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const imgContainer = document.createElement("div");
+        const img = document.createElement("img");
+        img.src = e.target.result;
+        img.style.width = "200px";
+        img.style.height = "auto";
 
-    for (const file of files) {
-      if (file.type.startsWith("image/")) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const imgContainer = document.createElement("div");
-          const img = document.createElement("img");
+        // Speichere das Bild als Base64 in sessionStorage
+        uploadedImages.push(e.target.result);
+        sessionStorage.setItem("uploadedImages", JSON.stringify(uploadedImages));
+        sessionStorage.setItem("selectedFile", e.target.result);
+        
+        // Update Label
+        document.getElementById("uploadLabel").innerHTML = 
+          `📁 Datei ausgewählt: <strong>${file.name}</strong>`;
 
-          // Verwende createObjectURL statt Base64
-          const blob = new Blob([e.target.result], { type: "image/png" });
-          const imageUrl = URL.createObjectURL(blob);
-          img.src = imageUrl;
+        // Erstelle ein "X"-Element zum Entfernen
+        const removeButton = document.createElement("span");
+        removeButton.innerText = "X";
+        removeButton.style.cursor = "pointer";
+        removeButton.style.marginLeft = "5px";
+        removeButton.style.color = "red";
 
-          // Erstelle ein "X"-Element zum Entfernen
-          const removeButton = document.createElement("span");
-          removeButton.innerText = "X";
-          removeButton.style.cursor = "pointer";
-          removeButton.style.marginLeft = "5px";
-          removeButton.style.color = "red";
+        removeButton.addEventListener("click", () => {
+          imgContainer.remove();
+          sessionStorage.removeItem("uploadedImages");
+          sessionStorage.removeItem("selectedFile");
+          fileInput.value = "";
+          document.getElementById("uploadLabel").innerHTML = 
+            "📁 Bild auswählen oder hierher ziehen";
+        });
 
-          removeButton.addEventListener("click", () => {
-            imgContainer.remove(); // Entferne die Vorschau
-            uploadedImages = uploadedImages.filter((url) => url !== imageUrl); // Entferne das Bild aus dem Array
-            sessionStorage.setItem(
-              "uploadedImages",
-              JSON.stringify(uploadedImages)
-            ); // Speichere Änderungen
-          });
-
-          imgContainer.appendChild(img);
-          imgContainer.appendChild(removeButton);
-          imagePreview.appendChild(imgContainer);
-
-          uploadedImages.push(imageUrl); // Speichere nur die URL, nicht die Base64-Daten
-
-          try {
-            sessionStorage.setItem(
-              "uploadedImages",
-              JSON.stringify(uploadedImages)
-            );
-          } catch (e) {
-            if (e.name === "QuotaExceededError") {
-              console.error(
-                "Speicherplatz ist voll! Bitte löschen Sie einige Bilder."
-              );
-              alert("Speicherplatz ist voll! Bitte löschen Sie einige Bilder.");
-            }
-          }
-        };
-        reader.readAsArrayBuffer(file); // Lies das Bild als ArrayBuffer (statt Base64)
-      }
+        imgContainer.appendChild(img);
+        imgContainer.appendChild(removeButton);
+        imagePreview.innerHTML = ""; // Clear previous previews
+        imagePreview.appendChild(imgContainer);
+      };
+      reader.readAsDataURL(file);
     }
   }
 };
@@ -354,56 +350,42 @@ function loadFinishedSide() {
 }
 
 function loadAll() {
-  console.log("Window loaded"); // Prüfen, ob das Skript läuft
-
+  console.log("Loading images for confirmation");
+  
   const imageContainer = document.getElementById("imageContainer");
   if (!imageContainer) {
     console.error("Element mit ID 'imageContainer' nicht gefunden.");
     return;
   }
 
-  const uploadedImages =
-    JSON.parse(sessionStorage.getItem("uploadedImages")) || [];
-
-  if (uploadedImages.length === 0) {
-    console.log("Keine gespeicherten Bilder im sessionStorage gefunden.");
+  // Hole das ausgewählte Bild direkt vom Input
+  const fileInput = document.getElementById("fileToUpload");
+  
+  if (!fileInput.files || fileInput.files.length === 0) {
+    console.log("Keine Datei im Input gefunden.");
     return;
   }
 
-  uploadedImages.forEach((imageData, index) => {
+  const file = fileInput.files[0];
+  const reader = new FileReader();
+  
+  reader.onload = function(e) {
     const imgContainer = document.createElement("div");
-
     const img = document.createElement("img");
-    img.src = imageData; // Base64 oder URL
-    img.alt = `Bild ${index + 1}`;
+    img.src = e.target.result;
+    img.alt = file.name;
     img.style.width = "200px";
     img.style.height = "auto";
-
-    // Entfernen-Button erstellen
-    const removeButton = document.createElement("span");
-    removeButton.innerText = "X";
-    removeButton.style.cursor = "pointer";
-    removeButton.style.marginLeft = "10px";
-    removeButton.style.color = "red";
-
-    removeButton.addEventListener("click", () => {
-      uploadedImages.splice(index, 1); // Bild aus dem Array entfernen
-      sessionStorage.setItem("uploadedImages", JSON.stringify(uploadedImages)); // SessionStorage aktualisieren
-      imgContainer.remove(); // Bild aus der Vorschau entfernen
-    });
-
+    
     imgContainer.appendChild(img);
-    imgContainer.appendChild(removeButton);
     imageContainer.appendChild(imgContainer);
-  });
-}
-
-function goToAdd() {
-  window.location.href = "./add.html";
+  };
+  
+  reader.readAsDataURL(file);
 }
 
 async function saveLocation() {
-  // ...sammle alle Felder wie bisher...
+  // Sammle alle Felder
   const name = sessionStorage.getItem("name");
   const latitude = sessionStorage.getItem("latitude");
   const longitude = sessionStorage.getItem("longitude");
@@ -413,20 +395,25 @@ async function saveLocation() {
   const opening_hours = sessionStorage.getItem("OpeningHours");
   const season = sessionStorage.getItem("Season");
   const price_range = sessionStorage.getItem("Price");
-  const accessibility = sessionStorage.getItem("Accessibility");
+  
+  // Accessibility als Integer (1 wenn vorhanden, sonst 0)
+  const accessibilityText = sessionStorage.getItem("Accessibility") || '';
+  const accessibility = accessibilityText.trim() !== '' ? 1 : 0;
+  
   const website_url = sessionStorage.getItem("Website");
   const special_features = sessionStorage.getItem("SpecialFeatures");
   const comments = sessionStorage.getItem("Comments");
   const created_by = await getCurrentUserId();
 
-  // Bild holen
+  // Prüfe ob ein Bild ausgewählt wurde
   const fileInput = document.getElementById("fileToUpload");
-  const file = fileInput.files[0];
-
-  if (!file) {
-    alert("Bitte wähle ein Bild aus!");
+  
+  if (!fileInput.files || fileInput.files.length === 0) {
+    alert("Bitte wähle mindestens ein Bild aus!");
     return;
   }
+
+  const file = fileInput.files[0];
 
   // FormData für multipart/form-data
   const formData = new FormData();
@@ -439,32 +426,40 @@ async function saveLocation() {
   formData.append("opening_hours", opening_hours);
   formData.append("season", season);
   formData.append("price_range", price_range);
-  formData.append("accessibility", accessibility);
+  formData.append("accessibility", accessibility); // Integer-Wert
   formData.append("website_url", website_url);
   formData.append("special_features", special_features);
-  formData.append("comments", comments);
+  formData.append("comments", comments === "Enabled" ? "1" : "0");
   formData.append("created_by", created_by);
   formData.append("fileToUpload", file);
 
-  // Sende an das Backend
-  fetch("./add.php", {
-    method: "POST",
-    body: formData,
-  })
-    .then((response) => response.text())
-    //.then((response) => response.json())
+  try {
+    // Sende an das Backend
+    const uploadResponse = await fetch("./add.php", {
+      method: "POST",
+      body: formData,
+    });
 
-    .then((data) => {
+    const responseText = await uploadResponse.text();
+    console.log("Server response:", responseText);
+    
+    try {
+      const data = JSON.parse(responseText);
       if (data.code === 200) {
         alert("Ort und Bild erfolgreich gespeichert!");
+        sessionStorage.clear(); // Clear all session data
         window.location.href = "../../index.html";
       } else {
         alert("Fehler beim Hochladen: " + data.message);
       }
-    })
-    .catch((error) => {
-      alert("Fehler beim Hochladen: " + error);
-    });
+    } catch (e) {
+      console.error("JSON Parse Error:", e);
+      alert("Fehler beim Hochladen: Server-Antwort konnte nicht verarbeitet werden");
+    }
+  } catch (error) {
+    console.error("Fehler beim Hochladen:", error);
+    alert("Fehler beim Hochladen: " + error.message);
+  }
 }
 
 function uploadNewLocation(locationData) {
