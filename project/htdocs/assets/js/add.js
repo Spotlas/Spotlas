@@ -39,8 +39,8 @@ if (progress / 50 === 2) {
 }
 
 window.onload = function () {
-  const fileInput = document.getElementById("fileToUpload"); // Korrigierte ID
-  const dropArea = document.getElementById("fileUpload"); // Korrigierte ID
+  const fileInput = document.getElementById("fileToUpload");
+  const dropArea = document.getElementById("fileUpload");
   const imagePreview = document.getElementById("imagePreview");
 
   if (!dropArea) {
@@ -75,50 +75,137 @@ window.onload = function () {
   function handleFiles(files) {
     if (!files || files.length === 0) return;
     
-    const uploadedImages = [];
-    const file = files[0]; // Nur das erste Bild verwenden
+    // Array für hochgeladene Bilder - vorhandene aus sessionStorage holen oder neu erstellen
+    let uploadedImages = JSON.parse(sessionStorage.getItem("uploadedImages")) || [];
     
-    if (file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const imgContainer = document.createElement("div");
-        const img = document.createElement("img");
-        img.src = e.target.result;
-        img.style.width = "200px";
-        img.style.height = "auto";
+    // Durch alle Dateien iterieren
+    Array.from(files).forEach(file => {
+      if (file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const imgContainer = document.createElement("div");
+          imgContainer.className = "image-preview-container";
+          imgContainer.style.display = "inline-block";
+          imgContainer.style.position = "relative";
+          imgContainer.style.margin = "10px";
+          
+          const img = document.createElement("img");
+          img.src = e.target.result;
+          img.style.width = "150px";
+          img.style.height = "auto";
+          img.style.display = "block";
 
-        // Speichere das Bild als Base64 in sessionStorage
-        uploadedImages.push(e.target.result);
-        sessionStorage.setItem("uploadedImages", JSON.stringify(uploadedImages));
-        sessionStorage.setItem("selectedFile", e.target.result);
+          // Eindeutige ID für das Bild generieren
+          const imageId = "img_" + new Date().getTime() + "_" + Math.random().toString(36).substr(2, 9);
+          img.dataset.id = imageId;
+
+          // Speichere das Bild in uploadedImages
+          uploadedImages.push({
+            id: imageId,
+            data: e.target.result,
+            name: file.name
+          });
+          
+          // Aktualisiere sessionStorage
+          sessionStorage.setItem("uploadedImages", JSON.stringify(uploadedImages));
+          
+          // Update Label mit Anzahl der Bilder
+          document.getElementById("uploadLabel").innerHTML = 
+            `📁 ${uploadedImages.length} Datei(en) ausgewählt`;
+
+          // Erstelle ein "X"-Element zum Entfernen
+          const removeButton = document.createElement("span");
+          removeButton.innerText = "X";
+          removeButton.style.position = "absolute";
+          removeButton.style.top = "5px";
+          removeButton.style.right = "5px";
+          removeButton.style.cursor = "pointer";
+          removeButton.style.backgroundColor = "rgba(255,0,0,0.7)";
+          removeButton.style.color = "white";
+          removeButton.style.borderRadius = "50%";
+          removeButton.style.width = "20px";
+          removeButton.style.height = "20px";
+          removeButton.style.textAlign = "center";
+          removeButton.style.lineHeight = "20px";
+
+          removeButton.addEventListener("click", () => {
+            imgContainer.remove();
+            
+            // Entferne das Bild aus dem Array
+            uploadedImages = uploadedImages.filter(img => img.id !== imageId);
+            sessionStorage.setItem("uploadedImages", JSON.stringify(uploadedImages));
+            
+            // Update Label
+            document.getElementById("uploadLabel").innerHTML = uploadedImages.length > 0 ? 
+              `📁 ${uploadedImages.length} Datei(en) ausgewählt` : 
+              "📁 Bilder auswählen oder hierher ziehen";
+              
+            // Falls keine Bilder mehr vorhanden, Input zurücksetzen
+            if (uploadedImages.length === 0) {
+              fileInput.value = "";
+            }
+          });
+
+          imgContainer.appendChild(img);
+          imgContainer.appendChild(removeButton);
+          imagePreview.appendChild(imgContainer);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+  
+  // Lade bestehende Bilder beim Start
+  let existingImages = JSON.parse(sessionStorage.getItem("uploadedImages")) || [];
+  if (existingImages.length > 0) {
+    existingImages.forEach(imageData => {
+      const imgContainer = document.createElement("div");
+      imgContainer.className = "image-preview-container";
+      imgContainer.style.display = "inline-block";
+      imgContainer.style.position = "relative";
+      imgContainer.style.margin = "10px";
+      
+      const img = document.createElement("img");
+      img.src = imageData.data;
+      img.dataset.id = imageData.id;
+      img.style.width = "150px";
+      img.style.height = "auto";
+      img.style.display = "block";
+
+      const removeButton = document.createElement("span");
+      removeButton.innerText = "X";
+      removeButton.style.position = "absolute";
+      removeButton.style.top = "5px";
+      removeButton.style.right = "5px";
+      removeButton.style.cursor = "pointer";
+      removeButton.style.backgroundColor = "rgba(255,0,0,0.7)";
+      removeButton.style.color = "white";
+      removeButton.style.borderRadius = "50%";
+      removeButton.style.width = "20px";
+      removeButton.style.height = "20px";
+      removeButton.style.textAlign = "center";
+      removeButton.style.lineHeight = "20px";
+
+      removeButton.addEventListener("click", () => {
+        imgContainer.remove();
+        
+        // Entferne das Bild aus dem Array
+        existingImages = existingImages.filter(img => img.id !== imageData.id);
+        sessionStorage.setItem("uploadedImages", JSON.stringify(existingImages));
         
         // Update Label
-        document.getElementById("uploadLabel").innerHTML = 
-          `📁 Datei ausgewählt: <strong>${file.name}</strong>`;
+        document.getElementById("uploadLabel").innerHTML = existingImages.length > 0 ? 
+          `📁 ${existingImages.length} Datei(en) ausgewählt` : 
+          "📁 Bilder auswählen oder hierher ziehen";
+      });
 
-        // Erstelle ein "X"-Element zum Entfernen
-        const removeButton = document.createElement("span");
-        removeButton.innerText = "X";
-        removeButton.style.cursor = "pointer";
-        removeButton.style.marginLeft = "5px";
-        removeButton.style.color = "red";
-
-        removeButton.addEventListener("click", () => {
-          imgContainer.remove();
-          sessionStorage.removeItem("uploadedImages");
-          sessionStorage.removeItem("selectedFile");
-          fileInput.value = "";
-          document.getElementById("uploadLabel").innerHTML = 
-            "📁 Bild auswählen oder hierher ziehen";
-        });
-
-        imgContainer.appendChild(img);
-        imgContainer.appendChild(removeButton);
-        imagePreview.innerHTML = ""; // Clear previous previews
-        imagePreview.appendChild(imgContainer);
-      };
-      reader.readAsDataURL(file);
-    }
+      imgContainer.appendChild(img);
+      imgContainer.appendChild(removeButton);
+      imagePreview.appendChild(imgContainer);
+    });
+    
+    // Update Label
+    document.getElementById("uploadLabel").innerHTML = `📁 ${existingImages.length} Datei(en) ausgewählt`;
   }
 };
 
@@ -357,31 +444,33 @@ function loadAll() {
     console.error("Element mit ID 'imageContainer' nicht gefunden.");
     return;
   }
-
-  // Hole das ausgewählte Bild direkt vom Input
-  const fileInput = document.getElementById("fileToUpload");
   
-  if (!fileInput.files || fileInput.files.length === 0) {
-    console.log("Keine Datei im Input gefunden.");
+  // Bilder aus sessionStorage laden
+  const uploadedImages = JSON.parse(sessionStorage.getItem("uploadedImages")) || [];
+  
+  if (uploadedImages.length === 0) {
+    console.log("Keine gespeicherten Bilder gefunden.");
     return;
   }
-
-  const file = fileInput.files[0];
-  const reader = new FileReader();
   
-  reader.onload = function(e) {
+  // Container leeren
+  imageContainer.innerHTML = "";
+  
+  // Alle Bilder anzeigen
+  uploadedImages.forEach((imageData) => {
     const imgContainer = document.createElement("div");
+    imgContainer.style.display = "inline-block";
+    imgContainer.style.margin = "10px";
+    
     const img = document.createElement("img");
-    img.src = e.target.result;
-    img.alt = file.name;
-    img.style.width = "200px";
+    img.src = imageData.data;
+    img.alt = imageData.name || "Vorschaubild";
+    img.style.width = "150px";
     img.style.height = "auto";
     
     imgContainer.appendChild(img);
     imageContainer.appendChild(imgContainer);
-  };
-  
-  reader.readAsDataURL(file);
+  });
 }
 
 async function saveLocation() {
@@ -395,25 +484,19 @@ async function saveLocation() {
   const opening_hours = sessionStorage.getItem("OpeningHours");
   const season = sessionStorage.getItem("Season");
   const price_range = sessionStorage.getItem("Price");
-  
-  // Accessibility als Integer (1 wenn vorhanden, sonst 0)
-  const accessibilityText = sessionStorage.getItem("Accessibility") || '';
-  const accessibility = accessibilityText.trim() !== '' ? 1 : 0;
-  
+  const accessibility = sessionStorage.getItem("Accessibility") ? 1 : 0;
   const website_url = sessionStorage.getItem("Website");
   const special_features = sessionStorage.getItem("SpecialFeatures");
   const comments = sessionStorage.getItem("Comments");
   const created_by = await getCurrentUserId();
 
-  // Prüfe ob ein Bild ausgewählt wurde
-  const fileInput = document.getElementById("fileToUpload");
+  // Prüfe ob Bilder ausgewählt wurden
+  const uploadedImages = JSON.parse(sessionStorage.getItem("uploadedImages")) || [];
   
-  if (!fileInput.files || fileInput.files.length === 0) {
+  if (uploadedImages.length === 0) {
     alert("Bitte wähle mindestens ein Bild aus!");
     return;
   }
-
-  const file = fileInput.files[0];
 
   // FormData für multipart/form-data
   const formData = new FormData();
@@ -426,12 +509,47 @@ async function saveLocation() {
   formData.append("opening_hours", opening_hours);
   formData.append("season", season);
   formData.append("price_range", price_range);
-  formData.append("accessibility", accessibility); // Integer-Wert
+  formData.append("accessibility", accessibility);
   formData.append("website_url", website_url);
   formData.append("special_features", special_features);
   formData.append("comments", comments === "Enabled" ? "1" : "0");
   formData.append("created_by", created_by);
-  formData.append("fileToUpload", file);
+  formData.append("imageCount", uploadedImages.length);
+
+  // Konvertiere die Base64-Bilder zu Blobs und füge sie zu FormData hinzu
+  const blobPromises = uploadedImages.map((img, index) => {
+    return new Promise((resolve) => {
+      // Extrahiere Base64-Daten
+      const base64Data = img.data.split(',')[1];
+      // Bestimme den MIME-Typ aus dem data-URL-Header
+      const mimeType = img.data.split(',')[0].split(':')[1].split(';')[0];
+      
+      // Konvertiere Base64 zu Blob
+      const byteCharacters = atob(base64Data);
+      const byteArrays = [];
+
+      for (let i = 0; i < byteCharacters.length; i += 512) {
+        const slice = byteCharacters.slice(i, i + 512);
+        const byteNumbers = new Array(slice.length);
+        
+        for (let j = 0; j < slice.length; j++) {
+          byteNumbers[j] = slice.charCodeAt(j);
+        }
+        
+        byteArrays.push(new Uint8Array(byteNumbers));
+      }
+
+      const blob = new Blob(byteArrays, { type: mimeType });
+      const file = new File([blob], img.name || `image_${index}.jpg`, { type: mimeType });
+      
+      // Füge die Datei zu FormData hinzu
+      formData.append(`fileToUpload_${index}`, file);
+      resolve();
+    });
+  });
+
+  // Warte bis alle Blobs erstellt und zu FormData hinzugefügt wurden
+  await Promise.all(blobPromises);
 
   try {
     // Sende an das Backend
@@ -446,8 +564,8 @@ async function saveLocation() {
     try {
       const data = JSON.parse(responseText);
       if (data.code === 200) {
-        alert("Ort und Bild erfolgreich gespeichert!");
-        sessionStorage.clear(); // Clear all session data
+        alert("Ort und Bilder erfolgreich gespeichert!");
+        sessionStorage.clear();
         window.location.href = "../../index.html";
       } else {
         alert("Fehler beim Hochladen: " + data.message);

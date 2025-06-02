@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $special_features = $_POST['special_features'] ?? '';
         $comments = isset($_POST['comments']) ? 1 : 0;
         $created_by = $_SESSION['user_id'] ?? null;
+        $imageCount = intval($_POST['imageCount'] ?? 0);
 
         if (!$created_by) {
             echo json_encode(["code" => 401, "message" => "User not logged in"]);
@@ -48,29 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // Bild-Upload prüfen
-        if (!isset($_FILES['fileToUpload']) || $_FILES['fileToUpload']['error'] !== UPLOAD_ERR_OK) {
-            echo json_encode(["code" => 400, "message" => "Bild ist erforderlich. Upload-Fehler: " . ($_FILES['fileToUpload']['error'] ?? 'Keine Datei')]);
+        // Prüfen, ob mindestens ein Bild vorhanden ist
+        if ($imageCount === 0) {
+            echo json_encode(["code" => 400, "message" => "Mindestens ein Bild ist erforderlich"]);
             exit;
         }
-
-        $file = $_FILES['fileToUpload'];
-        $targetDir = "../../uploads/";
-        
-        // Erstelle Upload-Verzeichnis falls nicht vorhanden
-        if (!file_exists($targetDir)) {
-            mkdir($targetDir, 0777, true);
-        }
-        
-        $uniqueName = uniqid() . "_" . basename($file["name"]);
-        $targetFile = $targetDir . $uniqueName;
-        
-        if (!move_uploaded_file($file["tmp_name"], $targetFile)) {
-            echo json_encode(["code" => 500, "message" => "Fehler beim Speichern des Bildes"]);
-            exit;
-        }
-        
-        $image_url = "uploads/" . $uniqueName;
 
         // Kategorie-ID ermitteln
         $category_name = $category;
@@ -84,43 +67,90 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $cat_stmt->close();
 
         if (!$category_id) {
-            // Cleanup: Lösche das hochgeladene Bild
-            if (file_exists($targetFile)) {
-                unlink($targetFile);
-            }
             echo json_encode(["code" => 400, "message" => "Ungültige Kategorie: " . $category_name]);
             exit;
         }
 
         // Location speichern
         $stmt = $conn->prepare("INSERT INTO Locations (name, latitude, longitude, address, description, category_id, opening_hours, season, price_range, accessibility, website_url, special_features, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sddsssississi", $name, $latitude, $longitude, $address, $description, $category_id, $opening_hours, $season, $price_range, $accessibility, $website_url, $special_features, $created_by);
+        $stmt->bind_param("sddssississsi", $name, $latitude, $longitude, $address, $description, $category_id, $opening_hours, $season, $price_range, $accessibility, $website_url, $special_features, $created_by);
         
         if ($stmt->execute()) {
             $locationId = $conn->insert_id;
             $stmt->close();
-
-            // Bildpfad in Images-Tabelle speichern
-            $stmtImg = $conn->prepare("INSERT INTO Images (location_id, image_url, description) VALUES (?, ?, ?)");
-            $imgDesc = "Main image";
-            $stmtImg->bind_param("iss", $locationId, $image_url, $imgDesc);
             
-            if ($stmtImg->execute()) {
-                $stmtImg->close();
-                echo json_encode(["code" => 200, "message" => "Location und Bild erfolgreich gespeichert", "location_id" => $locationId]);
-            } else {
-                // Rollback: Lösche Location und Bild
-                $conn->prepare("DELETE FROM Locations WHERE id = ?")->bind_param("i", $locationId)->execute();
-                if (file_exists($targetFile)) {
-                    unlink($targetFile);
+            $uploadedImages = [];
+            $uploadErrors = [];
+            
+            // Alle hochgeladenen Bilder verarbeiten
+            for ($i = 0; $i < $imageCount; $i++) {
+                $fileKey = "fileToUpload_" . $i;
+                
+                if (isset($_FILES[$fileKey]) && $_FILES[$fileKey]['error'] === UPLOAD_ERR_OK) {
+                    $file = $_FILES[$fileKey];
+                    $targetDir = "../../uploads/";
+                    
+                    // Erstelle Upload-Verzeichnis falls nicht vorhanden
+                    if (!file_exists($targetDir)) {
+                        mkdir($targetDir, 0777, true);
+                    }
+                    
+                    $uniqueName = uniqid() . "_" . basename($file["name"]);
+                    $targetFile = $targetDir . $uniqueName;
+                    
+                    if (move_uploaded_file($file["tmp_name"], $targetFile)) {
+                        $image_url = "uploads/" . $uniqueName;
+                        
+                        // Bildpfad in Images-Tabelle speichern
+                        $stmtImg = $conn->prepare("INSERT INTO Images (location_id, image_url, description) VALUES (?, ?, ?)");
+                        $imgDesc = $i === 0 ? "Main image" : "Additional image " . $i;
+                        $stmtImg->bind_param("iss", $locationId, $image_url, $imgDesc);
+                        
+                        if ($stmtImg->execute()) {
+                            $uploadedImages[] = [
+                                "image_id" => $conn->insert_id,
+                                "url" => $image_url
+                            ];
+                        } else {
+                            $uploadErrors[] = "Fehler beim Speichern des Bildes " . $i . " in der Datenbank: " . $stmtImg->error;
+                        }
+                        $stmtImg->close();
+                    } else {
+                        $uploadErrors[] = "Fehler beim Speichern des Bildes " . $i . " auf dem Server";
+                    }
+                } else {
+                    $errorCode = $_FILES[$fileKey]['error'] ?? 'Unbekannt';
+                    $uploadErrors[] = "Fehler beim Hochladen des Bildes " . $i . " (Code: " . $errorCode . ")";
                 }
-                echo json_encode(["code" => 500, "message" => "Fehler beim Speichern des Bildes in der Datenbank: " . $stmtImg->error]);
             }
+            
+            // Rückmeldung zum Client
+            if (count($uploadedImages) > 0) {
+                $response = [
+                    "code" => 200,
+                    "message" => "Location erfolgreich gespeichert mit " . count($uploadedImages) . " Bild(ern)",
+                    "location_id" => $locationId,
+                    "images" => $uploadedImages
+                ];
+                
+                if (count($uploadErrors) > 0) {
+                    $response["warnings"] = $uploadErrors;
+                }
+                
+                echo json_encode($response);
+            } else {
+                // Wenn gar keine Bilder hochgeladen wurden, Location wieder löschen
+                $stmt = $conn->prepare("DELETE FROM Locations WHERE id = ?");
+                $stmt->bind_param("i", $locationId);
+                $stmt->execute();
+                echo json_encode([
+                    "code" => 500, 
+                    "message" => "Location wurde erstellt, aber keine Bilder konnten hochgeladen werden", 
+                    "errors" => $uploadErrors
+                ]);
+            }
+            
         } else {
-            // Cleanup: Lösche das hochgeladene Bild
-            if (file_exists($targetFile)) {
-                unlink($targetFile);
-            }
             echo json_encode(["code" => 500, "message" => "Fehler beim Speichern der Location: " . $stmt->error]);
         }
         
