@@ -1,7 +1,6 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
-require("./mysql.php");
-session_start();
+require_once("./mariaDB.php");  // Verwende mariaDB.php statt mysql.php für Konsistenz
 
 // Default response
 $response = [
@@ -12,10 +11,11 @@ $response = [
 
 // Get images by location ID
 if (isset($_GET['location_id'])) {
-    $locationId = $_GET['location_id'];
+    $locationId = intval($_GET['location_id']);
     
     try {
-        $stmt = $mysql->prepare("SELECT id, location_id, image_url, description, creation_date, status_id FROM images WHERE location_id = ? ORDER BY creation_date DESC");
+        // Tabellennamen korrigieren: "Images" statt "images"
+        $stmt = $conn->prepare("SELECT id, location_id, image_url, description, creation_date, status_id FROM Images WHERE location_id = ? ORDER BY creation_date DESC");
         $stmt->bind_param("i", $locationId);
         
         if ($stmt->execute()) {
@@ -35,24 +35,27 @@ if (isset($_GET['location_id'])) {
             
             $response = [
                 "code" => 200,
-                "message" => "Images retrieved successfully",
+                "message" => count($images) > 0 ? "Images retrieved successfully" : "No images found for this location",
                 "images" => $images
             ];
         } else {
+            $response["code"] = 500;
             $response["message"] = "Error executing query: " . $stmt->error;
         }
         
         $stmt->close();
     } catch (Exception $e) {
+        $response["code"] = 500;
         $response["message"] = "Database error: " . $e->getMessage();
     }
 } 
 // Get a specific image by ID
 else if (isset($_GET['image_id'])) {
-    $imageId = $_GET['image_id'];
+    $imageId = intval($_GET['image_id']);
     
     try {
-        $stmt = $mysql->prepare("SELECT id, location_id, image_url, description, creation_date, status_id FROM images WHERE id = ?");
+        // Tabellennamen korrigieren: "Images" statt "images"
+        $stmt = $conn->prepare("SELECT id, location_id, image_url, description, creation_date, status_id FROM Images WHERE id = ?");
         $stmt->bind_param("i", $imageId);
         
         if ($stmt->execute()) {
@@ -72,17 +75,22 @@ else if (isset($_GET['image_id'])) {
                     ]
                 ];
             } else {
+                $response["code"] = 404;
                 $response["message"] = "Image not found";
             }
         } else {
+            $response["code"] = 500;
             $response["message"] = "Error executing query: " . $stmt->error;
         }
         
         $stmt->close();
     } catch (Exception $e) {
+        $response["code"] = 500;
         $response["message"] = "Database error: " . $e->getMessage();
     }
 }
 
+// Stellen Sie sicher, dass die Ausgabe ein gültiges JSON ist
 echo json_encode($response);
+exit;
 ?>

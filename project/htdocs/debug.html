@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Debug</title>
+    <link rel="stylesheet" href="./assets/css/gallery.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #result {
+            white-space: pre-wrap;
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        button, input {
+            margin-top: 10px;
+            padding: 8px;
+        }
+        #test-gallery {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>API Debug Tool</h1>
+    
+    <h2>Test Images API</h2>
+    <div>
+        <label for="location-id">Location ID:</label>
+        <input type="number" id="location-id" value="1">
+        <button onclick="testImagesApi()">Test Images API</button>
+    </div>
+    
+    <h2>Test Gallery Display</h2>
+    <div>
+        <label for="gallery-location-id">Location ID für Galerie:</label>
+        <input type="number" id="gallery-location-id" value="1">
+        <button onclick="testGallery()">Galerie anzeigen</button>
+    </div>
+    
+    <div id="test-gallery"></div>
+    <pre id="result"></pre>
+    
+    <script src="./assets/js/gallery.js"></script>
+    <script>
+        // API direkt testen
+        function testImagesApi() {
+            const locationId = document.getElementById('location-id').value;
+            const resultArea = document.getElementById('result');
+            resultArea.textContent = "Loading...";
+            
+            fetch(`./api/images.php?location_id=${locationId}`)
+                .then(response => response.text())
+                .then(text => {
+                    resultArea.textContent = text;
+                    try {
+                        const json = JSON.parse(text);
+                        console.log("JSON Response:", json);
+                    } catch (e) {
+                        console.error("Invalid JSON:", e);
+                    }
+                })
+                .catch(error => {
+                    resultArea.textContent = "Error: " + error.message;
+                });
+        }
+        
+        // Galerie testen
+        function testGallery() {
+            const locationId = document.getElementById('gallery-location-id').value;
+            const container = document.getElementById('test-gallery');
+            container.innerHTML = '<div class="location-images"></div>';
+            
+            displayLocationImages(locationId, '#test-gallery .location-images');
+        }
+    </script>
+</body>
+</html>
