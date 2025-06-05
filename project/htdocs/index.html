@@ -48,7 +48,6 @@
     <!-- Karten JavaScript -->
     <!-- <script src="./assets/js/fullscreen.js" defer></script> -->
     <script src="./assets/js/index.js" defer></script>
-    <script src="./assets/js/gallery.js" defer></script>
   </head>
   <body>
     <header id="homepage_header">
@@ -168,50 +167,5 @@
     <div id="homepage_footer"></div>
 
     <script src="./assets/js/fetches.js"></script>
-    <script src="./assets/js/gallery.js"></script>
-    <script>
-document.addEventListener('DOMContentLoaded', async function() {
-    try {
-        // Locations von der API holen
-        const response = await fetch('./api/home.php');
-        const data = await response.json();
-        
-        if (data.code === 200 && data.locations && data.locations.length > 0) {
-            const container = document.getElementById('locations-container') || document.createElement('div');
-            container.id = 'locations-container';
-            
-            if (!container.parentElement) {
-                document.querySelector('main') ? document.querySelector('main').appendChild(container) : document.body.appendChild(container);
-            }
-            
-            // Container leeren
-            container.innerHTML = '';
-            
-            // Für jede Location eine Karte erstellen
-            data.locations.forEach(location => {
-                const card = document.createElement('div');
-                card.className = 'location-card';
-                card.setAttribute('data-id', location.id);
-                
-                card.innerHTML = `
-                    <div class="location-content">
-                        <h3>${location.name}</h3>
-                        <p class="location-description">${location.description || ''}</p>
-                        <div class="card-actions">
-                            <a href="./pages/location/location.html?id=${location.id}" class="location-details-btn">Details</a>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-            
-            // Gallery-Funktionen initialisieren
-            setupGalleries();
-        }
-    } catch (error) {
-        console.error('Fehler beim Laden der Locations:', error);
-    }
-});
-</script>
   </body>
 </html>

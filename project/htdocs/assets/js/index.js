@@ -102,6 +102,8 @@ function addMarkersToMap(points) {
           <div class="main-image-container">
             <img id="img_big" src="${point.image || './assets/images/placeholder.jpg'}" alt="${point.name}" class="main-image">
           </div>
+          <div class="location-images"></div> <!-- <--- DAS FEHLT -->
+
           
           <!-- Category and rating info -->
           <div id="spot_infos">
@@ -131,6 +133,9 @@ function addMarkersToMap(points) {
       `);
 
       fetchLocationDetails(point.id);
+
+      // Füge das nach openSidebarWithContent(...) ein
+      displayLocationImages(point.id, '#homepage_karte_sidebar .location-images');
       
       // Add click event listener to the save button
       const saveButton = document.getElementById("img_saveButton");
@@ -495,4 +500,47 @@ function removeFavoriteLocation(id, userId) {
         saveButton.setAttribute('data-is-saved', 'true');
       }
     });
+}
+
+
+/**
+ * Zeigt alle Bilder einer Location in einem Ziel-Container an.
+ * @param {number} locationId - Die ID des Ortes.
+ * @param {string} selector - CSS-Selector für das Ziel-Element (z.B. '.location-images').
+ */
+function displayLocationImages(locationId, selector) {
+    console.log(`displayLocationImages aufgerufen mit: locationId=${locationId}, selector=${selector}`);
+    const container = document.querySelector(selector);
+    if (!container) {
+        console.error('Ziel-Container für Bilder nicht gefunden:', selector);
+        return;
+    }
+
+    container.innerHTML = '<div>Lade Bilder...</div>';
+
+    fetch(`./api/images.php?location_id=${locationId}`)
+        .then(response => response.json())
+        .then(result => {
+            const images = result.images;
+            container.innerHTML = '';
+
+            console.log(`Bilder für Location ${locationId} geladen:`, images);
+
+            if (!Array.isArray(images) || images.length === 0) {
+                container.innerHTML = '<div>Keine Bilder verfügbar.</div>';
+                return;
+            }
+
+            images.forEach(img => {
+                const imgElem = document.createElement('img');
+                imgElem.src = img.image_url || img.path || img.url;
+                imgElem.alt = img.alt || '';
+                imgElem.classList.add('gallery-image');
+                container.appendChild(imgElem);
+            });
+        })
+        .catch(err => {
+            console.error('Fehler beim Laden der Bilder:', err);
+            container.innerHTML = '<div>Fehler beim Laden der Bilder.</div>';
+        });
 }
