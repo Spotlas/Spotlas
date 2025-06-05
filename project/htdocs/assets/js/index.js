@@ -509,14 +509,13 @@ function removeFavoriteLocation(id, userId) {
  * @param {string} selector - CSS-Selector für das Ziel-Element (z.B. '.location-images').
  */
 function displayLocationImages(locationId, selector) {
-    console.log(`displayLocationImages aufgerufen mit: locationId=${locationId}, selector=${selector}`);
     const container = document.querySelector(selector);
     if (!container) {
         console.error('Ziel-Container für Bilder nicht gefunden:', selector);
         return;
     }
 
-    container.innerHTML = '<div>Lade Bilder...</div>';
+    container.innerHTML = '<div class="loading">Lade Bilder...</div>';
 
     fetch(`./api/images.php?location_id=${locationId}`)
         .then(response => response.json())
@@ -524,23 +523,50 @@ function displayLocationImages(locationId, selector) {
             const images = result.images;
             container.innerHTML = '';
 
-            console.log(`Bilder für Location ${locationId} geladen:`, images);
-
             if (!Array.isArray(images) || images.length === 0) {
-                container.innerHTML = '<div>Keine Bilder verfügbar.</div>';
+                container.innerHTML = '<div class="no-images">Keine Bilder verfügbar.</div>';
                 return;
             }
 
-            images.forEach(img => {
-                const imgElem = document.createElement('img');
-                imgElem.src = img.image_url || img.path || img.url;
-                imgElem.alt = img.alt || '';
-                imgElem.classList.add('gallery-image');
-                container.appendChild(imgElem);
+            // Hauptbild initial auf das erste Bild setzen
+            let currentIndex = 0;
+
+            // Hauptbild-Container
+            const mainImageDiv = document.createElement('div');
+            mainImageDiv.className = 'main-image';
+
+            const mainImg = document.createElement('img');
+            mainImg.src = images[0].image_url || images[0].path || images[0].url;
+            mainImg.alt = images[0].alt || '';
+            mainImageDiv.appendChild(mainImg);
+
+            // Thumbnail-Leiste
+            const thumbnailsDiv = document.createElement('div');
+            thumbnailsDiv.className = 'thumbnails';
+
+            images.forEach((img, idx) => {
+                const thumb = document.createElement('div');
+                thumb.className = 'thumbnail' + (idx === 0 ? ' active' : '');
+                const tImg = document.createElement('img');
+                tImg.src = img.image_url || img.path || img.url;
+                tImg.alt = img.alt || '';
+                thumb.appendChild(tImg);
+
+                thumb.addEventListener('click', () => {
+                    mainImg.src = tImg.src;
+                    // Aktive Klasse setzen
+                    thumbnailsDiv.querySelectorAll('.thumbnail').forEach(th => th.classList.remove('active'));
+                    thumb.classList.add('active');
+                });
+
+                thumbnailsDiv.appendChild(thumb);
             });
+
+            container.appendChild(mainImageDiv);
+            container.appendChild(thumbnailsDiv);
         })
         .catch(err => {
             console.error('Fehler beim Laden der Bilder:', err);
-            container.innerHTML = '<div>Fehler beim Laden der Bilder.</div>';
+            container.innerHTML = '<div class="error">Fehler beim Laden der Bilder.</div>';
         });
 }
