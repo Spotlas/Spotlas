@@ -1,58 +1,74 @@
-/* Gallery Styling */
+/* ===== Sidebar Gallery ===== */
 
-/* Galerie-Container */
 .location-images {
-    margin: 15px 0;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
+    margin: 14px 0 18px 0;
+    padding: 14px 12px 10px 12px;
+    border-radius: 16px;
+    box-shadow: 0 1px 8px rgba(50,50,50,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Hauptbild */
 .main-image {
     width: 100%;
-    height: 250px;
+    max-width: 370px;
+    height: 165px;
+    border-radius: 12px;
     overflow: hidden;
-    border-radius: 8px;
-    margin-bottom: 10px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.09);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    position: relative;
 }
 
 .main-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    border-radius: 12px;
+    transition: transform 0.25s cubic-bezier(.4,0,.2,1);
 }
 
 .main-image img:hover {
-    transform: scale(1.02);
+    transform: scale(1.025);
 }
 
-/* Thumbnails */
 .thumbnails {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    flex-wrap: nowrap;
+    gap: 12px;
     justify-content: flex-start;
+    width: 100%;
+    max-width: 370px;
+    margin-bottom: 4px;
 }
 
 .thumbnail {
-    width: 60px;
-    height: 60px;
-    border-radius: 4px;
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
     border: 2px solid transparent;
-    opacity: 0.7;
-    transition: all 0.3s ease;
-}
-
-.thumbnail:hover {
-    opacity: 0.9;
+    background: #f2f2f2;
+    box-shadow: 0 1px 5px rgba(60,60,60,0.07);
+    opacity: 0.82;
+    transition: border 0.2s, opacity 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .thumbnail.active {
-    border-color: #4CAF50;
+    border: 2px solid #19ad6e;
+    opacity: 1;
+    background: #fff;
+}
+
+.thumbnail:hover {
     opacity: 1;
 }
 
@@ -60,47 +76,55 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 8px;
 }
 
-/* Button zum Ein-/Ausblenden der Bilder */
-.show-images-btn {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 12px;
-    cursor: pointer;
-    margin-top: 10px;
-    font-size: 14px;
-    transition: background-color 0.3s;
-}
-
-.show-images-btn:hover {
-    background-color: #45a049;
-}
-
-/* Status-Anzeigen */
-.loading, .no-images, .error {
-    padding: 15px;
+/* Status-/Fehlermeldungen */
+.loading,
+.no-images,
+.error {
+    width: 100%;
+    padding: 20px 0 10px 0;
     text-align: center;
+    font-size: 1.04em;
+    color: #aaa;
     font-style: italic;
-    color: #666;
+    letter-spacing: 0.02em;
 }
 
 .error {
-    color: #e74c3c;
-    background-color: #fadbd8;
-    border-radius: 4px;
+    color: #c32a1d;
+    background: #fff0ee;
+    border-radius: 6px;
 }
 
-/* Responsive Design */
-@media (min-width: 768px) {
-    .main-image {
-        height: 350px;
+/* Responsive: Sidebar/Handy */
+@media (max-width: 700px) {
+    .main-image, .thumbnails {
+        max-width: 98vw;
     }
-    
+    .main-image {
+        height: 110px;
+    }
     .thumbnail {
-        width: 80px;
-        height: 80px;
+        width: 38px;
+        height: 38px;
+    }
+    .location-images {
+        padding: 7px 3px 6px 3px;
+    }
+}
+
+/* Feinjustierung für enges Layout */
+@media (max-width: 480px) {
+    .main-image {
+        height: 74px;
+        border-radius: 8px;
+    }
+    .thumbnail {
+        border-radius: 5px;
+    }
+    .location-images {
+        border-radius: 8px;
     }
 }

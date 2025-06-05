@@ -100,10 +100,11 @@ function addMarkersToMap(points) {
           
           <!-- Main image with placeholder fallback -->
           <div class="main-image-container">
-            <img id="img_big" src="${point.image || './assets/images/placeholder.jpg'}" alt="${point.name}" class="main-image">
+            <div class="placeholder">📍</div>
           </div>
-          <div class="location-images"></div> <!-- <--- DAS FEHLT -->
 
+          <!-- Gallery container -->
+          <div class="location-images"></div>
           
           <!-- Category and rating info -->
           <div id="spot_infos">
@@ -510,6 +511,8 @@ function removeFavoriteLocation(id, userId) {
  */
 function displayLocationImages(locationId, selector) {
     const container = document.querySelector(selector);
+    const mainImageContainer = document.querySelector('.main-image-container');
+    
     if (!container) {
         console.error('Ziel-Container für Bilder nicht gefunden:', selector);
         return;
@@ -525,45 +528,51 @@ function displayLocationImages(locationId, selector) {
 
             if (!Array.isArray(images) || images.length === 0) {
                 container.innerHTML = '<div class="no-images">Keine Bilder verfügbar.</div>';
+                // Keep placeholder in main container
                 return;
             }
 
-            // Hauptbild initial auf das erste Bild setzen
-            let currentIndex = 0;
+            // Replace placeholder with first image in main container
+            if (mainImageContainer) {
+                const mainImg = document.createElement('img');
+                mainImg.src = images[0].image_url || images[0].path || images[0].url;
+                mainImg.alt = images[0].alt || '';
+                mainImg.className = 'main-image';
+                mainImageContainer.innerHTML = '';
+                mainImageContainer.appendChild(mainImg);
+            }
 
-            // Hauptbild-Container
-            const mainImageDiv = document.createElement('div');
-            mainImageDiv.className = 'main-image';
+            // Only show thumbnails if more than one image
+            if (images.length > 1) {
+                // Thumbnail-Leiste
+                const thumbnailsDiv = document.createElement('div');
+                thumbnailsDiv.className = 'thumbnails';
 
-            const mainImg = document.createElement('img');
-            mainImg.src = images[0].image_url || images[0].path || images[0].url;
-            mainImg.alt = images[0].alt || '';
-            mainImageDiv.appendChild(mainImg);
+                images.forEach((img, idx) => {
+                    const thumb = document.createElement('div');
+                    thumb.className = 'thumbnail' + (idx === 0 ? ' active' : '');
+                    const tImg = document.createElement('img');
+                    tImg.src = img.image_url || img.path || img.url;
+                    tImg.alt = img.alt || '';
+                    thumb.appendChild(tImg);
 
-            // Thumbnail-Leiste
-            const thumbnailsDiv = document.createElement('div');
-            thumbnailsDiv.className = 'thumbnails';
+                    thumb.addEventListener('click', () => {
+                        if (mainImageContainer) {
+                            const mainImg = mainImageContainer.querySelector('img');
+                            if (mainImg) {
+                                mainImg.src = tImg.src;
+                            }
+                        }
+                        // Aktive Klasse setzen
+                        thumbnailsDiv.querySelectorAll('.thumbnail').forEach(th => th.classList.remove('active'));
+                        thumb.classList.add('active');
+                    });
 
-            images.forEach((img, idx) => {
-                const thumb = document.createElement('div');
-                thumb.className = 'thumbnail' + (idx === 0 ? ' active' : '');
-                const tImg = document.createElement('img');
-                tImg.src = img.image_url || img.path || img.url;
-                tImg.alt = img.alt || '';
-                thumb.appendChild(tImg);
-
-                thumb.addEventListener('click', () => {
-                    mainImg.src = tImg.src;
-                    // Aktive Klasse setzen
-                    thumbnailsDiv.querySelectorAll('.thumbnail').forEach(th => th.classList.remove('active'));
-                    thumb.classList.add('active');
+                    thumbnailsDiv.appendChild(thumb);
                 });
 
-                thumbnailsDiv.appendChild(thumb);
-            });
-
-            container.appendChild(mainImageDiv);
-            container.appendChild(thumbnailsDiv);
+                container.appendChild(thumbnailsDiv);
+            }
         })
         .catch(err => {
             console.error('Fehler beim Laden der Bilder:', err);
