@@ -8,12 +8,13 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="../../assets/css/global.css">
+    <link rel="stylesheet" href="../../assets/css/fullscreen.css">
+    <link rel="stylesheet" href="../../assets/css/gallery.css">
+    
     <script src="https://api.websynthesis.org/stars/v2/stars.js"></script>
     <script src="../../assets/js/global.js" defer></script>
-    <script src="../../assets/js/index.js" defer></script>
-    <script src="../../assets/js/session.js"></script>
+    <script src="../../assets/js/session.js" defer></script>
     <script src="../../assets/js/fullscreen.js" defer></script>
-    <link rel="stylesheet" href="../../assets/css/fullscreen.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -59,12 +60,13 @@
             </div>
             
             <div id="preview_images">
-                <div id="mainImg"><img src="../../assets/images/testPic/1.png" alt="Location Main Image"></div>
-                <div class="contentImages" id="contentImgs">
-                    <img src="../../assets/images/testPic/1.png" alt="Thumbnail 1">
-                    <img src="../../assets/images/testPic/1.png" alt="Thumbnail 2">
-                    <img src="../../assets/images/testPic/1.png" alt="Thumbnail 3">
+                <!-- Main image container with placeholder -->
+                <div id="mainImg">
+                    <div class="placeholder-image">📍</div>
                 </div>
+                
+                <!-- Gallery container for dynamic images -->
+                <div class="location-images"></div>
             </div>
 
             <div id="comments_section">

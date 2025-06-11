@@ -25,8 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     const pointId = params.get("id");
     if (pointId) {
-      console.log("Geladene ID:", pointId);
+        console.log("Geladene ID:", pointId);
         fetchLocationDetails(pointId);
+        // Load gallery images - call the function immediately
+        displayLocationImagesFullscreen(pointId);
     }
 });
 
@@ -133,6 +135,85 @@ function fetchLocationDetails(id) {
             document.querySelector('#comments').innerHTML = htmlCode;
         })
         .catch(error => console.error('Error fetching location details:', error));
+}
+
+/**
+ * Displays location images in fullscreen view
+ * @param {number} locationId - The location ID
+ */
+function displayLocationImagesFullscreen(locationId) {
+    const container = document.querySelector('.location-images');
+    const mainImageContainer = document.querySelector('#mainImg');
+    
+    if (!container) {
+        console.error('Gallery container not found');
+        return;
+    }
+
+    container.innerHTML = '<div class="loading">Loading images...</div>';
+
+    fetch(`../../api/images.php?location_id=${locationId}`)
+        .then(response => response.json())
+        .then(result => {
+            console.log('Images API response:', result);
+            const images = result.images;
+            container.innerHTML = '';
+
+            if (!Array.isArray(images) || images.length === 0) {
+                container.innerHTML = '<div class="no-images">No images available.</div>';
+                return;
+            }
+
+            // Replace placeholder with first image in main container
+            if (mainImageContainer) {
+                const mainImg = document.createElement('img');
+                // Fix image path - use absolute path from htdocs root
+                const imagePath = images[0].image_url || images[0].path || images[0].url;
+                mainImg.src = imagePath.startsWith('/') ? `../../${imagePath}` : `../../${imagePath}`;
+                mainImg.alt = images[0].alt || images[0].description || '';
+                mainImg.className = 'main-image';
+                mainImageContainer.innerHTML = '';
+                mainImageContainer.appendChild(mainImg);
+            }
+
+            // Only show thumbnails if more than one image
+            if (images.length > 1) {
+                const thumbnailsDiv = document.createElement('div');
+                thumbnailsDiv.className = 'thumbnails';
+
+                images.forEach((img, idx) => {
+                    const thumb = document.createElement('div');
+                    thumb.className = 'thumbnail' + (idx === 0 ? ' active' : '');
+                    const tImg = document.createElement('img');
+                    // Fix image path - use absolute path from htdocs root
+                    const imagePath = img.image_url || img.path || img.url;
+                    tImg.src = imagePath.startsWith('/') ? `../../${imagePath}` : `../../${imagePath}`;
+                    tImg.alt = img.alt || img.description || '';
+                    thumb.appendChild(tImg);
+
+                    thumb.addEventListener('click', () => {
+                        if (mainImageContainer) {
+                            const mainImg = mainImageContainer.querySelector('img');
+                            if (mainImg) {
+                                mainImg.src = tImg.src;
+                                mainImg.alt = tImg.alt;
+                            }
+                        }
+                        // Update active state
+                        thumbnailsDiv.querySelectorAll('.thumbnail').forEach(th => th.classList.remove('active'));
+                        thumb.classList.add('active');
+                    });
+
+                    thumbnailsDiv.appendChild(thumb);
+                });
+
+                container.appendChild(thumbnailsDiv);
+            }
+        })
+        .catch(err => {
+            console.error('Error loading images:', err);
+            container.innerHTML = '<div class="error">Error loading images.</div>';
+        });
 }
 
 // Helper function to update bookmark icon based on isSaved state
