@@ -573,6 +573,7 @@ select {
 @media (max-width: 768px) {
     #main {
         flex-direction: column;
+        height: auto;
     }
     
     #add_section1 {
@@ -580,9 +581,10 @@ select {
         width: 100%;
         border-right: none;
         border-bottom: 1px solid #eaeaea;
-        padding: 15px;
+        padding: 10px;
         flex-direction: row;
         justify-content: space-between;
+        height: auto;
     }
     
     .progress-container {
@@ -595,12 +597,195 @@ select {
     }
     
     #add_section2 {
-        padding-bottom: 80px; /* Less bottom padding on mobile */
+        padding: 15px;
+        padding-bottom: 70px;
+    }
+    
+    #add_content_slide1, #add_content_slide2 {
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+    
+    .add_name_description div, .add_content div {
+        gap: 5px;
+    }
+    
+    label {
+        font-size: 13px;
+    }
+    
+    input, textarea, select {
+        padding: 8px 12px;
+        font-size: 13px;
+        border-radius: 8px;
+    }
+    
+    textarea {
+        min-height: 80px;
     }
     
     #add_buttons_bC {
-        width: 100%; /* Full width on mobile */
+        width: 100%;
         padding: 10px 15px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border-top: 1px solid #eaeaea;
+        z-index: 100;
+    }
+    
+    #add_buttons_bC button {
+        min-width: 90px;
+        padding: 8px 15px;
+        font-size: 14px;
+        border-radius: 8px;
+    }
+    
+    #add_info_backButton {
+        padding: 6px 10px;
+        margin-bottom: 15px;
+        font-size: 13px;
+    }
+    
+    #add_info_backButton img {
+        width: 16px;
+    }
+    
+    #fileUpload.drag-drop {
+        padding: 15px;
+        min-height: 120px;
+    }
+    
+    #uploadLabel {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    
+    #uploadLabel::before {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 10px;
+        background-size: 40px;
+    }
+    
+    #fileUpload button {
+        padding: 8px 15px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 576px) {
+    #add_section2 {
+        padding: 12px;
+        padding-bottom: 65px;
+    }
+    
+    #add_content_slide1, #add_content_slide2 {
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+    
+    label {
+        font-size: 12px;
+        margin-bottom: 2px;
+    }
+    
+    input, textarea, select {
+        padding: 7px 10px;
+        font-size: 12px;
+        border-radius: 6px;
+    }
+    
+    #add_buttons_bC button {
+        min-width: 80px;
+        padding: 7px 12px;
+        font-size: 13px;
+    }
+    
+    #comments_checkbox input {
+        width: 40px;
+        height: 20px;
+    }
+    
+    #comments_checkbox input::before {
+        width: 16px;
+        height: 16px;
+    }
+    
+    #comments_checkbox input:checked::before {
+        transform: translateX(20px);
+    }
+    
+    /* Confirmation screen adjustments */
+    #main2_finish {
+        padding: 15px;
+    }
+    
+    #confirmation h2 {
+        font-size: 20px;
+    }
+    
+    #confirm_infos > div {
+        padding: 15px;
+        border-radius: 10px;
+    }
+    
+    #confirm_infos h3 {
+        font-size: 14px;
+    }
+    
+    #imageContainer img {
+        width: 80px;
+        height: 80px;
+    }
+    
+    #finish_buttons button {
+        font-size: 14px;
+        min-width: 120px;
+        padding: 6px 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    input, textarea, select {
+        padding: 6px 8px;
+        font-size: 11px;
+    }
+    
+    label {
+        font-size: 11px;
+    }
+    
+    #add_buttons_bC button {
+        min-width: 70px;
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    #add_section2 {
+        padding: 10px;
+        padding-bottom: 60px;
+    }
+    
+    #add_content_slide1, #add_content_slide2 {
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    
+    #confirm_infos h3 {
+        font-size: 13px;
+    }
+    
+    #confirm_infos > div {
+        padding: 12px;
+    }
+    
+    #imageContainer img {
+        width: 70px;
+        height: 70px;
     }
 }
 
