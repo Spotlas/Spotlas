@@ -233,7 +233,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const user = await getCurrentUser();
     if (!user) {
       console.error('No user found in session');
-      window.location.href = "./login_register/login.html";
+      window.location.href = "../login_register/login.html";
       return;
     }
 
