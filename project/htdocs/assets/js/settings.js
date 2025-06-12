@@ -35,6 +35,48 @@ function applyUnderlineEffect(elementId) {
   }, 10);
 }
 
+// User data for settings
+let userData = null;
+
+// Initialize settings page
+document.addEventListener('DOMContentLoaded', () => {
+  // Check if user is logged in
+  getCurrentUser()
+    .then(user => {
+      if (!user) {
+        window.location.href = '../login_register/login.html';
+        return;
+      }
+      
+      userData = user;
+      console.log('User data loaded:', userData);
+      
+      // Show Edit Profile by default
+      showEditProfil();
+    })
+    .catch(error => {
+      console.error('Error loading user data:', error);
+      showError('Failed to load settings. Please try again later.');
+    });
+});
+
+// Get current user data
+async function getCurrentUser() {
+  try {
+    const response = await fetch('../../api/session.php?action=get_user');
+    const data = await response.json();
+    
+    if (data.code === 200 && data.logged_in) {
+      return data.user;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    return null;
+  }
+}
+
 // Check login status on page load
 document.addEventListener("DOMContentLoaded", async function() {
   // Check if user is logged in
@@ -341,3 +383,191 @@ async function confirmDeleteAccount() {
     }
   }
 }
+
+// Set active menu item
+function setActiveMenuItem(id) {
+  // Remove active class from all menu items
+  document.querySelectorAll('.controlers').forEach(item => {
+    item.classList.remove('active');
+  });
+  
+  // Add active class to the selected item
+  document.getElementById(id).classList.add('active');
+}
+
+// Show change username overlay
+function showChangeUsername() {
+  const overlay = document.getElementById('usernameOverlay');
+  const inputField = document.getElementById('newUserName');
+  const overlayTitle = document.getElementById('overlayTitle');
+  
+  overlayTitle.textContent = 'Change Username';
+  inputField.placeholder = 'Enter new username';
+  inputField.value = userData.username || '';
+  
+  // Reset error message
+  document.getElementById('inputError').style.display = 'none';
+  
+  overlay.style.display = 'flex';
+  
+  // Focus on input field after animation completes
+  setTimeout(() => {
+    inputField.focus();
+  }, 100);
+}
+
+// Save new username
+function saveUserName() {
+  const newUsername = document.getElementById('newUserName').value.trim();
+  const inputError = document.getElementById('inputError');
+  
+  // Simple validation
+  if (!newUsername) {
+    inputError.textContent = 'Username cannot be empty';
+    inputError.style.display = 'block';
+    document.getElementById('newUserName').classList.add('invalid');
+    return;
+  }
+  
+  if (newUsername.length < 3) {
+    inputError.textContent = 'Username must be at least 3 characters long';
+    inputError.style.display = 'block';
+    document.getElementById('newUserName').classList.add('invalid');
+    return;
+  }
+  
+  // Reset error state
+  document.getElementById('newUserName').classList.remove('invalid');
+  
+  // Save username (API call would go here)
+  console.log('Saving new username:', newUsername);
+  
+  // Update user data
+  userData.username = newUsername;
+  
+  // Close overlay
+  closeOverlay();
+  
+  // Show success message
+  alert('Username updated successfully!');
+  
+  // Refresh current view
+  if (document.getElementById('editp').classList.contains('active')) {
+    showEditProfil();
+  } else {
+    showKontoVerwaltung();
+  }
+}
+
+// Close overlay
+function closeOverlay() {
+  document.getElementById('usernameOverlay').style.display = 'none';
+}
+
+// Navigate back to home
+function backHome() {
+  window.location.href = "../../index.html";
+}
+
+// Show error message
+function showError(message) {
+  const outputDiv = document.getElementById('outp');
+  outputDiv.innerHTML = `
+    <div style="text-align: center; padding: 40px 20px;">
+      <i class="fas fa-exclamation-circle" style="font-size: 48px; color: #e53e3e; margin-bottom: 20px;"></i>
+      <h3>Error</h3>
+      <p>${message}</p>
+      <button class="buttons" onclick="location.reload()">Retry</button>
+    </div>
+  `;
+}
+
+// Handle profile picture change
+function changeProfilePicture() {
+  // This would typically open a file picker
+  alert('Profile picture change functionality would be implemented here.');
+}
+
+// Save profile changes
+function saveProfileChanges() {
+  const firstName = document.getElementById('firstname').value.trim();
+  const lastName = document.getElementById('lastname').value.trim();
+  const country = document.getElementById('land').value;
+  const gender = document.getElementById('geschlecht').value;
+  
+  // Update user data
+  userData.first_name = firstName;
+  userData.last_name = lastName;
+  userData.country = country;
+  userData.gender = gender;
+  
+  // Save changes (API call would go here)
+  console.log('Saving profile changes:', {firstName, lastName, country, gender});
+  
+  // Show success message
+  alert('Profile updated successfully!');
+}
+
+// Confirm account deletion
+function confirmDeleteAccount() {
+  if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+    // Delete account (API call would go here)
+    console.log('Deleting account');
+    
+    // Redirect to login page
+    window.location.href = '../login_register/login.html';
+  }
+}
+
+// Show change password overlay
+function showChangePassword() {
+  const overlay = document.getElementById('usernameOverlay');
+  const inputField = document.getElementById('newUserName');
+  const overlayTitle = document.getElementById('overlayTitle');
+  
+  overlayTitle.textContent = 'Change Password';
+  inputField.placeholder = 'Enter new password';
+  inputField.value = '';
+  inputField.type = 'password';
+  
+  // Reset error message
+  document.getElementById('inputError').style.display = 'none';
+  
+  overlay.style.display = 'flex';
+}
+
+// Show change email overlay
+function showChangeEmail() {
+  const overlay = document.getElementById('usernameOverlay');
+  const inputField = document.getElementById('newUserName');
+  const overlayTitle = document.getElementById('overlayTitle');
+  
+  overlayTitle.textContent = 'Change Email';
+  inputField.placeholder = 'Enter new email';
+  inputField.value = userData.email || '';
+  inputField.type = 'email';
+  
+  // Reset error message
+  document.getElementById('inputError').style.display = 'none';
+  
+  overlay.style.display = 'flex';
+}
+
+// Handle responsiveness for menu on small screens
+window.addEventListener('resize', checkScreenSize);
+
+function checkScreenSize() {
+  const menuParent = document.getElementById('settings_Menu_parent');
+  const menuChild = document.getElementById('settings_Menu_child');
+  
+  if (window.innerWidth <= 768) {
+    // Mobile: menu items in a row
+    menuChild.style.flexDirection = 'row';
+  } else {
+    // Desktop: menu items in a column
+    menuChild.style.flexDirection = 'column';
+  }
+}
+
+// Call once on page load
+document.addEventListener('DOMContentLoaded', checkScreenSize);

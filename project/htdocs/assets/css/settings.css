@@ -22,10 +22,10 @@ h6 {
 
 #homepage_header{
   height: var(--height_header);
-  display: grid;
-  grid-template-columns: 50% 50%;
+  display: flex;
+  justify-content: space-between;
   background-color: var(--bg-color-header);
-  padding: 0 1vw 0 1vw;
+  padding: 0 1vw;
   height: 80px;
   align-items: center;
 }
@@ -45,56 +45,85 @@ h6 {
   gap: 1vw;
 }
 
-main{
+/* **********************************+ Settings Page Layout ********************************************** */
 
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-#backArrow {
-  padding-bottom: 3%;
+/* Back button styling */
+#add_info_backButton {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  cursor: pointer;
   transition: all ease-in-out 200ms;
 }
 
-#backArrow:hover {
-  cursor: pointer;
+#add_info_backButton:hover {
   transform: translateY(-5px);
 }
 
-#backArrow_Style {
-  text-decoration: none;
-  color: black;
+#add_info_backButton img {
+  width: 24px;
+  height: 24px;
+  transform: rotate(90deg);
+  margin-right: 10px;
+}
+
+#add_info_backButton p {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Settings layout */
+#settings {
+  display: flex;
+  gap: 40px;
 }
 
 #settings_Menu_parent {
-  padding-left: 3.5%;
+  width: 250px;
+  flex-shrink: 0;
+}
+
+#settings_edit {
+  flex-grow: 1;
+  background: #fff;
+  border-radius: var(--border-radius-m);
+  padding: 25px;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.05);
 }
 
 #settings_Menu_child {
-  padding-top: 3%;
-  padding-left: 6%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
 }
 
+/* Menu items styling */
 .controlers {
-  padding: 4%;
+  padding: 12px 15px;
+  border-radius: 8px;
   transition: all ease-in-out 200ms;
-}
-
-.controlers:hover {
+  font-weight: 500;
   cursor: pointer;
 }
 
-#settings {
-  display: grid;
-  grid-template-columns: 30% 20%;
-  padding: 5%;
+.controlers:hover {
+  background-color: rgba(0,0,0,0.05);
+  transform: translateY(-3px);
 }
 
-#change_button {
-  background-color: var(--bg-color-greenButton);
-  border: 5% solid var(--bg-color-greenButton);
+.controlers.active {
+  background-color: var(--accent-color, #19ad6e);
+  color: white;
 }
 
-/* **********************************+ ChangeUsername ********************************************** */
-
+/* **********************************+ Overlay Forms ********************************************** */
 
 .overlay {
   position: fixed;
@@ -102,152 +131,281 @@ main{
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Graue Schattierung */
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
 
 .input-box {
   background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.2);
   text-align: center;
+  width: 90%;
+  max-width: 400px;
+}
+
+.input-box h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: var(--text-color-dark);
 }
 
 .input-box input {
-  padding: 10px;
-  width: 80%;
-  margin-bottom: 10px;
+  padding: 12px 15px;
+  width: 100%;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
 }
 
-.input-box button {
-  margin: 5px;
-  padding: 10px;
-  cursor: pointer;
+.input-box input:focus {
+  outline: none;
+  border-color: var(--accent-color, #19ad6e);
+  box-shadow: 0 0 0 2px rgba(25, 173, 110, 0.1);
 }
 
+/* Buttons styling */
 .buttons {
-  margin-bottom: 1vw;
-  color: white;
-  padding: 10px;
+  display: inline-block;
+  margin: 5px;
+  padding: 12px 25px;
   background-color: var(--bg-color-greenButton);
-  border-radius: 12px;
+  color: white;
   border: none;
-  border-color: var(--bg-color-greenButton);
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
   transition: all ease-in-out 200ms;
 }
 
 .buttons:hover {
-  cursor: pointer;
   transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
+.buttons.secondary {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+#inputError {
+  display: block;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+/* **********************************+ Profile Image ********************************************** */
 
 #profilPic {
-  transition: all ease-in-out 200ms;
   width: 100px;
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
+  cursor: pointer;
+  border: 3px solid #fff;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+  transition: all ease-in-out 200ms;
+  margin-bottom: 15px;
 }
 
 #profilPic:hover {
-  cursor: pointer;
   transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
+/* **********************************+ Form Elements ********************************************** */
 
-#settings_Menu_child {
-  padding-top: 3%;
-  padding-left: 6%;
+#choose_country {
   display: flex;
   flex-direction: column;
-  margin-right: 30%;
-  gap: 10px;
+  gap: 15px;
+  margin-bottom: 25px;
 }
 
-a {
-  text-decoration: none;
-  color: black;
-  font-size: 15px;
-  padding: 2%;
-}
-
-/* Xhange Country */
-
-#land{
-  z-index: 20;
-  padding: 0.5vw 1vw;
+#land, #geschlecht {
+  padding: 12px 15px;
   background-color: var(--white-color);
   border: none;
   border-radius: var(--border-radius-m);
-  box-shadow: 2px 2px 10px -6px rgba(0,0,0,0.74);
-}
-
-#choose_country{
-  display: flex;
-  flex-direction: column;
-  gap: 1vw;
-  margin-bottom: 2vw;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  font-size: 16px;
+  width: 100%;
 }
 
 #names {
-  margin-top: 0.5vw;
   display: flex;
-  gap: 2vw; /* Abstand zwischen den Feldern */
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
-/* Stil für jedes Input-Feld */
 #input_vorname, #input_nachname {
-  flex: 1; /* Felder gleichmäßig verteilen */
-}
-
-#input_vorname label{
-  font-weight: bold;
-  font-size: var(--font-size-m);
-  margin-bottom: 1vw;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 #names div input[type="text"] {
-  margin-top: 1vw;
+  margin-top: 8px;
   width: 100%;
-  padding: 10px;
-  border:none;
+  padding: 12px 15px;
+  border: none;
   border-radius: 8px;
-  box-shadow: 2px 2px 10px -6px rgba(0,0,0,0.74);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  font-size: 16px;
 }
 
-#geschlecht_container{
+#geschlecht_container {
   display: flex;
   flex-direction: column;
-  gap: 1vw;
+  gap: 8px;
+  margin-bottom: 25px;
 }
 
-#geschlecht{
-  margin-top: 0.5vw;
-  z-index: 20;
-  padding: 0.5vw 1vw;
-  background-color: var(--white-color);
-  border: none;
-  border-radius: var(--border-radius-m);
-  box-shadow: 2px 2px 10px -6px rgba(0,0,0,0.74);
+label {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: var(--text-color-dark);
 }
 
-label{
-  font-weight: bold;
-  font-size: var(--font-size-m);
+/* Error styling */
+.error-message {
+  color: #e53e3e;
+  font-size: 14px;
+  margin-top: 5px;
 }
 
-/* Zusätzliche CSS-Regeln für Fehlermeldungen */
 #emailError {
-  color: red;
-  font-size: 12px;
-  display: none;
+  color: #e53e3e;
+  font-size: 14px;
   margin-top: 5px;
 }
 
 .input-box input.invalid {
-  border: 1px solid red;
+  border: 1px solid #e53e3e;
+}
+
+/* **********************************+ Responsive Design ********************************************** */
+
+/* Tablet adjustments */
+@media (max-width: 1024px) {
+  #settings {
+    gap: 25px;
+  }
+  
+  #settings_Menu_parent {
+    width: 200px;
+  }
+  
+  #settings_edit {
+    padding: 20px;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  #settings {
+    flex-direction: column;
+  }
+  
+  #settings_Menu_parent {
+    width: 100%;
+    margin-bottom: 25px;
+  }
+  
+  #settings_Menu_child {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .controlers {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  #settings_edit {
+    padding: 15px;
+  }
+  
+  #names {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .input-box {
+    padding: 25px 15px;
+  }
+  
+  .buttons {
+    width: 100%;
+    margin: 5px 0;
+    font-size: 15px;
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 480px) {
+  main {
+    padding: 15px 10px;
+  }
+  
+  #add_info_backButton {
+    margin-bottom: 15px;
+  }
+  
+  #add_info_backButton img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .controlers {
+    padding: 10px;
+    min-width: 100px;
+    font-size: 13px;
+  }
+  
+  label {
+    font-size: 14px;
+  }
+  
+  #land, #geschlecht, #names div input[type="text"] {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  
+  .input-box h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  
+  .input-box input {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+  #settings_Menu_child {
+    gap: 8px;
+  }
+  
+  .controlers {
+    padding: 8px;
+    min-width: 90px;
+    font-size: 12px;
+  }
+  
+  .input-box {
+    padding: 20px 15px;
+  }
 }

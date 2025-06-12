@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Settings</title>
 
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <!-- Embeddings -->
     <link rel="stylesheet" href="../../assets/css/global.css" />
     <link rel="stylesheet" href="../../assets/css/settings.css" />
@@ -17,7 +20,7 @@
     <header id="homepage_header">
       <div id="homepage_header_spotlas">
         <a href="../../index.html"
-          ><img src="../../assets/images/logo_schwarz.png" width="180" alt=""
+          ><img src="../../assets/images/logo_schwarz.png" width="180" alt="Spotlas Logo"
         /></a>
       </div>
 
@@ -26,18 +29,18 @@
           <a href="../../pages/add_place/add.html"
             ><img
               src="../../assets/images/icons/add_icon.svg"
-              alt="add"
-              width="40px"
-              height="40px"
+              alt="Add"
+              width="40"
+              height="40"
           /></a>
         </div>
         <div>
           <a href="../../pages/profile/profile.html"
             ><img
               src="../../assets/images/icons/profile_icon.svg"
-              alt="profile"
-              width="40px"
-              height="40px"
+              alt="Profile"
+              width="40"
+              height="40"
           /></a>
         </div>
         <div>
@@ -45,9 +48,9 @@
             id="toggleImg"
             onclick="showDropdown()"
             src="../../assets/images/icons/arrow_icon.svg"
-            alt="options"
-            width="40px"
-            height="40px"
+            alt="Menu"
+            width="40"
+            height="40"
           />
           <div style="display: none; z-index: 12" id="dropDown_menu">
             <a href="../../pages/settings/settings.html">Settings</a>
@@ -61,19 +64,19 @@
     </header>
 
     <main>
+      <div onclick="backHome()" id="add_info_backButton">
+        <img src="../../assets/images/icons/arrow_icon.svg" alt="Back" />
+        <p>Back</p>
+      </div>
+      
       <div id="settings">
         <div id="settings_Menu_parent">
-          <div onclick="backHome()" id="add_info_backButton">
-            <img src="../../assets/images/icons/arrow_icon.svg" alt="" />
-            <p>Back</p>
-          </div>
-
           <div id="settings_Menu_child">
-            <div id="editp" onclick="showEditProfil()" class="controlers">
-              Edit Profile
+            <div id="editp" onclick="showEditProfil()" class="controlers active">
+              <i class="far fa-user"></i> Edit Profile
             </div>
             <div id="kontov" onclick="showKontoVerwaltung()" class="controlers">
-              Account Management
+              <i class="fas fa-cog"></i> Account Management
             </div>
           </div>
         </div>
@@ -83,15 +86,14 @@
         </div>
       </div>
 
-
+      <!-- Overlay for changing settings -->
       <div class="overlay" id="usernameOverlay" style="display: none">
         <div class="input-box">
           <h3 id="overlayTitle">Change Username</h3>
           <input type="text" id="newUserName" placeholder="Enter new username" />
           <span id="inputError" style="color: red; font-size: 12px; display: none;"></span>
-          <br />
           <button class="buttons" onclick="saveUserName()">Save</button>
-          <button class="buttons" onclick="closeOverlay()">Cancel</button>
+          <button class="buttons secondary" onclick="closeOverlay()">Cancel</button>
         </div>
       </div>
     </main>
