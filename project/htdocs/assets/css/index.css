@@ -278,9 +278,15 @@ h6 {
     bottom: 0;
     transform: translate(-50%, 0);
     border-radius: 18px 18px 0 0;
-    max-height: 80vh;
+    max-height: 60vh; /* Kleiner machen */
     box-shadow: 0 -6px 40px rgba(0,0,0,0.18);
-    padding: 24px 6vw 20px 6vw;
+    padding: 20px 6vw 16px 6vw; /* Weniger Padding */
+    transition: transform 0.3s ease; /* Smooth animation */
+  }
+  
+  /* Hidden state for mobile */
+  #homepage_karte_sidebar.hidden {
+    transform: translate(-50%, 100%);
   }
 }
 
@@ -290,24 +296,107 @@ h6 {
     left: 0;
     transform: none;
     border-radius: 16px 16px 0 0;
-    padding: 20px 5vw 16px 5vw;
-    max-height: 75vh;
-    min-height: 300px;
+    padding: 16px 4vw 12px 4vw; /* Weniger Padding */
+    max-height: 55vh; /* Noch kleiner */
+    min-height: 250px; /* Kleinere Mindesthöhe */
+  }
+  
+  /* Hidden state for mobile */
+  #homepage_karte_sidebar.hidden {
+    transform: translateY(100%);
   }
 }
 
 /* Extra small screens */
 @media (max-width: 360px) {
   #homepage_karte_sidebar {
-    padding: 18px 4vw 14px 4vw;
-    max-height: 70vh;
-    min-height: 280px;
+    padding: 14px 3vw 10px 3vw; /* Noch weniger Padding */
+    max-height: 50vh; /* Sehr klein */
+    min-height: 220px;
     border-radius: 12px 12px 0 0;
   }
 }
 
-.sidebar-el:hover {
+/* ===================== Mobile Toggle Button ===================== */
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  z-index: 15;
+  border: none;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sidebar-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.sidebar-toggle i {
+  color: white;
+  font-size: 24px;
+}
+
+/* Show toggle button only on mobile */
+@media (max-width: 768px) {
+  .sidebar-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* ===================== Sidebar Header with Close Button ===================== */
+.sidebar-header {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.sidebar-close {
+  width: 32px;
+  height: 32px;
+  background: #f7fafc;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.sidebar-close:hover {
+  background: #e2e8f0;
+}
+
+.sidebar-close i {
+  color: #4a5568;
+  font-size: 16px;
+}
+
+.sidebar-title {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: var(--text-color-dark);
+  margin: 0;
+}
+
+/* Show header only on mobile */
+@media (max-width: 768px) {
+  .sidebar-header {
+    display: flex;
+  }
 }
 
 /* ===================== Sidebar Card (Location) ===================== */

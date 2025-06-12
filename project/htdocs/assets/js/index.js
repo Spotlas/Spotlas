@@ -66,8 +66,34 @@ const sidebar = document.getElementById("homepage_karte_sidebar");
 let selectedMarker = null;
 
 function openSidebarWithContent(content) {
-  sidebar.innerHTML = content;
+  // Add header with close button for mobile
+  const headerContent = `
+    <div class="sidebar-header">
+      <h3 class="sidebar-title">Location Details</h3>
+      <button class="sidebar-close" onclick="toggleSidebar()">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+  `;
+  
+  sidebar.innerHTML = headerContent + content;
   sidebar.classList.add("open");
+  sidebar.classList.remove("hidden");
+}
+
+// Function to toggle sidebar visibility on mobile
+function toggleSidebar() {
+  sidebar.classList.toggle("hidden");
+}
+
+// Function to show sidebar
+function showSidebar() {
+  sidebar.classList.remove("hidden");
+}
+
+// Function to hide sidebar
+function hideSidebar() {
+  sidebar.classList.add("hidden");
 }
 
 function addMarkersToMap(points) {
@@ -185,7 +211,17 @@ function addMarkersToMap(points) {
 
 function listMarkers(points) {
   if (selectedMarker) return; // Zeige nur die Namen, wenn kein Marker aktiv ist
-  sidebar.innerHTML = "<h3>Orte im aktuellen Kartenausschnitt:</h3><br>";
+  
+  const headerContent = `
+    <div class="sidebar-header">
+      <h3 class="sidebar-title">Locations</h3>
+      <button class="sidebar-close" onclick="toggleSidebar()">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+  `;
+  
+  sidebar.innerHTML = headerContent + "<h3>Orte im aktuellen Kartenausschnitt:</h3><br>";
 
   map.eachLayer(function (layer) {
     if (
@@ -207,6 +243,9 @@ function listMarkers(points) {
       sidebar.appendChild(el);
     }
   });
+  
+  // Show sidebar on mobile when content is loaded
+  showSidebar();
 }
 
 map.on("moveend", () => {
@@ -215,6 +254,22 @@ map.on("moveend", () => {
 map.on("popupclose", () => {
   selectedMarker = null;
   listMarkers(points);
+});
+
+// Hide sidebar initially on mobile
+window.addEventListener('load', () => {
+  if (window.innerWidth <= 768) {
+    hideSidebar();
+  }
+});
+
+// Handle window resize
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768) {
+    sidebar.classList.remove("hidden");
+  } else if (!selectedMarker) {
+    hideSidebar();
+  }
 });
 
 // Abrufen der Locations und Marker erstellen
@@ -504,7 +559,7 @@ function removeFavoriteLocation(id, userId) {
 }
 
 
-/**
+ /**
  * Zeigt alle Bilder einer Location in einem Ziel-Container an.
  * @param {number} locationId - Die ID des Ortes.
  * @param {string} selector - CSS-Selector für das Ziel-Element (z.B. '.location-images').
