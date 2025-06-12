@@ -3,37 +3,7 @@ let currentUserId = null;
 let currentView = 'created'; // 'created' oder 'favorites'
 const baseURL = 'http://localhost//'; // Basis-URL für API-Anfragen
 
-// Initialisierung beim Laden der Seite
-document.addEventListener("DOMContentLoaded", async () => {
-  // User-ID aus der URL oder Session holen
-  currentUserId = getCurrentUserId();
-
-  const user = await getCurrentUser();
-  if (!user) return; // Safety check
-
-  
-  document.getElementById('full_name').textContent = user.full_name;
-  document.getElementById('username').textContent = user.username;
-  document.getElementById('info_mini').textContent = "Beigetreten am " + user.creation_date;
-  document.getElementById('profilPic').src = '../../assets/images/' + user.profile_picture_url || '../../assets/images/default.jpg';
-
-
-  
-  // Event Listener für die Tabs
-document.getElementById('switches_erstellt').addEventListener('click', () => {
-  switchView('created');
-  loadCreatedImages();
-});
-
-document.getElementById('switches_favoriten').addEventListener('click', () => {
-  switchView('favorites');
-  loadFavoriteImages();
-});
-  // Standardansicht laden
-  switchView('created');
-});
-
-// Funktionen
+// Funktionen (vor der DOM-Initialisierung definieren)
 function getCurrentUserId() {
   // Hier die Logik zur Ermittlung der aktuellen User-ID
   // Beispiel: Aus der URL holen oder aus dem Session Storage
@@ -68,8 +38,19 @@ function updateActiveTab() {
 
 async function loadCreatedImages() {
   try {
-    const response = await fetch(`/api/profile.php?userId=${currentUserId}`);
+    console.log(`Loading created images for user: ${currentUserId}`);
+    const url = `../../api/profile.php?userId=${currentUserId}`;
+    console.log('Fetching from:', url);
+    
+    const response = await fetch(url);
     const data = await response.json();
+    
+    console.log('Created images response:', data);
+    
+    if (data.code !== 200) {
+      showErrorMessage('Fehler beim Laden der Daten: ' + (data.message || 'Unbekannter Fehler'));
+      return;
+    }
     
     if (!data.locations || data.locations.length === 0) {
       showNoContentMessage('Du hast noch keine Bilder erstellt');
@@ -85,8 +66,19 @@ async function loadCreatedImages() {
 
 async function loadFavoriteImages() {
   try {
-    const response = await fetch(`./api/profile.php?userId=${currentUserId}&action=favorites`);
+    console.log(`Loading favorite images for user: ${currentUserId}`);
+    const url = `../../api/profile.php?userId=${currentUserId}&action=favorites`;
+    console.log('Fetching from:', url);
+    
+    const response = await fetch(url);
     const data = await response.json();
+    
+    console.log('Favorites response:', data);
+    
+    if (data.code !== 200) {
+      showErrorMessage('Fehler beim Laden der Favoriten: ' + (data.message || 'Unbekannter Fehler'));
+      return;
+    }
     
     if (!data.favorites || data.favorites.length === 0) {
       showNoContentMessage('Du hast noch keine Favoriten gespeichert');
@@ -102,16 +94,37 @@ async function loadFavoriteImages() {
 
 function renderImages(images, showEditLink) {
   const container = document.getElementById('bilder');
+  
+  if (!container) {
+    console.error('Container "bilder" nicht gefunden');
+    return;
+  }
+  
   container.innerHTML = '';
   
-  images.forEach(image => {
+  console.log(`Rendering ${images.length} images, showEditLink: ${showEditLink}`);
+  
+  images.forEach((image, index) => {
     const imageWrapper = document.createElement('div');
     imageWrapper.className = 'image-wrapper';
     
+    // Add class for favorites to enable cursor pointer
+    if (!showEditLink) {
+      imageWrapper.classList.add('favorite-item');
+    }
+    
     const img = document.createElement('img');
     img.className = showEditLink ? 'images' : 'images_fav';
-    img.src = image.image_url || '../../assets/images/default.jpg';
-    img.alt = image.title || 'Bild';
+    
+    // Use a placeholder image since there's no image_url in the database
+    const imagePath = '../../assets/images/default.jpg';
+    
+    img.src = imagePath;
+    img.alt = image.title || image.name || 'Bild';
+    
+    img.onerror = function() {
+      this.src = '../../assets/images/default.jpg';
+    };
     
     imageWrapper.appendChild(img);
     
@@ -121,11 +134,11 @@ function renderImages(images, showEditLink) {
       
       const header = document.createElement('h2');
       header.className = 'header';
-      header.textContent = image.title || 'Unbekannt';
+      header.textContent = image.title || image.name || `Location #${image.id}`;
       
       const likes = document.createElement('p');
       likes.className = 'like';
-      likes.textContent = `${image.likes || 0} ❤`;
+      likes.textContent = `${image.favorite_count || 0} ❤`;
       
       const editLink = document.createElement('a');
       editLink.className = 'edit-link';
@@ -136,20 +149,51 @@ function renderImages(images, showEditLink) {
       overlay.appendChild(likes);
       overlay.appendChild(editLink);
       imageWrapper.appendChild(overlay);
+    } else {
+      const simpleOverlay = document.createElement('div');
+      simpleOverlay.className = 'simple-overlay';
+      
+      const title = document.createElement('h3');
+      title.className = 'favorite-title';
+      title.textContent = image.title || image.name || `Favorit #${image.id}`;
+      
+      simpleOverlay.appendChild(title);
+      imageWrapper.appendChild(simpleOverlay);
+      
+      // Make favorites clickable to view location details
+      imageWrapper.addEventListener('click', () => {
+        window.location.href = `../fullscreen_startseite/fullscreen.html?id=${image.id}`;
+      });
     }
     
     container.appendChild(imageWrapper);
   });
+  
+  console.log(`Successfully rendered ${images.length} images`);
 }
 
 function showNoContentMessage(message) {
   const container = document.getElementById('bilder');
-  container.innerHTML = `<p class="no-content-message">${message}</p>`;
+  if (container) {
+    container.innerHTML = `
+      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px;">
+        <div style="font-size: 48px; margin-bottom: 20px; opacity: 0.3;">📸</div>
+        <p class="no-content-message">${message}</p>
+      </div>
+    `;
+  }
 }
 
 function showErrorMessage(message) {
   const container = document.getElementById('bilder');
-  container.innerHTML = `<p class="error-message">${message}</p>`;
+  if (container) {
+    container.innerHTML = `
+      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px;">
+        <div style="font-size: 48px; margin-bottom: 20px; opacity: 0.3;">⚠️</div>
+        <p class="error-message">${message}</p>
+      </div>
+    `;
+  }
 }
 
 function backHome() {
@@ -181,3 +225,57 @@ async function getCurrentUser(forceRefresh = false) {
       return null;
   }
 }
+
+// Initialisierung beim Laden der Seite
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    // User aus Session holen
+    const user = await getCurrentUser();
+    if (!user) {
+      console.error('No user found in session');
+      window.location.href = "./login_register/login.html";
+      return;
+    }
+
+    // User ID setzen
+    currentUserId = user.id;
+    console.log('Current user ID:', currentUserId);
+
+    document.getElementById('full_name').textContent = user.full_name;
+    document.getElementById('username').textContent = user.username;
+    document.getElementById('info_mini').textContent = "Beigetreten am " + user.creation_date;
+    
+    // Profilbild setzen
+    const profilePic = document.getElementById('profilPic');
+    if (user.profile_picture_url) {
+      profilePic.src = '../../assets/images/' + user.profile_picture_url;
+    } else {
+      profilePic.src = '../../assets/images/default.jpg';
+    }
+
+    // Event Listener für die Tabs
+    const erstelltTab = document.getElementById('switches_erstellt');
+    const favoritenTab = document.getElementById('switches_favoriten');
+    
+    if (erstelltTab) {
+      erstelltTab.addEventListener('click', () => {
+        console.log('Switching to created view');
+        switchView('created');
+      });
+    }
+
+    if (favoritenTab) {
+      favoritenTab.addEventListener('click', () => {
+        console.log('Switching to favorites view');
+        switchView('favorites');
+      });
+    }
+
+    // Standardansicht laden
+    switchView('created');
+    
+  } catch (error) {
+    console.error('Error during initialization:', error);
+    showErrorMessage('Fehler beim Laden des Profils');
+  }
+});

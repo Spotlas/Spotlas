@@ -133,98 +133,195 @@ p.active::after {
   margin: 3%;
   position: relative;
   bottom: 30%;
-  text-align: center;
+  text-align: left;
   margin-right: 3%;
   margin-top: 2%;
-  display: grid;
-  grid-template-columns: 20% 20% 20% 20% 20%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px;
+  padding: 20px;
   overflow-y: scroll;
   max-height: 500px;
 }
 
-.images {
-  margin: 10%;
-  width: 70%;
-  height: 90%;
-  border-radius: 20%;
-}
-
-.images_fav {
-  margin: 10%;
-  width: 70%;
-  height: 90%;
-  border-radius: 20%;
-}
-
+/* Modern Card Design */
 .image-wrapper {
   position: relative;
-  display: inline-block; /* passt sich der Bildgröße an */
+  display: inline-block;
+  margin: 0;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #fff;
+  width: 280px;
 }
 
+.image-wrapper:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+.images, .images_fav {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+  border-radius: 0;
+  margin: 0;
+}
+
+.image-wrapper:hover .images,
+.image-wrapper:hover .images_fav {
+  transform: scale(1.05);
+}
+
+/* Enhanced Overlay for Created Locations */
 .image-wrapper .overlay {
   position: absolute;
-  bottom: -2%;
-  width: 70%;
-  height: 30%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: auto;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
   color: white;
-  background-color: rgba(0, 0, 0, 0.5); /* halbtransparentes Overlay */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 15%;
-  border-radius: 65px;
-  transition: all 0.3s ease; /* Sanfter Übergang für den Hover-Effekt */
-}
-
-.image-wrapper .overlay::before {
-  content: ""; /* Standardmäßig kein Inhalt */
-}
-
-.image-wrapper .overlay:hover {
-  background-color: rgba(255, 255, 255, 0.547); /* Weißer Hintergrund beim Hovern */
-  color: black; /* Schwarzer Text beim Hovern */
-}
-
-.image-wrapper .overlay:hover .header,
-.image-wrapper .overlay:hover .like {
-  display: none; /* Versteckt Header und Like beim Hovern */
-}
-
-.header {
-  margin-left: 0%;
-}
-
-.like {
-  margin-left: 45%;
-}
-
-
-.image-wrapper .overlay .edit-link {
-  display: none;
-  font-weight: bold;
-}
-
-.image-wrapper .overlay:hover .header,
-.image-wrapper .overlay:hover .like {
-  display: none;
-}
-
-.image-wrapper .overlay:hover .edit-link {
+  padding: 20px 15px 15px 15px;
+  margin: 0;
+  border-radius: 0;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
   display: block;
 }
 
-.edit-link {
-  color: black;
-  text-decoration: none;
-  padding: 5px 10px;
-  border-radius: 5px;
+.image-wrapper:hover .overlay {
+  transform: translateY(0);
 }
 
-.image-wrapper .overlay:hover .edit-link {
-  color: black;
+/* Simple Overlay for Favorites */
+.simple-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  color: white;
+  padding: 15px;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+
+.image-wrapper:hover .simple-overlay {
+  background: linear-gradient(transparent, rgba(0,0,0,0.9));
+}
+
+/* Typography */
+.header {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  display: block;
+}
+
+.like {
+  font-size: 14px;
+  margin: 0 0 10px 0;
+  opacity: 0.9;
+  display: block;
+}
+
+.favorite-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Enhanced Edit Link */
+.edit-link {
+  background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: inline-block;
 }
 
 .edit-link:hover {
-  text-decoration: underline;
+  background: linear-gradient(45deg, #764ba2 0%, #667eea 100%);
+  transform: scale(1.05);
+  text-decoration: none;
+  color: white;
+}
+
+/* Reset hover effects that hide elements */
+.image-wrapper .overlay:hover {
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  color: white;
+}
+
+.image-wrapper .overlay:hover .header,
+.image-wrapper .overlay:hover .like,
+.image-wrapper .overlay:hover .edit-link {
+  display: block;
+  color: white;
+}
+
+/* Empty State Messages */
+.no-content-message {
+  text-align: center;
+  color: #666;
+  padding: 60px 20px;
+  font-size: 18px;
+  font-style: italic;
+}
+
+.error-message {
+  text-align: center;
+  color: #ff4757;
+  padding: 60px 20px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* Clickable favorites cursor */
+.image-wrapper.favorite-item {
+  cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  #bilder {
+    gap: 15px;
+  }
+  
+  .image-wrapper {
+    width: 250px;
+  }
+  
+  .images, .images_fav {
+    height: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  #bilder {
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .image-wrapper {
+    width: 220px;
+  }
+  
+  .images, .images_fav {
+    height: 160px;
+  }
 }
 
