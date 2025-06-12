@@ -91,21 +91,34 @@ function submitComment(pointId, userId) {
 // Holt detaillierte Informationen zu einer Location inkl. Kommentare und Bilder
 function fetchLocationDetails(id) {
     // Get user ID to check favorite status
-    const userId = getCurrentUserIdSync();
+    const userId = getCurrentUserIdSync ? getCurrentUserIdSync() : null;
     
-    fetch(`../../api/location.php?action=details&id=${id}&user_id=${userId}`)
+    fetch(`../../api/location.php?action=details&id=${id}${userId ? '&user_id='+userId : ''}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            return response.json();
+            // Prüfen und loggen des Inhalts für Debugging
+            return response.text().then(text => {
+                try {
+                    return JSON.parse(text);
+                } catch (e) {
+                    console.error("JSON Parse error. Raw response:", text);
+                    throw new Error("Invalid JSON response");
+                }
+            });
         })
         .then(data => {
             console.log('Location details:', data);
+            
+            if (!data || !data.data || !data.data.location) {
+                console.error("Invalid data structure:", data);
+                return;
+            }
 
             const location = data.data.location;
             const rating = data.data.average_rating;
-            const comments = data.data.comments;
+            const comments = data.data.comments || [];
             
             // Update favorite status and icon
             isSaved = data.data.is_favorite || false;
@@ -115,26 +128,107 @@ function fetchLocationDetails(id) {
             generateStars(rating);
 
             // Aktualisiere die verschiedenen Felder
-            document.querySelector('#name_spot').innerHTML = location.name;
-            document.querySelector('#name_category').innerHTML = location.name + ', ' + (location.category_id || 'Keine Kategorie');
-            document.querySelector('#website_url').innerHTML = location.website_url ? `<a href="${location.website_url}" target="_blank">${location.website_url}</a>` : 'Kein Link verfügbar';
-            document.querySelector('#openinghours').innerHTML = "Openinghours: " + (location.opening_hours || 'Keine Angaben');
-            document.querySelector('#address').innerHTML = location.address || 'Keine Adresse verfügbar';
-            document.querySelector('#description_spot').innerHTML = location.description || 'Keine Beschreibung verfügbar';
-            document.querySelector('#price_range').innerHTML = "Price Range: " + (location.price_range || 'Keine Angabe');
-            document.querySelector('#season').innerHTML = "Season: " + (location.season || 'Keine Saisonangabe');
-            document.querySelector('#special_features').innerHTML = location.special_features || 'Keine besonderen Merkmale';
+            if (document.querySelector('#name_spot')) document.querySelector('#name_spot').innerHTML = location.name || '';
+            if (document.querySelector('#name_category')) document.querySelector('#name_category').innerHTML = location.name + ', ' + (location.category_id || 'Keine Kategorie');
+            if (document.querySelector('#website_url')) document.querySelector('#website_url').innerHTML = location.website_url ? `<a href="${location.website_url}" target="_blank">${location.website_url}</a>` : 'Kein Link verfügbar';
+            if (document.querySelector('#openinghours')) document.querySelector('#openinghours').innerHTML = "Openinghours: " + (location.opening_hours || 'Keine Angaben');
+            if (document.querySelector('#address')) document.querySelector('#address').innerHTML = location.address || 'Keine Adresse verfügbar';
+            if (document.querySelector('#description_spot')) document.querySelector('#description_spot').innerHTML = location.description || 'Keine Beschreibung verfügbar';
+            if (document.querySelector('#price_range')) document.querySelector('#price_range').innerHTML = "Price Range: " + (location.price_range || 'Keine Angabe');
+            if (document.querySelector('#season')) document.querySelector('#season').innerHTML = "Season: " + (location.season || 'Keine Saisonangabe');
+            if (document.querySelector('#special_features')) document.querySelector('#special_features').innerHTML = location.special_features || 'Keine besonderen Merkmale';
             fetchCategoryNameById(location.category_id); // Kategorie-Name abrufen
             
 
-            // Kommentare anzeigen
-            let htmlCode = "";
-            for (let i = 0; i < comments.length; i++) {
-                htmlCode += `<div class="comment"><strong><a href="../profile/profile.html?userId=${comments[i].user_id}" >${comments[i].user_id}</a>:</strong> ${comments[i].comment_text}</div>`;
+            // Kommentare anzeigen mit Fehlerbehandlung
+            try {
+                displayComments(comments);
+            } catch (e) {
+                console.error("Error displaying comments:", e);
+                const commentsContainer = document.getElementById('comments');
+                if (commentsContainer) {
+                    commentsContainer.innerHTML = '<p class="error">Fehler beim Laden der Kommentare.</p>';
+                }
             }
-            document.querySelector('#comments').innerHTML = htmlCode;
+            
+            // Zeige den Erstellernamen an - KORREKTE VERSION
+            const creatorName = location.creator_username || 'Unbekannter Nutzer';
+            
+            // Standard-IDs und Klassen probieren
+            const userDataName = document.getElementById('user_data_name');
+            if (userDataName) {
+                userDataName.textContent = creatorName;
+            }
+            
+            // Falls Standard-ID nicht existiert, nach bestimmten Textmustern suchen
+            if (!userDataName) {
+                // Suche nach allen p-Tags, die "Created by" enthalten könnten
+                const allParagraphs = document.querySelectorAll('p, span, div');
+                
+                for (let element of allParagraphs) {
+                    if (element.textContent && element.textContent.includes('Created by')) {
+                        // Suche nach dem nächsten benachbarten Element oder erstelle eines, wenn keines existiert
+                        let creatorElement = element.nextElementSibling;
+                        
+                        if (!creatorElement) {
+                            // Wir fügen ein neues Element hinzu, wenn keines existiert
+                            creatorElement = document.createElement('span');
+                            creatorElement.className = 'creator-name';
+                            element.parentNode.insertBefore(creatorElement, element.nextSibling);
+                        }
+                        
+                        // Setze den Benutzernamen
+                        creatorElement.textContent = creatorName;
+                        break;
+                    }
+                }
+            }
         })
-        .catch(error => console.error('Error fetching location details:', error));
+        .catch(error => {
+            console.error('Error fetching location details:', error);
+            // Benutzeroberfläche über Fehler informieren
+            document.getElementById('comments').innerHTML = 
+                '<p class="error">Fehler beim Laden der Daten. Bitte versuchen Sie es später erneut.</p>';
+        });
+}
+
+// Funktion zum Anzeigen der Kommentare mit korrekten Spaltennamen
+function displayComments(comments) {
+  const commentsContainer = document.getElementById('comments');
+  commentsContainer.innerHTML = '';
+
+  if (!comments || comments.length === 0) {
+    commentsContainer.innerHTML = '<p class="no-comments">Noch keine Kommentare vorhanden.</p>';
+    return;
+  }
+
+  comments.forEach(comment => {
+    const commentElement = document.createElement('div');
+    commentElement.className = 'comment';
+    
+    // Username anzeigen - aus der korrekten DB-Spalte
+    const username = comment.username || 'Unbekannter Nutzer';
+    
+    commentElement.innerHTML = `
+      <strong>${username}</strong>
+      <p>${comment.comment_text}</p>
+      <small>${formatDate(comment.creation_date)}</small>
+    `;
+    
+    commentsContainer.appendChild(commentElement);
+  });
+}
+
+// Funktion zum Formatieren des Datums
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('de-DE', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
 }
 
 /**
@@ -254,12 +348,13 @@ function rateLocation(id, userId, rating) {
         },
         body: JSON.stringify(payload)
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Rating response:', data);
-        })
-        .catch(error => console.error('Error rating location:', error));
-  }
+    .then(response => response.json())
+    .then(data => {
+        console.log('Rating response:', data);
+    })
+    .catch(error => console.error('Error rating location:', error));
+}
+
 
   function generateStars(rating) {
     let fullStars = Math.floor(rating); // Ganze Sterne

@@ -13,17 +13,28 @@ if (isset($_GET['action'], $_GET['id']) && is_numeric($_GET['id'])) {
         // Get user ID if provided
         $user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : null;
         
-        // Location
-        $stmtLoc = $conn->prepare("SELECT * FROM Locations WHERE id = ?");
+        // Location with creator username
+        $stmtLoc = $conn->prepare("
+            SELECT l.*, u.username as creator_username 
+            FROM Locations l
+            LEFT JOIN Users u ON l.created_by = u.id
+            WHERE l.id = ?
+        ");
         $stmtLoc->bind_param("i", $id);
         $stmtLoc->execute();
         $resLoc = $stmtLoc->get_result();
         if ($resLoc->num_rows > 0) {
             $location = $resLoc->fetch_assoc();
 
-            // Kommentare
+            // Kommentare mit Benutzernamen
             $comments = [];
-            $stmtCom = $conn->prepare("SELECT * FROM Comments WHERE location_id = ?");
+            $stmtCom = $conn->prepare("
+                SELECT c.id, c.location_id, c.user_id, c.comment_text, c.version, c.creation_date, c.last_modified, c.status_id, u.username 
+                FROM Comments c 
+                LEFT JOIN Users u ON c.user_id = u.id 
+                WHERE c.location_id = ? 
+                ORDER BY c.creation_date DESC
+            ");
             $stmtCom->bind_param("i", $id);
             $stmtCom->execute();
             $resCom = $stmtCom->get_result();

@@ -18,8 +18,9 @@ body {
   min-height: 100vh !important;
 }
 
-/* Layout Structure - More Modern */
+/* Layout Structure */
 #fullscreen_main {
+  width: 100%;
   max-width: 1300px;
   margin: 0 auto;
   display: grid;
@@ -28,9 +29,6 @@ body {
   padding: 20px;
   background: transparent;
   flex: 1 !important;
-  overflow-x: hidden; /* Prevent horizontal scroll */
-  width: 100%;
-  max-width: 1300px;
   box-sizing: border-box;
   overflow: visible;
 }
@@ -44,7 +42,7 @@ body {
   position: relative;
 }
 
-/* Image Gallery - Modern Design */
+/* Image Gallery Fixes */
 #preview_images {
   width: 100%;
   box-sizing: border-box;
@@ -57,14 +55,14 @@ body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   margin: 0 auto 1rem auto !important;
   position: relative;
-  width: 100%;
+  width: calc(100% - 10px);
   height: 40vh;
   min-height: 250px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg-color-white, #f5f5f5);
-  max-width: calc(100% - 10px); /* Verhindert horizontales Scrollen */
+  max-width: 100%;
   box-sizing: border-box;
 }
 
@@ -97,9 +95,8 @@ body {
   gap: 12px;
   margin-top: 16px;
   flex-wrap: wrap;
-  width: calc(100% - 10px); /* Verhindert horizontales Scrollen */
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  max-width: 100%;
   padding-bottom: 10px; /* Platz für Scrollbar */
   margin: 0 auto;
   box-sizing: border-box;
@@ -201,8 +198,53 @@ body {
   padding: 25px;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+#comments_section h2 {
+  margin-bottom: 15px;
+  font-size: var(--font-size-lg);
+  color: var(--text-color);
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 8px;
+}
+
+#comments {
+  margin-bottom: 20px;
+  max-height: 250px; /* Erhöht von 100px */
+  overflow-y: auto;
+}
+
+.comment {
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  background: #f9f9f9;
+  border-left: 3px solid var(--accent-color);
+  border-radius: 10px;
+}
+
+/* Fehlermeldungen */
+.error {
+  color: #d32f2f;
+  padding: 10px;
+  margin: 10px 0;
+  border-left: 3px solid #d32f2f;
+  background: #ffebee;
+  border-radius: 4px;
+}
+
+/* Verbesserte Comments Section */
+#comments_section {
+  max-width: 100%;
+  margin-top: 30px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   margin-top: auto !important; /* Push to bottom */
   margin-bottom: 0 !important;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 #comments_section h2 {
@@ -225,33 +267,75 @@ body {
   border-radius: 3px;
 }
 
+/* Verbessertes Kommentar-Container-Design */
 #comments {
   margin-bottom: 20px;
-  max-height: 100px;
+  max-height: 350px; /* Mehr Kommentare sichtbar */
   overflow-y: auto;
+  padding-right: 10px;
 }
 
+/* Scrollbar für Kommentare */
+#comments::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f5f5f5;
+}
+
+#comments::-webkit-scrollbar-thumb {
+  background-color: var(--accent-color);
+  border-radius: 6px;
+}
+
+#comments::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+  border-radius: 6px;
+}
+
+/* Besseres Kommentar-Design mit Debug-Fix */
 .comment {
-  padding: 12px 16px;
-  margin-bottom: 12px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
   background: #f9f9f9;
   border-left: 3px solid var(--accent-color);
   border-radius: 10px;
   transition: transform 0.2s ease;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+}
+
+.comment:last-child {
+  margin-bottom: 0;
+}
+
+.comment:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
 }
 
 .comment strong {
+  display: block;
+  margin-bottom: 6px;
   color: var(--accent-color);
 }
 
-.comment strong a {
-  text-decoration: none;
-  color: inherit;
-  transition: color 0.2s;
+.comment p {
+  margin: 0;
+  color: var(--text-color);
+  line-height: 1.5;
 }
 
-.comment strong a:hover {
-  opacity: 0.8;
+/* Fix für "Unbekannt"-Anzeige in Kommentaren */
+.comment-author {
+  font-weight: 600;
+  color: var(--accent-color);
+}
+
+.comment-text {
+  margin-top: 6px;
+}
+
+.unknown-user {
+  color: #666;
+  font-style: italic;
 }
 
 #comment_form {
@@ -511,7 +595,7 @@ textarea:focus {
 #user_data_content {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
 }
 
 #user_data_img {
@@ -522,13 +606,37 @@ textarea:focus {
   overflow: hidden;
 }
 
-#user_data_name {
+#user_data_name,
+.created-by-username,
+#creator-name {
   font-weight: 500;
   color: var(--text-color);
+  display: block; /* Sicherstellen, dass es angezeigt wird */
 }
 
-/* Responsive Design */
+/* Spezifische Stilregeln, wenn ein Container mit "Created by:" existiert */
+[id*="created-by"] span,
+[class*="created-by"] span,
+[id*="user"] span,
+[class*="user"] span {
+  display: inline-block;
+  font-weight: 500;
+  margin-left: 5px;
+}
+
+/* Verbesserung der Lesbarkeit */
+#user_data_content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Responsive Fixes */
 @media (max-width: 992px) {
+  body {
+    overflow-x: hidden !important;
+  }
+  
   #fullscreen_main {
     display: flex;
     flex-direction: column;
@@ -545,41 +653,26 @@ textarea:focus {
     order: 1;
   }
   
-  #comments_section {
-    order: 3; /* Kommentare ganz unten */
-    margin-top: 30px !important;
-  }
-  
   #fullscreen_main_right {
     order: 2;
     margin: 20px 0;
   }
   
-  /* Images anpassen */
-  #mainImg {
-    height: 35vh;
-    min-height: 200px;
-    margin: 0 auto 15px auto;
-    max-width: 100%;
+  #comments_section {
+    order: 3; /* Kommentare ganz unten */
+    margin-top: 30px !important;
   }
-  
-  .contentImages {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    overflow-x: auto;
-    width: 100%;
-    padding: 5px 0;
-    gap: 10px;
-  }
-  
-  .contentImages img {
-    width: 90px;
-    height: 90px;
+
+  #comments {
+    max-height: 200px; /* Responsive Höhe */
   }
 }
 
 @media (max-width: 768px) {
+  #comments {
+    max-height: 300px;
+  }
+  
   #mainImg {
     height: 30vh;
   }
@@ -595,6 +688,10 @@ textarea:focus {
 }
 
 @media (max-width: 480px) {
+  #comments {
+    max-height: 180px;
+  }
+  
   #mainImg {
     height: 25vh;
   }
