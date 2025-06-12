@@ -308,61 +308,86 @@ button.loading {
     
     .main {
         grid-template-columns: 100%;
-        margin: 80px 15px 30px;
+        margin: 70px 10px 20px;
         min-height: unset;
+        width: calc(100% - 20px);
     }
     
     .main_box:first-child {
-        padding: 30px 0;
-    }
-    
-    .main_box:last-child {
-        display: none;
-    }
-    
-    .main_box h1 {
-        font-size: 1.5rem;
-    }
-    
-    .main_box > div {
-        padding: 0 20px;
-    }
-    
-    #header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 100;
-    }
-    
-    .message-container.error,
-    .message-container.success {
-        font-size: 0.8rem;
-    }
-}
-
-@media screen and (max-width: 400px) {
-    #header_spotlas a img {
-        width: 120px;
+        padding: 20px 0;
     }
     
     .main_box h1 {
         font-size: 1.3rem;
+        margin-bottom: 15px;
     }
     
-    .main_box input, 
-    .main_box select {
-        padding: 8px 12px;
+    .main_box > div {
+        padding: 0 15px;
+        gap: 10px;
+    }
+    
+    #loginForm, #registerForm, #registerPage2Form {
+        gap: 10px;
+    }
+    
+    .main_box input, select {
+        padding: 8px 10px;
         font-size: 13px;
     }
     
+    .main_box div button {
+        min-width: 90px;
+        padding: 7px 12px;
+        margin-top: 5px;
+    }
+    
+    #header {
+        height: 50px;
+    }
+}
+
+@media screen and (max-width: 400px) {
     .main {
-        margin-top: 70px;
+        margin: 60px 8px 15px;
+    }
+    
+    .main_box:first-child {
+        padding: 15px 0;
+    }
+    
+    .main_box h1 {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+    }
+    
+    .main_box > div {
+        padding: 0 12px;
+        gap: 8px;
+    }
+    
+    #loginForm, #registerForm, #registerPage2Form {
+        gap: 8px;
+    }
+    
+    .main_box input, select {
+        padding: 7px 8px;
+        font-size: 12px;
     }
     
     .main_box p {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
+        margin: 5px 0;
+    }
+    
+    .main_box div button {
+        min-width: 80px;
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+    
+    #header_spotlas a img {
+        width: 110px;
     }
 }
 

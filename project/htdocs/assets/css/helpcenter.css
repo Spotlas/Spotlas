@@ -205,3 +205,178 @@ form button:hover {
     color: black;
 }
 
+/* Responsive styling for all screen sizes */
+@media screen and (max-width: 1200px) {
+    .container {
+        max-width: 85vw;
+    }
+    
+    form {
+        max-width: 60vw;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .container {
+        max-width: 90vw;
+        gap: 15px;
+    }
+    
+    .sidebar {
+        width: 30%;
+    }
+    
+    .content {
+        width: 70%;
+    }
+    
+    form {
+        max-width: 70vw;
+    }
+    
+    .accordion-title {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        max-width: 95vw;
+    }
+    
+    .sidebar {
+        position: relative;
+        width: 100%;
+        max-height: none;
+        margin-bottom: 20px;
+    }
+    
+    .content {
+        width: 100%;
+        max-height: none;
+    }
+    
+    form {
+        max-width: 90vw;
+        padding: 15px;
+    }
+    
+    .sidebar ul li {
+        padding: 8px;
+    }
+    
+    /* Create horizontal scrollable categories on small screens */
+    .sidebar ul {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 10px;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+    
+    .sidebar ul li {
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 0;
+    }
+    
+    .sidebar h2 {
+        margin-bottom: 15px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    body {
+        font-size: 14px;
+    }
+    
+    .container {
+        margin: 10px auto;
+    }
+    
+    .sidebar {
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .content {
+        padding: 12px;
+    }
+    
+    form {
+        max-width: 95%;
+        padding: 12px;
+        margin: 10px auto;
+    }
+    
+    form input,
+    form textarea {
+        padding: 8px;
+        width: 95%;
+        font-size: 13px;
+    }
+    
+    form button {
+        padding: 8px;
+        font-size: 14px;
+        margin: 0 auto;
+        width: 40%;
+    }
+    
+    .accordion-title {
+        font-size: 15px;
+        padding: 8px;
+    }
+    
+    .accordion-content {
+        font-size: 13px;
+        padding: 8px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .sidebar {
+        padding: 8px;
+    }
+    
+    .sidebar h2 {
+        font-size: 15px;
+        margin-bottom: 8px;
+    }
+    
+    .sidebar ul li {
+        padding: 5px;
+        font-size: 12px;
+    }
+    
+    form {
+        gap: 8px;
+        padding: 10px;
+    }
+    
+    form label {
+        font-size: 13px;
+        margin-bottom: 2px;
+    }
+    
+    form input,
+    form textarea {
+        padding: 6px;
+        font-size: 12px;
+    }
+    
+    form button {
+        padding: 6px;
+        font-size: 13px;
+        width: 35%;
+    }
+}
+
+/* Fix for mobile safari scrolling */
+@supports (-webkit-touch-callout: none) {
+    .sidebar, .content {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
