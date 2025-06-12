@@ -116,10 +116,8 @@ function renderImages(images, showEditLink) {
     const img = document.createElement('img');
     img.className = showEditLink ? 'images' : 'images_fav';
     
-    // Use a placeholder image since there's no image_url in the database
-    const imagePath = '../../assets/images/default.jpg';
-    
-    img.src = imagePath;
+    // Set default image initially
+    img.src = '../../assets/images/default.jpg';
     img.alt = image.title || image.name || 'Bild';
     
     img.onerror = function() {
@@ -127,6 +125,9 @@ function renderImages(images, showEditLink) {
     };
     
     imageWrapper.appendChild(img);
+    
+    // Load the first image for this location
+    loadLocationImage(image.id, img);
     
     if (showEditLink) {
       const overlay = document.createElement('div');
@@ -170,6 +171,37 @@ function renderImages(images, showEditLink) {
   });
   
   console.log(`Successfully rendered ${images.length} images`);
+}
+
+/**
+ * Load the first image for a specific location and update the img element
+ * @param {number} locationId - The location ID
+ * @param {HTMLImageElement} imgElement - The img element to update
+ */
+function loadLocationImage(locationId, imgElement) {
+  fetch(`../../api/images.php?location_id=${locationId}`)
+    .then(response => response.json())
+    .then(result => {
+      console.log(`Images for location ${locationId}:`, result);
+      
+      if (result.code === 200 && result.images && result.images.length > 0) {
+        // Get the first image
+        const firstImage = result.images[0];
+        const imagePath = firstImage.image_url;
+        
+        if (imagePath) {
+          // Update the img src with the actual image
+          imgElement.src = `../../${imagePath}`;
+          console.log(`Updated image for location ${locationId}: ../../${imagePath}`);
+        }
+      } else {
+        console.log(`No images found for location ${locationId}, keeping default image`);
+      }
+    })
+    .catch(err => {
+      console.error(`Error loading image for location ${locationId}:`, err);
+      // Keep default image on error
+    });
 }
 
 function showNoContentMessage(message) {
