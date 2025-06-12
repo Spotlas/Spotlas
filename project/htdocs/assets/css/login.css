@@ -230,26 +230,157 @@ button.loading {
     transform: none !important;
 }
 
-/* Add responsive styling for smaller screens */
-@media screen and (max-width: 768px) {
+/* Responsive styling improvements */
+@media screen and (max-width: 1200px) {
+    .main {
+        margin: 8vw 15vw 0 15vw;
+    }
+    
+    .main_box h1 {
+        font-size: 1.8rem;
+    }
+}
+
+@media screen and (max-width: 992px) {
     .main {
         margin: 8vw 10vw 0 10vw;
-        height: auto;
+    }
+    
+    .main_box input, 
+    .main_box select {
+        padding: 10px 15px;
+        font-size: 14px;
     }
     
     .main_box div button {
         width: auto;
+        min-width: 100px;
+        padding: 8px 16px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        background-position: center;
+    }
+    
+    .main {
+        margin: 10vw 5vw;
+        height: auto;
+        min-height: 500px;
+    }
+    
+    .main_box {
+        padding: 20px 0;
+    }
+    
+    .main_box h1 {
+        margin-bottom: 20px;
+    }
+    
+    .main_box > div {
+        gap: 15px;
+    }
+    
+    #loginForm, #registerForm, #registerPage2Form {
+        gap: 15px;
+    }
+    
+    .main_box div button {
         min-width: 120px;
+        margin-top: 10px;
+    }
+    
+    #header {
+        height: 60px;
+        padding: 0 15px;
+    }
+    
+    #header_spotlas a img {
+        width: 150px;
     }
 }
 
 @media screen and (max-width: 576px) {
+    body {
+        overflow-y: auto;
+    }
+    
     .main {
         grid-template-columns: 100%;
-        margin: 8vw 5vw 0 5vw;
+        margin: 80px 15px 30px;
+        min-height: unset;
+    }
+    
+    .main_box:first-child {
+        padding: 30px 0;
     }
     
     .main_box:last-child {
         display: none;
+    }
+    
+    .main_box h1 {
+        font-size: 1.5rem;
+    }
+    
+    .main_box > div {
+        padding: 0 20px;
+    }
+    
+    #header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+    }
+    
+    .message-container.error,
+    .message-container.success {
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #header_spotlas a img {
+        width: 120px;
+    }
+    
+    .main_box h1 {
+        font-size: 1.3rem;
+    }
+    
+    .main_box input, 
+    .main_box select {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+    
+    .main {
+        margin-top: 70px;
+    }
+    
+    .main_box p {
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-height: 600px) {
+    .main {
+        margin-top: 70px;
+        min-height: unset;
+    }
+    
+    .main_box {
+        padding: 15px 0;
+    }
+    
+    .main_box > div {
+        gap: 10px;
+    }
+    
+    #loginForm, #registerForm, #registerPage2Form {
+        gap: 8px;
     }
 }
