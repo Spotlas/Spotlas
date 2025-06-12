@@ -90,17 +90,17 @@ function addMarkersToMap(points) {
       selectedMarker = marker;
       openSidebarWithContent(`
         <div class="location-card">
-          <!-- Save and fullscreen buttons -->
+          <!-- Main image with placeholder fallback -->
+          <div class="main-image-container">
+            <div class="placeholder">📍</div>
+          </div>
+
+          <!-- Action buttons positioned below image -->
           <div class="action-buttons">
             <img id="img_saveButton" src="./assets/images/icons/bookmark_unsaved.svg" alt="Save" class="action-button" data-location-id="${point.id}" data-is-saved="false">
             <a href="./pages/fullscreen_startseite/fullscreen.html?id=${point.id}" class="fullscreen-link">
               <img id="img_großButton" src="./assets/images/testPic/grosmachen.png" alt="Fullscreen" class="action-button">
             </a>
-          </div>
-          
-          <!-- Main image with placeholder fallback -->
-          <div class="main-image-container">
-            <div class="placeholder">📍</div>
           </div>
 
           <!-- Gallery container -->
