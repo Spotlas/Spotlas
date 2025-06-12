@@ -13,14 +13,8 @@
       rel="stylesheet"
     />
 
-    <!-- Font -->
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- Globale Variablen -->
     <link rel="stylesheet" href="../../assets/css/global.css" />
@@ -37,7 +31,7 @@
     <header id="homepage_header">
       <div id="homepage_header_spotlas">
         <a href="../../index.html"
-          ><img src="../../assets/images/logo_schwarz.png" width="180" alt=""
+          ><img src="../../assets/images/logo_schwarz.png" width="180" alt="Spotlas Logo"
         /></a>
       </div>
 
@@ -46,18 +40,18 @@
           <a href="../../pages/add_place/add.html"
             ><img
               src="../../assets/images/icons/add_icon.svg"
-              alt="add"
-              width="40px"
-              height="40px"
+              alt="Add Place"
+              width="40"
+              height="40"
           /></a>
         </div>
         <div>
           <a href="../../pages/profile/profile.html"
             ><img
               src="../../assets/images/icons/profile_icon.svg"
-              alt="profile"
-              width="40px"
-              height="40px"
+              alt="Profile"
+              width="40"
+              height="40"
           /></a>
         </div>
         <div>
@@ -65,9 +59,9 @@
             id="toggleImg"
             onclick="showDropdown()"
             src="../../assets/images/icons/arrow_icon.svg"
-            alt="options"
-            width="40px"
-            height="40px"
+            alt="Menu"
+            width="40"
+            height="40"
           />
           <div style="display: none; z-index: 12" id="dropDown_menu">
             <a href="../settings/settings.html">Settings</a>
@@ -80,25 +74,20 @@
       </div>
     </header>
 
+    <!-- Back button for mobile navigation -->
+    <div onclick="backHome()" id="profile_info_backButton">
+      <img src="../../assets/images/icons/arrow_icon.svg" alt="Back" />
+      <p>Back</p>
+    </div>
+
+    <!-- Main profile content -->
     <div id="profile_grandparent">
-      <main id="profile_main">
-        <section id="profile_infoSection">
-          <div onclick="backHome()" id="profile_info_backButton">
-            <img src="../../assets/images/icons/arrow_icon.svg" alt="" />
-            <p>Back</p>
-          </div>
-        </section>
-
-        <section id="profile_contentSection"></section>
-      </main>
-
       <div id="profile_infos">
-        <div>
+        <div class="profile-image-container">
           <img
             id="profilPic"
             src="../../assets/images/profilPicture_test.png"
-            alt="profilPic"
-            width="50%"
+            alt="Profile Picture"
           />
         </div>
 
@@ -110,12 +99,11 @@
       </div>
     </div>
 
+    <!-- Tab navigation -->
     <div id="erstellt_parent">
-      <p></p>
-      <p class="switches" id="switches_erstellt" onclick="loadErstellte(this)">
+      <p class="switches active" id="switches_erstellt" onclick="loadErstellte(this)">
         Erstellt
       </p>
-      <p></p>
       <p
         class="switches"
         id="switches_favoriten"
@@ -123,12 +111,14 @@
       >
         Favoriten
       </p>
-      <p></p>
     </div>
 
     <hr />
 
-    <div id="bilder"></div>
+    <!-- Image gallery container -->
+    <div id="bilder">
+      <!-- Content will be loaded dynamically -->
+    </div>
 
     <footer>
       <div id="homepage_footer"></div>
