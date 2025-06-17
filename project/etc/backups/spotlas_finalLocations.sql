@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mariadb
--- Erstellungszeit: 12. Jun 2025 um 17:34
+-- Erstellungszeit: 17. Jun 2025 um 07:13
 -- Server-Version: 11.7.2-MariaDB-ubu2404
 -- PHP-Version: 8.2.27
 
@@ -62,23 +62,6 @@ CREATE TABLE `Comments` (
   `status_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
---
--- Daten für Tabelle `Comments`
---
-
-INSERT INTO `Comments` (`id`, `location_id`, `user_id`, `comment_text`, `version`, `creation_date`, `last_modified`, `status_id`) VALUES
-(1, 1, 1, 'Ein wunderschönes Schloss mit einer reichen Geschichte!', 1, '2025-02-13 20:01:17', '2025-02-13 20:01:17', 1),
-(2, 2, 2, 'Perfekt für einen Spaziergang an einem sonnigen Tag.', 1, '2025-02-13 20:01:17', '2025-02-13 20:01:17', 1),
-(3, 3, 3, 'Das Café Central ist ein Muss für jeden Wien-Besucher.', 1, '2025-02-13 20:01:17', '2025-02-13 20:01:17', 1),
-(4, 4, 4, 'Das Riesenrad ist ein absolutes Highlight!', 1, '2025-02-13 20:01:17', '2025-02-13 20:01:17', 1),
-(5, 5, 5, 'Hallstatt ist wie aus einem Märchen.', 1, '2025-02-13 20:01:17', '2025-02-13 20:01:17', 1),
-(6, 6, 6, 'Die Festung bietet einen atemberaubenden Blick über Salzburg.', 1, '2025-02-13 20:01:17', '2025-02-13 20:01:17', 1),
-(7, 7, 7, 'Die Wasserfälle sind ein Muss für Naturliebhaber.', 1, '2025-02-13 20:01:17', '2025-02-13 20:01:17', 1),
-(8, 8, 8, 'Die Klimt-Gemälde im Belvedere sind unglaublich.', 1, '2025-02-13 20:01:17', '2025-02-13 20:01:17', 1),
-(14, 7, 14, 'schön\n', 1, '2025-05-17 10:00:19', '2025-05-17 10:00:19', 1),
-(15, 12, 14, 'schön hier', 1, '2025-06-09 14:40:39', '2025-06-12 16:45:01', 1),
-(16, 12, 13, 'find ich auch', 1, '2025-06-12 16:41:15', '2025-06-12 16:41:15', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -91,33 +74,6 @@ CREATE TABLE `Favorites` (
   `user_id` int(11) NOT NULL,
   `creation_date` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
-
---
--- Daten für Tabelle `Favorites`
---
-
-INSERT INTO `Favorites` (`id`, `location_id`, `user_id`, `creation_date`) VALUES
-(1, 1, 1, '2025-02-13 20:01:29'),
-(2, 2, 2, '2025-02-13 20:01:29'),
-(3, 3, 3, '2025-02-13 20:01:29'),
-(4, 4, 4, '2025-02-13 20:01:29'),
-(5, 5, 5, '2025-02-13 20:01:29'),
-(6, 6, 6, '2025-02-13 20:01:29'),
-(7, 7, 7, '2025-02-13 20:01:29'),
-(8, 8, 8, '2025-02-13 20:01:29'),
-(20, 4, 1, '2025-05-17 09:22:50'),
-(21, 5, 1, '2025-05-17 09:24:04'),
-(23, 8, 13, '2025-05-17 09:26:13'),
-(31, 7, 13, '2025-05-17 09:30:10'),
-(38, 4, 13, '2025-05-17 09:43:01'),
-(43, 8, 1, '2025-05-17 09:43:44'),
-(44, 6, 1, '2025-05-17 09:43:54'),
-(48, 3, 1, '2025-05-17 09:47:28'),
-(49, 5, 13, '2025-05-17 09:58:38'),
-(51, 6, 13, '2025-05-17 09:58:57'),
-(55, 7, 14, '2025-05-17 10:00:14'),
-(56, 6, 14, '2025-05-17 10:01:24'),
-(60, 12, 13, '2025-06-12 15:30:03');
 
 -- --------------------------------------------------------
 
@@ -139,19 +95,28 @@ CREATE TABLE `Images` (
 --
 
 INSERT INTO `Images` (`id`, `location_id`, `image_url`, `description`, `creation_date`, `status_id`) VALUES
-(1, 1, '1', 'Schloss Schönbrunn Haupteingang', '2025-02-13 20:01:11', 1),
-(2, 2, '2', 'Stadtpark Wien im Frühling', '2025-02-13 20:01:11', 1),
-(3, 3, '3', 'Café Central Innenraum', '2025-02-13 20:01:11', 1),
-(4, 4, '4', 'Wiener Prater Riesenrad', '2025-02-13 20:01:11', 1),
-(5, 5, '5', 'Hallstatt Dorfansicht', '2025-02-13 20:01:11', 1),
-(6, 6, '6', 'Festung Hohensalzburg von oben', '2025-02-13 20:01:11', 1),
-(7, 7, '7', 'Krimmler Wasserfälle im Sommer', '2025-02-13 20:01:11', 1),
-(8, 8, '8', 'Belvedere Museum Garten', '2025-02-13 20:01:11', 1),
-(9, 11, 'uploads/683d7a6faf498_Fermin.png', 'Main image', '2025-06-02 10:18:23', NULL),
-(10, 12, 'uploads/683d7bf706f3e_hofburg 3.jpg', 'Main image', '2025-06-02 10:24:55', NULL),
-(11, 12, 'uploads/683d7bf707565_hofburg 2.jpg', 'Additional image 1', '2025-06-02 10:24:55', NULL),
-(12, 12, 'uploads/683d7bf7078df_hofburg 1.jpg', 'Additional image 2', '2025-06-02 10:24:55', NULL),
-(13, 13, 'uploads/684b0cb9d7f70_2560px-Lautsprecher_Schema-wikipedia-ulfbastel.svg.png', 'Main image', '2025-06-12 17:22:01', NULL);
+(14, 14, 'uploads/684bd0dd16f86_cafe3.jpg', 'Main image', '2025-06-13 07:18:53', NULL),
+(15, 14, 'uploads/684bd0dd1768d_cafe2.jpg', 'Additional image 1', '2025-06-13 07:18:53', NULL),
+(16, 14, 'uploads/684bd0dd17b12_cafe1.jpg', 'Additional image 2', '2025-06-13 07:18:53', NULL),
+(17, 15, 'uploads/684bd1785cb2d_prater2.jpg', 'Main image', '2025-06-13 07:21:28', NULL),
+(18, 15, 'uploads/684bd1785d3ee_prater1.jpg', 'Additional image 1', '2025-06-13 07:21:28', NULL),
+(19, 15, 'uploads/684bd1785d9f4_prater4.jpg', 'Additional image 2', '2025-06-13 07:21:28', NULL),
+(20, 15, 'uploads/684bd1785df03_prater3.jpg', 'Additional image 3', '2025-06-13 07:21:28', NULL),
+(21, 16, 'uploads/684bd2040f6b2_mirabell2.jpg', 'Main image', '2025-06-13 07:23:48', NULL),
+(22, 17, 'uploads/684bd286288ce_kunsthaus3.jpg', 'Main image', '2025-06-13 07:25:58', NULL),
+(23, 17, 'uploads/684bd28629196_kunsthaus2.jpg', 'Additional image 1', '2025-06-13 07:25:58', NULL),
+(24, 17, 'uploads/684bd2862992e_kunsthaus1.jpg', 'Additional image 2', '2025-06-13 07:25:58', NULL),
+(25, 18, 'uploads/684bd34dd2c17_seegrube1.jpg', 'Main image', '2025-06-13 07:29:17', NULL),
+(26, 18, 'uploads/684bd34dd318b_seegrube3.jpg', 'Additional image 1', '2025-06-13 07:29:17', NULL),
+(27, 18, 'uploads/684bd34dd35e2_seegrube2.jpg', 'Additional image 2', '2025-06-13 07:29:17', NULL),
+(28, 19, 'uploads/684bd3cb3e168_hall2.jpg', 'Main image', '2025-06-13 07:31:23', NULL),
+(29, 19, 'uploads/684bd3cb3e7dc_hall3.jpg', 'Additional image 1', '2025-06-13 07:31:23', NULL),
+(30, 19, 'uploads/684bd3cb3eed8_hall1.jpg', 'Additional image 2', '2025-06-13 07:31:23', NULL),
+(31, 20, 'uploads/684bd45ebc980_post1.jpg', 'Main image', '2025-06-13 07:33:50', NULL),
+(32, 20, 'uploads/684bd45ebd178_post2.jpg', 'Additional image 1', '2025-06-13 07:33:50', NULL),
+(33, 21, 'uploads/684bd59e29384_sacher2.webp', 'Main image', '2025-06-13 07:39:10', NULL),
+(34, 21, 'uploads/684bd59e299b4_sacher3.webp', 'Additional image 1', '2025-06-13 07:39:10', NULL),
+(35, 21, 'uploads/684bd59e29fce_sacher1.jpg', 'Additional image 2', '2025-06-13 07:39:10', NULL);
 
 -- --------------------------------------------------------
 
@@ -163,20 +128,6 @@ CREATE TABLE `LocationCategories` (
   `location_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
-
---
--- Daten für Tabelle `LocationCategories`
---
-
-INSERT INTO `LocationCategories` (`location_id`, `category_id`) VALUES
-(3, 1),
-(1, 2),
-(4, 2),
-(6, 2),
-(2, 3),
-(5, 3),
-(7, 3),
-(8, 4);
 
 -- --------------------------------------------------------
 
@@ -211,18 +162,14 @@ CREATE TABLE `Locations` (
 --
 
 INSERT INTO `Locations` (`id`, `name`, `description`, `category_id`, `latitude`, `longitude`, `address`, `creation_date`, `last_modified`, `status_id`, `price_range`, `opening_hours`, `season`, `accessibility`, `view_count`, `favorite_count`, `website_url`, `special_features`, `created_by`) VALUES
-(1, 'Schloss Schönbrunn', 'Ein barockes Schloss in Wien', 2, 48.185847, 16.312753, 'Schönbrunner Schloßstraße 47, 1130 Wien', '2025-02-13 20:00:54', '2025-02-13 20:00:54', 1, '€€', '09:00 - 17:00', 'Ganzjährig', 1, 0, 0, 'https://www.schoenbrunn.at', 'Gärten, Tiergarten, Brunnen', 1),
-(2, 'Stadtpark Wien', 'Ein öffentlicher Park im Zentrum von Wien', 3, 48.202161, 16.379919, 'Parkring, 1010 Wien', '2025-02-13 20:00:54', '2025-02-13 20:00:54', 1, 'Kostenlos', '06:00 - 22:00', 'Ganzjährig', 1, 0, 0, 'https://www.wien.info', 'Denkmäler, Teiche, Spazierwege', 2),
-(3, 'Café Central', 'Historisches Kaffeehaus in Wien', 1, 48.210193, 16.365315, 'Herrengasse 14, 1010 Wien', '2025-02-13 20:00:54', '2025-02-13 20:00:54', 1, '€€€', '08:00 - 22:00', 'Ganzjährig', 1, 0, 0, 'https://www.cafecentral.wien', 'Wiener Kaffeehauskultur, Live-Musik', 3),
-(4, 'Wiener Prater', 'Berühmter Vergnügungspark in Wien', 2, 48.216667, 16.395833, 'Prater 9, 1020 Wien', '2025-02-13 20:00:54', '2025-02-13 20:00:54', 1, '€€', '10:00 - 23:00', 'Ganzjährig', 1, 0, 0, 'https://www.prater.at', 'Riesenrad, Achterbahnen, Spielhallen', 4),
-(5, 'Hallstatt', 'Pittoreskes Dorf am Hallstätter See', 3, 47.562234, 13.649262, 'Hallstatt, 4830 Oberösterreich', '2025-02-13 20:00:54', '2025-02-13 20:00:54', 1, 'Kostenlos', 'Ganzjährig', 'Ganzjährig', 1, 0, 0, 'https://www.hallstatt.net', 'See, Berge, Salzbergwerk', 5),
-(6, 'Festung Hohensalzburg', 'Mittelalterliche Burg in Salzburg', 2, 47.794444, 13.046667, 'Mönchsberg 34, 5020 Salzburg', '2025-02-13 20:00:54', '2025-02-13 20:00:54', 1, '€€', '09:30 - 17:00', 'Ganzjährig', 1, 0, 0, 'https://www.salzburg-burgen.at', 'Panoramablick, Museen, Konzerte', 6),
-(7, 'Krimmler Wasserfälle', 'Höchste Wasserfälle Österreichs', 3, 47.195833, 12.172222, 'Krimml, 5743 Salzburg', '2025-02-13 20:00:54', '2025-02-13 20:00:54', 1, '€', '08:00 - 18:00', 'Mai bis Oktober', 1, 0, 0, 'https://www.wasserfaelle-krimml.at', 'Wanderwege, Naturerlebnis', 7),
-(8, 'Belvedere Museum', 'Kunstmuseum in Wien', 4, 48.191389, 16.380833, 'Prinz-Eugen-Straße 27, 1030 Wien', '2025-02-13 20:00:54', '2025-02-13 20:00:54', 1, '€€€', '10:00 - 18:00', 'Ganzjährig', 1, 0, 0, 'https://www.belvedere.at', 'Klimt-Gemälde, barocke Architektur', 8),
-(10, 'erik', '', 1, 51.000000, 24.000000, '', '2025-04-28 10:34:39', '2025-04-28 10:37:44', 1, '', '', '', 0, 0, 0, '', '', NULL),
-(11, 'HTL Leondinger', 'Schule', 4, 48.275500, 14.248400, 'Limesstraße', '2025-06-02 10:18:23', '2025-06-12 07:55:10', NULL, '', '0', '', 0, 0, 0, 'https://htl.com', '', 13),
-(12, 'Hofburg', 'Hofbug', 2, 48.207658, 15.838400, '16.366054', '2025-06-02 10:24:55', '2025-06-02 10:30:39', NULL, '0', '', '', 0, 0, 0, 'www.wien.at', '', 13),
-(13, 'test', '', 1, 51.165700, 10.451500, '', '2025-06-12 17:22:01', '2025-06-12 17:22:01', NULL, '0', '', '', 0, 0, 0, '', '', 13);
+(14, 'Café Central', 'Historisches Wiener Kaffeehaus mit Marmorsäulen und Torten.', 1, 48.206167, 16.359164, 'Herrengasse 14, 1010 Wien', '2025-06-13 07:18:53', '2025-06-13 07:18:53', NULL, '10', '07:30 – 22:00', 'Ganzjährig', 1, 0, 0, 'https://www.cafecentral.wien', 'Historisches Ambiente', 13),
+(15, 'Prater', 'Großer Stadtpark mit dem berühmten Riesenrad und Biergärten.', 2, 48.216110, 16.395555, 'Prater, 1020 Wien', '2025-06-13 07:21:28', '2025-06-13 07:21:28', NULL, '0', '06:00 – 23:00', 'Frühling–Herbst', 1, 0, 0, 'https://praterwien.com', 'Riesenrad', 13),
+(16, 'Schloss Mirabell', 'Barockschloss mit prächtigem Garten und Marmortreppenhaus.', 2, 47.803331, 13.038500, 'Mirabellplatz 4, 5020 Salzburg', '2025-06-13 07:23:48', '2025-06-13 07:23:48', NULL, '0', '06:00 – 21:00', 'Frühling–Sommer', 1, 0, 0, 'https://www.salzburg.info/de/sehenswuerdigkeiten/schloesser/schloss-mirabell', 'Barockgarten', 13),
+(17, 'Kunsthaus Graz', 'Futuristisches Museum für zeitgenössische Kunst am Murufer.', 4, 47.071400, 15.434100, 'Lendkai 1, 8020 Graz', '2025-06-13 07:25:58', '2025-06-13 07:25:58', NULL, '12', '10:00 – 18:00', 'Ganzjährig', 1, 0, 0, 'https://www.museum-joanneum.at/kunsthaus-graz', '„Blaue Blase“-Architektur', 13),
+(18, 'Restaurant Seegrube', 'Bergrestaurant auf 1 905 m mit Panoramablick über Innsbruck.', 1, 47.306667, 11.380278, 'Seegrube 510, 6020 Innsbruck', '2025-06-13 07:29:17', '2025-06-13 07:29:17', NULL, '15', '09:00 – 17:00', 'Sommer–Winter', 1, 0, 0, 'https://www.nordkette.com', 'Panoramablick', 13),
+(19, 'Hallstatt Skywalk', 'Aussichtsplattform über dem Welterbe-Dorf Hallstatt.', 3, 47.562233, 13.649262, 'Salzbergstraße 21, 4830 Hallstatt', '2025-06-13 07:31:23', '2025-06-13 07:31:23', NULL, '2', '09:00 – 16:30', 'Ganzjährig', 1, 0, 0, 'https://www.hallstatt.net/de/skywalk', 'Glasplattform', 13),
+(20, 'Pöstlingberg-Schlössl', 'Traditionslokal mit Donaublick und großer Terrasse.', 1, 48.344000, 14.262200, 'Am Pöstlingberg 14, 4040 Linz', '2025-06-13 07:33:50', '2025-06-13 07:33:50', NULL, '20', '10:00 – 23:00', 'Ganzjährig', 1, 0, 0, 'https://www.poestlingbergschloessl.at', 'Donaublick', 13),
+(21, 'Hotel Sacher Wien', 'Legendäres 5-Sterne-Hotel, Original Sachertorte & Blick auf die Staatsoper.', 5, 48.202333, 16.368331, 'Philharmonikerstraße 4, 1010 Wien', '2025-06-13 07:39:10', '2025-06-13 07:39:10', NULL, '300', '24/7', 'Ganzjährig', 1, 0, 0, 'https://www.sacher.com/hotel-sacher-wien', 'Sachertorte, Luxus-Spa', 13);
 
 -- --------------------------------------------------------
 
@@ -237,25 +184,6 @@ CREATE TABLE `Ratings` (
   `rating` int(11) NOT NULL CHECK (`rating` between 1 and 5),
   `creation_date` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
-
---
--- Daten für Tabelle `Ratings`
---
-
-INSERT INTO `Ratings` (`id`, `location_id`, `user_id`, `rating`, `creation_date`) VALUES
-(1, 1, 1, 5, '2025-02-13 20:01:23'),
-(2, 2, 2, 4, '2025-02-13 20:01:23'),
-(3, 3, 3, 5, '2025-02-13 20:01:23'),
-(4, 4, 4, 5, '2025-02-13 20:01:23'),
-(5, 5, 5, 5, '2025-02-13 20:01:23'),
-(6, 6, 6, 4, '2025-02-13 20:01:23'),
-(7, 7, 7, 5, '2025-02-13 20:01:23'),
-(8, 8, 8, 5, '2025-02-13 20:01:23'),
-(9, 6, 3, 1, '2025-04-09 08:55:57'),
-(14, 6, 1, 1, '2025-05-17 09:44:02'),
-(15, 3, 1, 1, '2025-05-17 09:47:40'),
-(16, 12, 13, 1, '2025-06-05 07:38:35'),
-(17, 12, 1, 1, '2025-06-09 14:40:06');
 
 -- --------------------------------------------------------
 
@@ -319,8 +247,9 @@ INSERT INTO `Users` (`id`, `full_name`, `username`, `email`, `password_hash`, `c
 (7, 'David Bauer', 'david_bauer', 'david.bauer@example.com', 'hashed_password_7', '2025-02-13 20:00:47', NULL, NULL, 1, '1988-09-14', '7', '+43987654321', NULL, 'admin', 1, NULL, 0, 'Systemadministrator der Plattform.'),
 (8, 'Julia Fischer', 'julia_fischer', 'julia.fischer@example.com', 'hashed_password_8', '2025-02-13 20:00:47', NULL, NULL, 1, '1991-04-18', '8', '+43109876543', NULL, 'user', 1, NULL, 0, 'Reisebloggerin aus Wien.'),
 (9, 'New User', 'erikii_9562', 'erikii@gmail.com', '$2y$10$OyHoKidkrekhvIZa9EUj7eTqQYWNUnqjIAzHuS7Yx6XNlZ7FORcfq', '2025-04-08 19:20:41', NULL, NULL, NULL, NULL, 'default.jpg', NULL, NULL, 'user', 0, NULL, 0, ''),
-(13, 'erik bergi', 'erikbergi', 'erikbergi@gmail.com', '$2y$10$s0zCuFz6TXzxbWUjcvu6euwPyM2QaQzGN/LYvUsp46gLmXfxn.Swy', '2025-05-17 09:23:32', '2025-06-12 17:33:24', NULL, NULL, NULL, 'default.jpg', '+43 686678976', NULL, 'user', 0, NULL, 0, ''),
-(14, 'bergi bergi', 'bergi', 'bergi@gmail.com', '$2y$10$74a0n/9fStjpp0ooGyKgS.M42anbDYNCP2v9xYLNGaCnWPVbfL.me', '2025-05-17 09:50:20', '2025-05-17 10:00:04', NULL, NULL, NULL, 'default.jpg', '+5678867', NULL, 'user', 0, NULL, 0, '');
+(13, 'erik bergi', 'erikbergi', 'erikbergi@gmail.com', '$2y$10$s0zCuFz6TXzxbWUjcvu6euwPyM2QaQzGN/LYvUsp46gLmXfxn.Swy', '2025-05-17 09:23:32', '2025-06-13 07:06:00', NULL, NULL, NULL, 'default.jpg', '+43 686678976', NULL, 'user', 0, NULL, 0, ''),
+(14, 'bergi bergi', 'bergi', 'bergi@gmail.com', '$2y$10$74a0n/9fStjpp0ooGyKgS.M42anbDYNCP2v9xYLNGaCnWPVbfL.me', '2025-05-17 09:50:20', '2025-05-17 10:00:04', NULL, NULL, NULL, 'default.jpg', '+5678867', NULL, 'user', 0, NULL, 0, ''),
+(15, 'test acc', 'testacc', 'testacc@gmail.com', '$2y$10$EDc7x7l808ltmO5hildof.xrMWTLQl8byTIgTVvmvjsDw9BVfeZKy', '2025-06-12 17:49:38', NULL, NULL, NULL, NULL, 'default.jpg', '+436434', NULL, 'user', 0, NULL, 0, '');
 
 --
 -- Indizes der exportierten Tabellen
@@ -419,19 +348,19 @@ ALTER TABLE `Comments`
 -- AUTO_INCREMENT für Tabelle `Favorites`
 --
 ALTER TABLE `Favorites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT für Tabelle `Images`
 --
 ALTER TABLE `Images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT für Tabelle `Locations`
 --
 ALTER TABLE `Locations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT für Tabelle `Ratings`
@@ -449,7 +378,7 @@ ALTER TABLE `Statuses`
 -- AUTO_INCREMENT für Tabelle `Users`
 --
 ALTER TABLE `Users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints der exportierten Tabellen
