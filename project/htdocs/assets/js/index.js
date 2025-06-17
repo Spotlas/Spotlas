@@ -14,7 +14,23 @@ const lat = 47.6965;
 const lng = 13.3458;
 let points = []; // Array für die Orte
 
+const map = L.map("map", config).setView([lat, lng], zoom);
+let markersLayer = L.featureGroup().addTo(map); // Layer für Marker - MOVED HERE
+const sidebar = document.getElementById("homepage_karte_sidebar");
+let selectedMarker = null;
+
+L.tileLayer(
+  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
+  {
+    attribution: '&copy; <a href="https://www.esri.com/">Esri</a>, USGS, NOAA',
+  }
+).addTo(map);
+
 function fetchAllLocations() {
+  // Clear the map state first to prevent duplicate markers
+  clearMarkers();
+  sidebar.innerHTML = "";
+  
   fetch("./api/home.php")
     .then((response) => response.json())
     .then((data) => {
@@ -52,18 +68,6 @@ function fetchAllLocations() {
       console.error("Error fetching all locations:", error);
     });
 }
-
-const map = L.map("map", config).setView([lat, lng], zoom);
-
-L.tileLayer(
-  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
-  {
-    attribution: '&copy; <a href="https://www.esri.com/">Esri</a>, USGS, NOAA',
-  }
-).addTo(map);
-
-const sidebar = document.getElementById("homepage_karte_sidebar");
-let selectedMarker = null;
 
 function openSidebarWithContent(content) {
   // Add header with close button for mobile
@@ -210,7 +214,8 @@ function addMarkersToMap(points) {
 }
 
 function listMarkers(points) {
-  if (selectedMarker) return; // Zeige nur die Namen, wenn kein Marker aktiv ist
+  // Don't return early if selectedMarker exists - we always want to rebuild the list
+  // when filters are applied
   
   const headerContent = `
     <div class="sidebar-header">
@@ -222,12 +227,16 @@ function listMarkers(points) {
   `;
   
   sidebar.innerHTML = headerContent + "<h3>Orte im aktuellen Kartenausschnitt:</h3><br>";
+  
+  // Flag to track if we found markers in the current view
+  let markersFound = false;
 
   map.eachLayer(function (layer) {
     if (
       layer instanceof L.Marker &&
       map.getBounds().contains(layer.getLatLng())
     ) {
+      markersFound = true;
       const el = document.createElement("div");
       el.className = "sidebar-el";
 
@@ -237,12 +246,20 @@ function listMarkers(points) {
 
       el.onclick = () => {
         map.setView(layer.getLatLng(), zoompoint);
-        layer.openPopup();
+        layer.fire('click');
       };
 
       sidebar.appendChild(el);
     }
   });
+  
+  // If no markers were found in the current view, show a message
+  if (!markersFound) {
+    const noResultsMsg = document.createElement("div");
+    noResultsMsg.className = "no-results-message";
+    noResultsMsg.textContent = "Keine Orte gefunden. Zoome heraus oder ändere den Filter.";
+    sidebar.appendChild(noResultsMsg);
+  }
   
   // Show sidebar on mobile when content is loaded
   showSidebar();
@@ -334,15 +351,51 @@ function searchLocationsByName(searchTerm) {
 // Ruft Locations anhand der Kategorie ab
 function fetchLocationsByCategory(category) {
   console.log(`fetchLocationbyCategory aufgerufen mit: ${category}`);
+  
+  // Clear the map state first
+  clearMarkers();
+  sidebar.innerHTML = '<div class="loading">Lade Daten...</div>';
+  showSidebar(); // Make sure sidebar is visible during loading
+  
   fetch(`./api/home.php?category=${encodeURIComponent(category)}`)
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
     .then((data) => {
       console.log("Locations by category:", data);
+      
+      if (!data.locations || data.locations.length === 0) {
+        sidebar.innerHTML = `
+          <div class="sidebar-header">
+            <h3 class="sidebar-title">Kategorie: ${category}</h3>
+            <button class="sidebar-close" onclick="toggleSidebar()">
+              <i class="fa fa-times"></i>
+            </button>
+          </div>
+          <div class="no-results-message">Keine Orte in dieser Kategorie gefunden.</div>
+          <button class="clear-filter-btn" onclick="clearFilter()">Filter zurücksetzen</button>
+        `;
+        return;
+      }
+      
       printToMap(data);
     })
-    .catch((error) =>
-      console.error("Error fetching locations by category:", error)
-    );
+    .catch((error) => {
+      console.error("Error fetching locations by category:", error);
+      sidebar.innerHTML = `
+        <div class="sidebar-header">
+          <h3 class="sidebar-title">Fehler</h3>
+          <button class="sidebar-close" onclick="toggleSidebar()">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+        <div class="error-message">Fehler beim Laden der Daten.</div>
+        <button class="clear-filter-btn" onclick="clearFilter()">Filter zurücksetzen</button>
+      `;
+    });
 }
 
 // Kategorie-ID anhand des Namens abrufen
@@ -366,13 +419,13 @@ function getCategoryId(categoryName) {
 }
 
 function printToMap(data) {
-  sidebar.innerHTML = "";
+  // Clear everything properly
   clearMarkers();
+  // Do NOT clear sidebar here, as we'll populate it after markers are added
   
-  // Update the global points array instead of creating a local one
+  // Update the global points array
   points = data.locations
     .map((location) => {
-      // Überprüfen, ob die notwendigen Felder vorhanden sind
       if (location.latitude && location.longitude) {
         return {
           id: location.id || 0,
@@ -383,31 +436,82 @@ function printToMap(data) {
           description: location.description,
         };
       }
-      return null; // Falls kein gültiger Ort, gebe null zurück
+      return null;
     })
-    .filter((location) => location !== null); // Entferne null-Werte
+    .filter((location) => location !== null);
 
-  console.log("Filtered points:", points); // Debug output
+  console.log("Filtered points:", points);
   
   // Remove old markers and create a new feature group
-  map.removeLayer(markersLayer);
+  if (markersLayer) {
+    map.removeLayer(markersLayer);
+  }
   markersLayer = L.featureGroup().addTo(map);
   
   addMarkersToMap(points);
+  
+  // If the markers layer is empty, show a message
+  if (markersLayer.getLayers().length === 0) {
+    sidebar.innerHTML = `
+      <div class="sidebar-header">
+        <h3 class="sidebar-title">Keine Ergebnisse</h3>
+        <button class="sidebar-close" onclick="toggleSidebar()">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <div class="no-results-message">Keine passenden Orte gefunden.</div>
+      <button class="clear-filter-btn" onclick="clearFilter()">Filter zurücksetzen</button>
+    `;
+    return; // Exit early if no markers
+  }
+  
+  // Handle map view based on number of markers
+  const markerCount = markersLayer.getLayers().length;
+  try {
+    // For multiple markers, fit bounds 
+    // REMOVED special handling for single marker to prevent auto-zoom
+    if (markerCount > 1) {
+      map.fitBounds(markersLayer.getBounds(), { padding: [50, 50] });
+    }
+  } catch (e) {
+    console.warn("Error adjusting map view:", e);
+    // Fallback to original coordinates if something goes wrong
+    map.setView([lat, lng], zoom);
+  }
 }
 
-let markersLayer = L.featureGroup().addTo(map); // Layer für Marker
-
 function clearMarkers() {
-  map.eachLayer(function(layer) {
-    if(layer instanceof L.Marker) {
-      map.removeLayer(layer);
-    }
-  });
-  
-  // Reset the markers layer
-  map.removeLayer(markersLayer);
+  if (markersLayer) {
+    markersLayer.clearLayers();
+    map.removeLayer(markersLayer);
+  }
   markersLayer = L.featureGroup().addTo(map);
+  selectedMarker = null; // Reset selected marker
+}
+
+// Add new function to clear filter and reset the map
+function clearFilter() {
+  console.log("Clearing filters and reloading all locations");
+  
+  // Reset any filter UI elements (like search inputs)
+  const searchInput = document.getElementById("homepage_filter_search_input");
+  if (searchInput) {
+    searchInput.value = "";
+  }
+  
+  // Show loading indicator in sidebar
+  sidebar.innerHTML = '<div class="loading">Lade alle Orte...</div>';
+  showSidebar();
+  
+  // Reset map view to initial state
+  map.setView([lat, lng], zoom);
+  
+  // Ensure we reset all state
+  selectedMarker = null;
+  
+  // Clear sidebar, markers, and fetch all locations again
+  clearMarkers();
+  fetchAllLocations();
 }
 
 function generateStars(rating) {
